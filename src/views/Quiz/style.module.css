@@ -1,0 +1,9 @@
+.textResponsive {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .textResponsive {
+    font-size: 0.75rem;
+  }
+}

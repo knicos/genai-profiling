@@ -1,6 +1,50 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.MuiPopper-root {
+  font-size: 1rem;
+  padding-left: 5px;
+}
+
+.MuiTooltip-tooltip {
+  font-size: 1rem;
+  padding: 0.3em 0.8rem;
+  background: #5f7377;
+  border-radius: 6px;
+}
+
+.MuiDialog-root {
+  z-index: 2100;
+}
+
+.MuiTooltip-arrow {
+  color: #5f7377;
+}
+
+.MuiDialogTitle-root {
+  border-bottom: 2px solid #008297;
+  padding: 0.5rem 1rem;
+  background: #e5f6fd;
+  margin-bottom: 0.5rem;
+}
+
+.MuiBackdrop-root {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.MuiDialog-paper {
+  border-radius: 6px;
+}
+
+.MuiDialogContent-root {
+  font-family: Andika;
+}
+
+.MuiSpeedDialAction-staticTooltipLabel {
+  width: max-content;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  color: white;
+  background: #5f7377;
+  border-radius: 6px;
+}
+
+h1 {
+  color: #444;
 }
