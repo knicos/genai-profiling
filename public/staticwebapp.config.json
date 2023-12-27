@@ -1,0 +1,20 @@
+{
+    "routes": [
+        {
+            "route": "/start*",
+            "rewrite": "index.html"
+        },
+        {
+            "route": "/quiz*",
+            "rewrite": "index.html"
+        },
+        {
+            "route": "/username*",
+            "rewrite": "index.html"
+        },
+        {
+            "route": "/configure*",
+            "rewrite": "index.html"
+        }
+    ]
+}
