@@ -7,6 +7,7 @@ import { theme } from './style/theme';
 import Loading from './components/Loading/Loading';
 import UsernameForm from './views/UsernameForm/UsernameForm';
 import ConfigurationForm from './views/ConfigurationForm/ConfigurationForm';
+import Dashboard from './views/Dashboard/Dashboard';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,6 +36,10 @@ const router = createBrowserRouter(
             <Route
                 path="configure"
                 element={<ConfigurationForm />}
+            />
+            <Route
+                path="dashboard"
+                element={<Dashboard />}
             />
         </Route>
     )

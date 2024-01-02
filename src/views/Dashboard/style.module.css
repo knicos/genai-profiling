@@ -1,0 +1,51 @@
+/* style.module.css */
+.imageSlider {
+    position: relative;
+    width: 80vh;
+    height: 80vh; /* 80% of viewport height */
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: auto; /* Adjust height automatically to maintain aspect ratio */
+    display: block; /* Remove any extra space around the image */
+    object-fit: cover;
+}
+
+.prevButton,
+.nextButton {
+    position: absolute;
+    top: 50%;
+    align-self: center;
+    transform: translateY(-50%); /* Center vertically */
+    z-index: 10; /* Ensure buttons are above the image */
+    background-color: #008297;
+}
+
+.prevButton {
+    left: 10px; /* Space from the left edge */
+}
+
+.nextButton {
+    right: 10px; /* Space from the right edge */
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between buttons */
+    align-items: center; /* Center buttons horizontally */
+    justify-content: center; /* Center buttons vertically */
+    padding-top: 20px; /* Space at the top of the first button */
+}
+
+.controlButton {
+    width: 100%; /* Full width of the container */
+    margin-bottom: 10px; /* Space between buttons */
+}
+
+.lowerRow {
+    margin-top: 15px;
+}
