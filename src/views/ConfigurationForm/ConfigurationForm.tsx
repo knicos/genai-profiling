@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { SmallButton } from '@genaism/components/Button/Button';
+import { SmallButton } from '@genaipg/components/Button/Button';
 import { TextField, FormControlLabel, Checkbox } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';

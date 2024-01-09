@@ -13,6 +13,14 @@
             "rewrite": "index.html"
         },
         {
+            "route": "/classroom*",
+            "rewrite": "index.html"
+        },
+        {
+            "route": "/individual*",
+            "rewrite": "index.html"
+        },
+        {
             "route": "/configure*",
             "rewrite": "index.html"
         }

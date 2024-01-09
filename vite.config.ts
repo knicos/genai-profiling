@@ -17,7 +17,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@genaism': path.resolve(__dirname, './src'),
+            '@genaipg': path.resolve(__dirname, './src'),
         },
     },
 });

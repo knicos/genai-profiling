@@ -30,6 +30,18 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Quiz/Quiz')}
             />
             <Route
+                path="classroom/:page"
+                lazy={() => import('./views/Teacher/Teacher')}
+            />
+            <Route
+                path="individual/:code"
+                lazy={() => import('./views/Student/Student')}
+            />
+            <Route
+                path="classroom"
+                lazy={() => import('./views/Teacher/Teacher')}
+            />
+            <Route
                 path="username"
                 element={<UsernameForm />}
             />

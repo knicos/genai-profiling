@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import Spinner from '@genaism/components/Spinner/Spinner';
+import Spinner from '@genaipg/components/Spinner/Spinner';
 
 interface Props extends PropsWithChildren {
     loading: boolean;

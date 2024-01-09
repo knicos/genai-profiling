@@ -1,4 +1,4 @@
-import { SmallButton } from '@genaism/components/Button/Button';
+import { SmallButton } from '@genaipg/components/Button/Button';
 import { TextField } from '@mui/material';
 import { useCallback, useRef } from 'react';
 import style from './style.module.css';
