@@ -2,6 +2,7 @@ export type SlideType = 'qr' | 'question' | 'image';
 
 interface SlideBase {
     type: SlideType;
+    form?: number;
 }
 
 export interface SlideQuestion extends SlideBase {

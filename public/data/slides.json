@@ -2,10 +2,12 @@
     {
         "type": "question",
         "text": "What is the meaning of life?",
-        "fontSize": 2
+        "fontSize": 2,
+        "form": 0
     },
     {
         "type": "question",
-        "text": "Why are you here?"
+        "text": "Why are you here?",
+        "form": 1
     }
 ]

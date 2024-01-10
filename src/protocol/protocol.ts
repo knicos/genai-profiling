@@ -1,8 +1,13 @@
 import { PeerEvent, BuiltinEvent } from '@genaipg/hooks/peer';
 
 export interface UserRegistrationEvent extends PeerEvent {
-    event: 'eter:reguser';
+    event: 'pg:reguser';
     username: string;
 }
 
-export type EventProtocol = BuiltinEvent | UserRegistrationEvent;
+export interface ChangeFormEvent extends PeerEvent {
+    event: 'pg:changeform';
+    form: number;
+}
+
+export type EventProtocol = BuiltinEvent | UserRegistrationEvent | ChangeFormEvent;

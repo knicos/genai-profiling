@@ -22,7 +22,7 @@ export default function SlideShow({ index, slides, showControls, onChange, hasNe
                     <IconButton
                         size="large"
                         color="inherit"
-                        disabled={index === 0}
+                        disabled={index === -1}
                         onClick={() => {
                             if (onChange) onChange(index - 1);
                         }}

@@ -28,19 +28,33 @@ export function Component() {
 
     const npage = page ? parseInt(page) : -1;
 
-    const dataHandler = useCallback((data: EventProtocol, conn: DataConnection) => {
-        console.log('GOT DATA', data);
-        if (data.event === 'eter:reguser') {
-            setUsers((old) => [...old, { username: data.username, connection: conn }]);
-        }
-    }, []);
+    const dataHandler = useCallback(
+        (data: EventProtocol, conn: DataConnection) => {
+            console.log('GOT DATA', data);
+            if (data.event === 'pg:reguser') {
+                setUsers((old) => [...old, { username: data.username, connection: conn }]);
+                if (slides) {
+                    const form = slides[npage]?.form;
+                    conn.send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
+                }
+            }
+        },
+        [slides, npage]
+    );
     const closeHandler = useCallback((conn?: DataConnection) => {
         if (conn) {
             setUsers((old) => old.filter((o) => o.connection !== conn));
         }
     }, []);
 
-    const { ready } = usePeer({ code: `pg-${MYCODE}`, onData: dataHandler, onClose: closeHandler });
+    const { ready, send } = usePeer({ code: `pg-${MYCODE}`, onData: dataHandler, onClose: closeHandler });
+
+    useEffect(() => {
+        if (slides && send) {
+            const form = slides[npage]?.form;
+            send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
+        }
+    }, [npage, send, slides]);
 
     return (
         <Loading loading={!ready || !slides}>
@@ -58,7 +72,7 @@ export function Component() {
                         slides={slides || []}
                         showControls
                         hasNext={npage < (slides?.length || 0) - 1}
-                        onChange={(index: number) => navigate(`/classroom/${index}`)}
+                        onChange={(index: number) => navigate(index >= 0 ? `/classroom/${index}` : '/classroom')}
                     />
                 )}
             </div>
