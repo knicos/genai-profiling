@@ -12,10 +12,10 @@
 .controls {
     display: flex;
     gap: 5rem;
-    color: secondary;
+    color: white;
     border-radius: 2rem;
     box-shadow: 0 0 5px #707070;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    background: white;
+    background: secondary;
 }

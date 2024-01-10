@@ -1,7 +1,8 @@
 [
     {
         "type": "question",
-        "text": "What is the meaning of life?"
+        "text": "What is the meaning of life?",
+        "fontSize": 2
     },
     {
         "type": "question",

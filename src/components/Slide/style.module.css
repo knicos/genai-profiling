@@ -8,7 +8,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-top: 5px solid secondary;
-    border-bottom: 5px solid secondary;
+    border-top: 10px solid secondary;
+    border-bottom: 10px solid secondary;
     background: white;
+    padding: 1rem 2rem;
+    box-sizing: border-box;
 }
