@@ -1,3 +1,4 @@
+import { QuestionData } from '@genaipg/components/Question/types';
 import { PeerEvent, BuiltinEvent } from '@genaipg/hooks/peer';
 
 export interface UserRegistrationEvent extends PeerEvent {
@@ -11,14 +12,18 @@ export interface ChangeFormEvent extends PeerEvent {
     form: number;
 }
 
-export interface QuestionResponseEvent extends PeerEvent {
+export interface ResponseData {
+    timestamp: number;
+    date: string;
+    question: QuestionData | number;
+    value: string;
+    form: number;
+}
+
+export interface QuestionResponseEvent extends PeerEvent, ResponseData {
     event: 'pg:response';
     username: string;
     userId: string;
-    timestamp: number;
-    date: string;
-    question: number;
-    value: string;
 }
 
 export type EventProtocol = BuiltinEvent | UserRegistrationEvent | ChangeFormEvent | QuestionResponseEvent;

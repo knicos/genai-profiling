@@ -10,6 +10,7 @@ import Loading from '@genaipg/components/Loading/Loading';
 import StartDialog from './StartDialog';
 import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
+import { addTeacherLog, addUserName, addUserResponse, dumpUserData } from './userState';
 
 const SLIDE_URL = '/data/slides.json';
 
@@ -32,11 +33,15 @@ export function Component() {
         (data: EventProtocol, conn: DataConnection) => {
             console.log('GOT DATA', data);
             if (data.event === 'pg:reguser') {
+                addUserName(data.id, data.username);
                 setUsers((old) => [...old, { username: data.username, connection: conn }]);
                 if (slides) {
                     const form = slides[npage]?.form;
                     conn.send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
                 }
+            } else if (data.event === 'pg:response') {
+                addUserResponse(data.userId, data, slides?.[npage]);
+                console.log(dumpUserData());
             }
         },
         [slides, npage]
@@ -52,6 +57,7 @@ export function Component() {
     useEffect(() => {
         if (slides && send) {
             const form = slides[npage]?.form;
+            addTeacherLog(form === undefined ? -1 : form, slides?.[npage]);
             send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
         }
     }, [npage, send, slides]);

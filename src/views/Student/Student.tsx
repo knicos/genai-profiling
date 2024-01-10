@@ -53,19 +53,20 @@ export function Component() {
 
     const logFn = useCallback(
         (id: number, value: string) => {
-            if (send && username) {
+            if (send && username && questions) {
                 send({
                     event: 'pg:response',
-                    question: id,
+                    question: questions.find((v) => v.id === id) || id,
                     value,
                     timestamp: Date.now(),
                     date: new Date().toISOString(),
                     username,
                     userId: MYID,
+                    form: currentForm,
                 });
             }
         },
-        [send, username]
+        [send, username, currentForm, questions]
     );
     useQuestionLogger(logFn);
 
