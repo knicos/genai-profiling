@@ -10,11 +10,17 @@ import Loading from '@genaipg/components/Loading/Loading';
 import StartDialog from './StartDialog';
 import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
-import { addTeacherLog, addUserName, addUserResponse, dumpUserData } from './userState';
+import { addTeacherLog, addUserName, addUserResponse } from './userState';
+import SlideContainer from '@genaipg/components/Slide/SlideContainer';
+import { SmallButton } from '@genaipg/components/Button/Button';
+import { saveFile } from '@genaipg/services/exporter/zipExport';
+import { useTranslation } from 'react-i18next';
+import DownloadIcon from '@mui/icons-material/Download';
 
 const SLIDE_URL = '/data/slides.json';
 
 export function Component() {
+    const { t } = useTranslation();
     const { page } = useParams();
     const MYCODE = useID(5);
     const [users, setUsers] = useState<UserInfo[]>([]);
@@ -41,7 +47,6 @@ export function Component() {
                 }
             } else if (data.event === 'pg:response') {
                 addUserResponse(data.userId, data, slides?.[npage]);
-                console.log(dumpUserData());
             }
         },
         [slides, npage]
@@ -65,22 +70,35 @@ export function Component() {
     return (
         <Loading loading={!ready || !slides}>
             <div className={style.page}>
-                {page === undefined && (
-                    <StartDialog
-                        users={users}
-                        code={MYCODE}
-                        onStart={() => navigate(`/classroom/${npage + 1}`)}
-                    />
-                )}
-                {page && (
-                    <SlideShow
-                        index={npage}
-                        slides={slides || []}
-                        showControls
-                        hasNext={npage < (slides?.length || 0) - 1}
-                        onChange={(index: number) => navigate(index >= 0 ? `/classroom/${index}` : '/classroom')}
-                    />
-                )}
+                <SlideShow
+                    index={npage}
+                    slides={slides || []}
+                    showControls
+                    hasNext={npage < (slides?.length || 0)}
+                    onChange={(index: number) => navigate(index >= 0 ? `/classroom/${index}` : '/classroom')}
+                    defaultSlide={
+                        page === undefined ? (
+                            <SlideContainer>
+                                <StartDialog
+                                    users={users}
+                                    code={MYCODE}
+                                />
+                            </SlideContainer>
+                        ) : npage >= (slides?.length || -1) ? (
+                            <SlideContainer>
+                                <SmallButton
+                                    variant="contained"
+                                    onClick={() => {
+                                        saveFile();
+                                    }}
+                                    startIcon={<DownloadIcon />}
+                                >
+                                    {t('Download')}
+                                </SmallButton>
+                            </SlideContainer>
+                        ) : undefined
+                    }
+                />
             </div>
         </Loading>
     );

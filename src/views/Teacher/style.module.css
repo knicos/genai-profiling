@@ -1,4 +1,4 @@
-@value bgColourful1, textLight, workspaceBg from "../../style/colours.module.css";
+@value bgColourful1, textDark, workspaceBg from "../../style/colours.module.css";
 
 .groupedItems {
     display: flex;
@@ -11,8 +11,8 @@
 
 .connectMessage {
     font-size: 1.6rem;
-    background-color: bgColourful1;
-    color: textLight;
+    background-color: white;
+    color: textDark;
     padding: 2rem;
     display: flex;
     gap: 2rem;
@@ -37,14 +37,14 @@
 .userListing {
     padding: 2rem;
     font-size: 1.2rem;
-    background-color: bgColourful1;
+    background-color: white;
     display: flex;
     justify-content: space-around;
     gap: 2rem;
     flex-wrap: wrap;
     border-bottom-right-radius: 16px;
     border-bottom-left-radius: 16px;
-    color: textLight;
+    color: textDark;
 }
 
 .column {

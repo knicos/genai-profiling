@@ -2,15 +2,13 @@ import { UserInfo } from './userinfo';
 import style from './style.module.css';
 import QRCode from '@genaipg/components/QRCode/QRCode';
 import { useTranslation, Trans } from 'react-i18next';
-import { SmallButton } from '@genaipg/components/Button/Button';
 
 interface Props {
     users: UserInfo[];
     code: string;
-    onStart: () => void;
 }
 
-export default function StartDialog({ users, code, onStart }: Props) {
+export default function StartDialog({ users, code }: Props) {
     const { t } = useTranslation();
 
     return (
@@ -24,7 +22,7 @@ export default function StartDialog({ users, code, onStart }: Props) {
                     <div>
                         <Trans
                             values={{ codeText: code }}
-                            i18nKey="dashboard.messages.connection"
+                            i18nKey="connection"
                             components={{
                                 Code: <em />,
                             }}
@@ -40,17 +38,9 @@ export default function StartDialog({ users, code, onStart }: Props) {
                 </div>
             </div>
             <div className={style.userListing}>
-                {users.length === 0 && <div>{t('dashboard.messages.waitingPeople')}</div>}
-                {users.length === 1 && <div>{t('dashboard.messages.onePerson', { count: users.length })}</div>}
-                {users.length > 1 && <div>{t('dashboard.messages.manyPeople', { count: users.length })}</div>}
-                <SmallButton
-                    variant="contained"
-                    color="secondary"
-                    data-testid="dashboard-start-button"
-                    onClick={onStart}
-                >
-                    {t('dashboard.actions.start')}
-                </SmallButton>
+                {users.length === 0 && <div>{t('waitingPeople')}</div>}
+                {users.length === 1 && <div>{t('onePerson', { count: users.length })}</div>}
+                {users.length > 1 && <div>{t('manyPeople', { count: users.length })}</div>}
             </div>
         </div>
     );

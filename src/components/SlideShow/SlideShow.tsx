@@ -11,12 +11,13 @@ interface Props {
     showControls?: boolean;
     hasNext?: boolean;
     onChange?: (index: number) => void;
+    defaultSlide?: JSX.Element;
 }
 
-export default function SlideShow({ index, slides, showControls, onChange, hasNext }: Props) {
+export default function SlideShow({ index, slides, showControls, onChange, hasNext, defaultSlide }: Props) {
     return (
         <div className={style.container}>
-            {index >= 0 && index < slides.length ? <Slide meta={slides[index]} /> : null}
+            {index >= 0 && index < slides.length ? <Slide meta={slides[index]} /> : defaultSlide || null}
             {showControls && (
                 <div className={style.controls}>
                     <IconButton

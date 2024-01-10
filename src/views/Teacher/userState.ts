@@ -1,3 +1,4 @@
+import { QuestionData } from '@genaipg/components/Question/types';
 import { SlideMeta } from '@genaipg/components/Slide/types';
 import { ResponseData } from '@genaipg/protocol/protocol';
 
@@ -7,6 +8,8 @@ interface UserState {
 }
 
 const state = new Map<string, UserState>();
+
+const questionRecord = new Map<number, QuestionData>();
 
 interface LogBase {
     type: 'user' | 'teacher';
@@ -53,6 +56,7 @@ export function addUserResponse(id: string, data: ResponseData, slide?: SlideMet
         userState.responses.set(data.question, data.value);
     } else {
         userState.responses.set(data.question.id, data.value);
+        questionRecord.set(data.question.id, data.question);
     }
     state.set(id, userState);
 }
@@ -84,7 +88,7 @@ export function dumpUserData() {
             id: key,
             name: value.name,
             responses: Array.from(value.responses).map((r) => ({
-                question: r[0],
+                question: questionRecord.get(r[0]) || r[0],
                 value: r[1],
             })),
         });

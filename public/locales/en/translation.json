@@ -16,5 +16,9 @@
     "Enable questions for this profile": "Enable questions for this profile",
     "Upload session's data On server": "Upload session data on server",
     "View clusters": "View clusters",
-    "Enable post session feedack questions": "Enable post session feedack questions"
+    "Enable post session feedack questions": "Enable post session feedack questions",
+    "connection": "Go to the address below and enter the code <Code>{{codeText}}</Code>, or use the QR code.",
+    "waitingPeople": "Waiting for people...",
+    "onePerson": "{{count}} person has joined.",
+    "manyPeople": "{{count}} people have joined."
 }
