@@ -8,9 +8,12 @@ import Loading from '@genaipg/components/Loading/Loading';
 import EnterUsername from './EnterUsername';
 import { QuestionData } from '@genaipg/components/Question/types';
 import Form from '@genaipg/components/Form/Form';
+import { useQuestionLogger } from '@genaipg/services/questionLogger/hook';
+import randomId from '@genaipg/util/randomId';
 
 const USERNAME_KEY = 'genai_pg_username';
 const QUESTION_URL = '/data/questions.json';
+const MYID = randomId(8);
 
 function loadUser() {
     const name = window.sessionStorage.getItem(USERNAME_KEY);
@@ -48,10 +51,28 @@ export function Component() {
 
     const { ready, send } = usePeer<EventProtocol>({ code: code && `pg-${MYCODE}`, server: `pg-${code}`, onData });
 
+    const logFn = useCallback(
+        (id: number, value: string) => {
+            if (send && username) {
+                send({
+                    event: 'pg:response',
+                    question: id,
+                    value,
+                    timestamp: Date.now(),
+                    date: new Date().toISOString(),
+                    username,
+                    userId: MYID,
+                });
+            }
+        },
+        [send, username]
+    );
+    useQuestionLogger(logFn);
+
     useEffect(() => {
         if (username && send && ready) {
             window.sessionStorage.setItem(USERNAME_KEY, username);
-            send({ event: 'pg:reguser', username });
+            send({ event: 'pg:reguser', username, id: MYID });
         }
     }, [username, send, ready]);
 
