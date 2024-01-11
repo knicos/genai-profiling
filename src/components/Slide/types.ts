@@ -11,4 +11,11 @@ export interface SlideQuestion extends SlideBase {
     fontSize?: number;
 }
 
-export type SlideMeta = SlideQuestion;
+export interface SlideImage extends SlideBase {
+    type: 'image';
+    url: string;
+    scale?: number;
+    label?: string;
+}
+
+export type SlideMeta = SlideQuestion | SlideImage;

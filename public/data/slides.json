@@ -6,8 +6,9 @@
         "form": 0
     },
     {
-        "type": "question",
-        "text": "Why are you here?",
+        "type": "image",
+        "url": "/375d6b43-7c39-4d4b-8370-c0edbd0e25b0.jpg",
+        "label": "Some text here",
         "form": 1
     }
 ]

@@ -59,10 +59,17 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: workspaceBg;
+    background-color: #d14bcf;
     color: textDark;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.logo {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    opacity: 0.5;
 }

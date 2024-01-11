@@ -99,6 +99,14 @@ export function Component() {
                         ) : undefined
                     }
                 />
+                <div className={style.logo}>
+                    <img
+                        src="/logo64_bw.png"
+                        alt="GenAI Logo"
+                        width={64}
+                        height={64}
+                    />
+                </div>
             </div>
         </Loading>
     );
