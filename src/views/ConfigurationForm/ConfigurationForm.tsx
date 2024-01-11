@@ -3,12 +3,13 @@ import { SmallButton } from '@genaipg/components/Button/Button';
 import { TextField, FormControlLabel, Checkbox } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export default function ConfigurationForm() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         className: '',
-        sessionDetail: '',
         enableRecordings: false,
     });
 
@@ -22,7 +23,7 @@ export default function ConfigurationForm() {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log('Form Data:', formData);
+        navigate(`/classroom?name=${formData.className}&audio=${formData.enableRecordings ? '1' : '0'}`);
     };
 
     return (
@@ -31,23 +32,10 @@ export default function ConfigurationForm() {
                 className={style.userContainer}
                 onSubmit={handleSubmit}
             >
-                {' '}
-                <img
-                    src="/logo192_bw.png"
-                    alt="GenAI logo"
-                    width={150}
-                    height={150}
-                />
                 <TextField
                     label={t('Enter Class Name')}
                     name="className"
                     value={formData.className}
-                    onChange={handleInputChange}
-                />
-                <TextField
-                    label={t('Enter Session Detail')}
-                    name="sessionDetail"
-                    value={formData.sessionDetail}
                     onChange={handleInputChange}
                 />
                 <FormControlLabel
@@ -64,7 +52,7 @@ export default function ConfigurationForm() {
                     type="submit"
                     variant="contained"
                 >
-                    {t('Configure')}
+                    {t('Go')}
                 </SmallButton>
             </form>
         </div>

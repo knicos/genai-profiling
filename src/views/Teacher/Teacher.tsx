@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import SlideShow from '@genaipg/components/SlideShow/SlideShow';
 import { useCallback, useEffect, useState } from 'react';
 import usePeer from '@genaipg/hooks/peer';
@@ -26,6 +26,7 @@ export function Component() {
     const [users, setUsers] = useState<UserInfo[]>([]);
     const navigate = useNavigate();
     const [slides, setSlides] = useState<SlideMeta[]>();
+    const [params] = useSearchParams();
 
     useEffect(() => {
         fetch(SLIDE_URL).then((response) => {
@@ -46,10 +47,10 @@ export function Component() {
                     conn.send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
                 }
             } else if (data.event === 'pg:response') {
-                addUserResponse(data.userId, data, slides?.[npage]);
+                addUserResponse(params.get('name') || 'NoName', data.userId, data, slides?.[npage]);
             }
         },
-        [slides, npage]
+        [slides, npage, params]
     );
     const closeHandler = useCallback((conn?: DataConnection) => {
         if (conn) {
@@ -62,10 +63,10 @@ export function Component() {
     useEffect(() => {
         if (slides && send) {
             const form = slides[npage]?.form;
-            addTeacherLog(form === undefined ? -1 : form, slides?.[npage]);
+            addTeacherLog(params.get('name') || 'NoName', form === undefined ? -1 : form, slides?.[npage]);
             send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
         }
-    }, [npage, send, slides]);
+    }, [npage, send, slides, params]);
 
     return (
         <Loading loading={!ready || !slides}>
@@ -75,7 +76,12 @@ export function Component() {
                     slides={slides || []}
                     showControls
                     hasNext={npage < (slides?.length || 0)}
-                    onChange={(index: number) => navigate(index >= 0 ? `/classroom/${index}` : '/classroom')}
+                    onChange={(index: number) =>
+                        navigate({
+                            pathname: index >= 0 ? `/classroom/${index}` : '/classroom',
+                            search: params.toString(),
+                        })
+                    }
                     defaultSlide={
                         page === undefined ? (
                             <SlideContainer>

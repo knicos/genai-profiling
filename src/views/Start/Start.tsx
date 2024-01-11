@@ -1,41 +1,30 @@
 import style from './style.module.css';
-import { useTranslation } from 'react-i18next';
+import ErrorDialog from '../dialogs/ErrorDialog/ErrorDialog';
+// import { useTranslation } from 'react-i18next';
 import { Button, TextField } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import QRCode from 'qrcode.react';
-import { generateRandomCode } from '../../../server/src/generateRandomCode';
-import { io, Socket } from 'socket.io-client';
+import { useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Component() {
-    const { t } = useTranslation();
-    const [classCode, setClassCode] = useState('');
-    const [enteredCode, setEnteredCode] = useState('');
-    const [socket, setSocket] = useState<Socket>({} as Socket);
-    const qrCodeValueRef = useRef('');
+    // const { t } = useTranslation();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
+    const doKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+                const value = (e.target as HTMLInputElement).value;
+                navigate(`/individual/${value}`);
+            }
+        },
+        [navigate]
+    );
 
-    useEffect(() => {
-        // Generate a random class code (you can replace this with your logic)
-
-        const newSocket = io('http://localhost:3000');
-        setSocket(newSocket);
-
-        // clean up connection upon unmount
-        () => {
-            newSocket.disconnect();
-        };
-    }, []);
-
-    const createConnection = () => {
-        const newClassCode = generateRandomCode();
-        setClassCode(newClassCode);
-        // Update the QR code value
-        qrCodeValueRef.current = newClassCode;
-        socket.emit('createConnection');
-    };
-
-    const joinConnection = () => {
-        socket.emit('join');
-    };
+    const doGo = useCallback(() => {
+        if (inputRef.current) {
+            const value = inputRef.current.value;
+            navigate(`/individual/${value}`);
+        }
+    }, [navigate]);
 
     return (
         <div className={style.container}>
@@ -47,37 +36,30 @@ export function Component() {
                     height={192}
                 />
                 <TextField
-                    label={t('Enter Code')}
+                    label="Enter Code  "
+                    onKeyDown={doKeyDown}
                     fullWidth
                     className={style.textbox}
-                    value={enteredCode}
-                    onChange={(e) => setEnteredCode(e.target.value)}
+                    inputRef={inputRef}
                 />
                 <Button
                     variant="contained"
                     fullWidth
                     size="large"
                     component="a"
-                    onClick={joinConnection}
+                    onClick={doGo}
                 >
-                    {t('Go')}
+                    Go
                 </Button>
-                <div className={style.qrCodeContainer}>
-                    <QRCode
-                        value={qrCodeValueRef.current}
-                        size={192}
-                    />
-                </div>
-                <p>{classCode}</p>
-                {/* <div className={style.spacer} /> */}
+                <div className={style.spacer} />
                 <Button
                     variant="outlined"
-                    href="/dashboard"
+                    href="/configure"
                     className={style.createButton}
-                    onClick={createConnection}
                 >
-                    {t('Create New')}
+                    Create New
                 </Button>
+                <ErrorDialog />
             </div>
         </div>
     );

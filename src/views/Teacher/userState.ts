@@ -17,6 +17,7 @@ interface LogBase {
 
 interface LogUserData extends ResponseData, LogBase {
     type: 'user';
+    className: string;
     username: string;
     userId: string;
     slide?: SlideMeta;
@@ -24,6 +25,7 @@ interface LogUserData extends ResponseData, LogBase {
 
 interface LogTeacherData extends LogBase {
     type: 'teacher';
+    className: string;
     form: number;
     slide?: SlideMeta;
     timestamp: number;
@@ -34,7 +36,7 @@ type LogData = LogUserData | LogTeacherData;
 
 const logs: LogData[] = [];
 
-export function addUserResponse(id: string, data: ResponseData, slide?: SlideMeta) {
+export function addUserResponse(className: string, id: string, data: ResponseData, slide?: SlideMeta) {
     const userState = state.get(id) || {
         name: '',
         responses: new Map<number, string>(),
@@ -43,6 +45,7 @@ export function addUserResponse(id: string, data: ResponseData, slide?: SlideMet
 
     logs.push({
         type: 'user',
+        className,
         username: userState.name,
         userId: id,
         question: data.question,
@@ -61,9 +64,10 @@ export function addUserResponse(id: string, data: ResponseData, slide?: SlideMet
     state.set(id, userState);
 }
 
-export function addTeacherLog(form: number, slide?: SlideMeta) {
+export function addTeacherLog(className: string, form: number, slide?: SlideMeta) {
     logs.push({
         type: 'teacher',
+        className,
         timestamp: Date.now(),
         date: new Date().toISOString(),
         form,
