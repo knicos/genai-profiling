@@ -7,48 +7,39 @@
         },
         {
             "id": 2,
-            "text": "Guess the age of this person?",
+            "text": "Minkä ikäinen henkilö on?",
             "type": "slider",
-            "min": 0,
-            "max": 100
+            "min": 10,
+            "max": 100,
+            "range": true
         },
         {
             "id": 3,
-            "text": "What kind of hobbies the person has?",
+            "text": "What are their hobbies?",
             "type": "multichoice",
-            "options": ["Gaming", "Reading", "Hiking", "Gardening"]
+            "options": ["Gaming", "Reading", "Hiking", "Skateboarding"]
         },
         {
             "id": 4,
-            "text": "Does the person seem a singer?",
-            "type": "singlechoice"
+            "text": "What pets might they have?",
+            "type": "multichoice",
+            "options": ["Cat", "Dog", "Rabbit"]
         },
         {
             "id": 5,
-            "text": "Where does this person live?",
-            "type": "text"
+            "text": "Describe the family members",
+            "type": "largetext"
         },
         {
-            "id": 6,
-            "text": "Guess the age of this person?",
-            "type": "slider",
-            "min": 0,
-            "max": 100
-        },
-        {
-            "id": 7,
-            "text": "What kind of hobbies the person has?",
-            "type": "multichoice",
-            "options": ["Gaming", "Reading", "Hiking", "Gardening"]
-        },
-        {
-            "id": 8,
-            "text": "Does the person seem a singer?",
-            "type": "singlechoice"
+            "id": 10,
+            "text": "Guess Profile",
+            "type": "message"
         }
     ],
     "forms": [
-        [1, 2, 3],
-        [4, 5, 6]
+        [10, 2],
+        [10, 2, 1],
+        [10, 2, 1, 4, 5],
+        [10, 2, 1, 4, 5, 3]
     ]
 }

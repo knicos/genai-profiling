@@ -21,8 +21,18 @@ function loadUser() {
 }
 
 function filterQuestions(questions: QuestionData[], form: number[]) {
-    const set = new Set(form);
-    return questions.filter((q) => set.has(q.id));
+    const set = new Map<number, QuestionData>();
+    questions.forEach((q) => {
+        set.set(q.id, q);
+    });
+    const result: QuestionData[] = [];
+    form.forEach((f) => {
+        const q = set.get(f);
+        if (q) {
+            result.push(q);
+        }
+    });
+    return result;
 }
 
 export function Component() {

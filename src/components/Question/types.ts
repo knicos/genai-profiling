@@ -1,37 +1,47 @@
-export type QuestionType = 'text' | 'slider' | 'multichoice' | 'singlechoice' | 'largetext';
+export type QuestionType = 'text' | 'slider' | 'multichoice' | 'singlechoice' | 'largetext' | 'message';
 
 interface QuestionBase {
     id: number;
     text: string;
     type: QuestionType;
-    min?: number;
-    max?: number;
-    options?: string[];
 }
 
-interface QuestionText extends QuestionBase {
+export interface QuestionText extends QuestionBase {
     type: 'text';
 }
 
-interface QuestionLargeText extends QuestionBase {
+export interface QuestionMessage extends QuestionBase {
+    type: 'message';
+    size?: 'small' | 'medium' | 'large';
+}
+
+export interface QuestionLargeText extends QuestionBase {
     type: 'largetext';
 }
 
-interface QuestionSlider extends QuestionBase {
+export interface QuestionSlider extends QuestionBase {
     type: 'slider';
     min: number;
     max: number;
     step: number;
+    range?: boolean;
 }
 
-interface QuestionMulti extends QuestionBase {
+export interface QuestionMulti extends QuestionBase {
     type: 'multichoice';
     options: string[];
 }
 
-interface QuestionChoice extends QuestionBase {
+export interface QuestionChoice extends QuestionBase {
     type: 'singlechoice';
     options: string[];
+    default?: string;
 }
 
-export type QuestionData = QuestionChoice | QuestionMulti | QuestionSlider | QuestionLargeText | QuestionText;
+export type QuestionData =
+    | QuestionChoice
+    | QuestionMulti
+    | QuestionSlider
+    | QuestionLargeText
+    | QuestionText
+    | QuestionMessage;

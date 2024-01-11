@@ -1,14 +1,10 @@
-import {
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    MenuItem,
-    Select,
-    Slider,
-    TextField,
-    Typography,
-} from '@mui/material';
 import { QuestionData } from './types';
+import TextQuestion from './TextQuestion';
+import LargeQuestion from './LargeQuestion';
+import SliderQuestion from './SliderQuestion';
+import MultiQuestion from './MultiQuestion';
+import SingleQuestion from './SingleQuestion';
+import MessageQuestion from './MessageQuestion';
 
 interface Props {
     question: QuestionData;
@@ -20,100 +16,47 @@ export default function Question({ question, value, onChange }: Props) {
     switch (question.type) {
         case 'text':
             return (
-                <div>
-                    <Typography
-                        variant="body1"
-                        component="h2"
-                        gutterBottom
-                    >
-                        {question.text}
-                    </Typography>
-                    <TextField
-                        fullWidth
-                        label={question.text}
-                        margin="normal"
-                        defaultValue={value}
-                        onBlur={(e) => onChange(question.id, e.target.value)}
-                    />
-                </div>
+                <TextQuestion
+                    question={question}
+                    value={value}
+                    onChange={onChange}
+                />
+            );
+        case 'largetext':
+            return (
+                <LargeQuestion
+                    question={question}
+                    value={value}
+                    onChange={onChange}
+                />
             );
         case 'slider':
             return (
-                <div>
-                    <Typography
-                        variant="body1"
-                        component="h2"
-                        gutterBottom
-                    >
-                        {question.text}
-                    </Typography>
-                    <Slider
-                        defaultValue={Number(value) || question.min}
-                        onChangeCommitted={(_, val) => onChange(question.id, `${val as number}`)}
-                        aria-labelledby="input-slider"
-                        min={question.min}
-                        max={question.max}
-                        valueLabelDisplay="auto"
-                        step={1}
-                    />
-                </div>
+                <SliderQuestion
+                    question={question}
+                    value={value}
+                    onChange={onChange}
+                />
             );
         case 'multichoice':
             return (
-                <div>
-                    <Typography
-                        variant="body1"
-                        component="h2"
-                        gutterBottom
-                    >
-                        {question.text}
-                    </Typography>
-                    <FormControl fullWidth>
-                        <Select
-                            defaultValue={value || ''}
-                            onBlur={(e) => onChange(question.id, e.target.value)}
-                            displayEmpty
-                        >
-                            <MenuItem
-                                value=""
-                                disabled
-                            >
-                                Select an option
-                            </MenuItem>
-                            {question.options?.map((option: string) => (
-                                <MenuItem
-                                    key={option}
-                                    value={option}
-                                >
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </div>
+                <MultiQuestion
+                    question={question}
+                    value={value}
+                    onChange={onChange}
+                />
             );
 
         case 'singlechoice':
             return (
-                <div>
-                    <Typography
-                        variant="body1"
-                        component="h2"
-                        gutterBottom
-                    >
-                        {question.text}
-                    </Typography>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                defaultChecked={value === 'true'}
-                                onBlur={(e) => onChange(question.id, e.currentTarget.value ? 'true' : 'false')}
-                            />
-                        }
-                        label="Yes"
-                    />
-                </div>
+                <SingleQuestion
+                    question={question}
+                    value={value}
+                    onChange={onChange}
+                />
             );
+        case 'message':
+            return <MessageQuestion question={question} />;
         default:
             return null;
     }

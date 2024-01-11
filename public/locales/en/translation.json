@@ -20,5 +20,6 @@
     "connection": "Go to the address below and enter the code <Code>{{codeText}}</Code>, or use the QR code.",
     "waitingPeople": "Waiting for people...",
     "onePerson": "{{count}} person has joined.",
-    "manyPeople": "{{count}} people have joined."
+    "manyPeople": "{{count}} people have joined.",
+    "pleaseWait": "Please wait"
 }

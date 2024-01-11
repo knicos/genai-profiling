@@ -1,14 +1,38 @@
 [
     {
-        "type": "question",
-        "text": "What is the meaning of life?",
-        "fontSize": 2,
+        "type": "image",
+        "url": "/375d6b43-7c39-4d4b-8370-c0edbd0e25b0.jpg",
+        "label": "Tämä henkilö kuunteli Spotifystä kappaleen Nirvana: Rape me",
         "form": 0
     },
     {
         "type": "image",
-        "url": "/375d6b43-7c39-4d4b-8370-c0edbd0e25b0.jpg",
-        "label": "Some text here",
+        "url": "/data/sarkanniemi.jpg",
+        "label": "They commented on a picture of Särkänniemi",
         "form": 1
+    },
+    {
+        "type": "image",
+        "url": "/data/tappara.jpg",
+        "label": "Followed three Tappara players",
+        "form": 1
+    },
+    {
+        "type": "image",
+        "url": "/data/siskonsynttarit.jpg",
+        "label": "Tagged in this photo",
+        "form": 2
+    },
+    {
+        "type": "image",
+        "url": "/data/mopokurssi.jpg",
+        "label": "Browsed to this web page",
+        "form": 2
+    },
+    {
+        "type": "image",
+        "url": "/data/counterstrike.jpg",
+        "label": "Five friends recommended this video",
+        "form": 3
     }
 ]
