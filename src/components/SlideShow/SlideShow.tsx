@@ -4,6 +4,8 @@ import { SlideMeta } from '../Slide/types';
 import style from './style.module.css';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+import DownloadIcon from '@mui/icons-material/Download';
 
 interface Props {
     index: number;
@@ -12,9 +14,20 @@ interface Props {
     hasNext?: boolean;
     onChange?: (index: number) => void;
     defaultSlide?: JSX.Element;
+    onDownload?: () => void;
+    onQRCode?: () => void;
 }
 
-export default function SlideShow({ index, slides, showControls, onChange, hasNext, defaultSlide }: Props) {
+export default function SlideShow({
+    index,
+    slides,
+    showControls,
+    onChange,
+    hasNext,
+    defaultSlide,
+    onDownload,
+    onQRCode,
+}: Props) {
     return (
         <div className={style.container}>
             {index >= 0 && index < slides.length ? <Slide meta={slides[index]} /> : defaultSlide || null}
@@ -30,6 +43,24 @@ export default function SlideShow({ index, slides, showControls, onChange, hasNe
                     >
                         <NavigateBeforeIcon fontSize="large" />
                     </IconButton>
+                    <div className={style.centralButtons}>
+                        {onQRCode && (
+                            <IconButton
+                                color="inherit"
+                                onClick={onQRCode}
+                            >
+                                <QrCode2Icon fontSize="large" />
+                            </IconButton>
+                        )}
+                        {onDownload && (
+                            <IconButton
+                                color="inherit"
+                                onClick={onDownload}
+                            >
+                                <DownloadIcon fontSize="large" />
+                            </IconButton>
+                        )}
+                    </div>
                     <IconButton
                         size="large"
                         color="inherit"

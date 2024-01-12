@@ -16,6 +16,7 @@ import { SmallButton } from '@genaipg/components/Button/Button';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
 import { useTranslation } from 'react-i18next';
 import DownloadIcon from '@mui/icons-material/Download';
+import { Dialog } from '@mui/material';
 
 const SLIDE_URL = '/data/slides.json';
 
@@ -27,6 +28,7 @@ export function Component() {
     const navigate = useNavigate();
     const [slides, setSlides] = useState<SlideMeta[]>();
     const [params] = useSearchParams();
+    const [showQR, setShowQR] = useState(false);
 
     useEffect(() => {
         fetch(SLIDE_URL).then((response) => {
@@ -76,6 +78,8 @@ export function Component() {
                     slides={slides || []}
                     showControls
                     hasNext={npage < (slides?.length || 0)}
+                    onDownload={() => saveFile()}
+                    onQRCode={() => setShowQR(true)}
                     onChange={(index: number) =>
                         navigate({
                             pathname: index >= 0 ? `/classroom/${index}` : '/classroom',
@@ -105,6 +109,18 @@ export function Component() {
                         ) : undefined
                     }
                 />
+                {showQR && (
+                    <Dialog
+                        maxWidth="md"
+                        open={showQR}
+                        onClose={() => setShowQR(false)}
+                    >
+                        <StartDialog
+                            users={users}
+                            code={MYCODE}
+                        />
+                    </Dialog>
+                )}
                 <div className={style.logo}>
                     <img
                         src="/logo64_bw.png"

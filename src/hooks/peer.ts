@@ -246,6 +246,7 @@ export default function usePeer<T extends PeerEvent>({
             });
 
             conn.on('close', () => {
+                if (cbRef.current.onClose) cbRef.current.onClose(conn);
                 connRef.current?.connections.delete(conn.connectionId);
                 connRef.current?.peers.delete(conn.peer);
             });
