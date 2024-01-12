@@ -1,38 +1,66 @@
 [
     {
         "type": "image",
-        "url": "/375d6b43-7c39-4d4b-8370-c0edbd0e25b0.jpg",
-        "label": "Tämä henkilö kuunteli Spotifystä kappaleen Nirvana: Rape me",
+        "url": "/data/spotify.jpg",
+        "label": "Tämä henkilö kuunteli Spotifystä kappaleen Jami Faltin: Kertoimia vastaan",
         "form": 0
     },
     {
         "type": "image",
-        "url": "/data/sarkanniemi.jpg",
-        "label": "They commented on a picture of Särkänniemi",
+        "url": "/data/skeitti.jpg",
         "form": 1
+    },
+    {
+        "type": "image",
+        "url": "/data/merkkaus.jpg",
+        "form": 1
+    },
+    {
+        "type": "image",
+        "url": "/data/moped.jpg",
+        "form": 2
+    },
+    {
+        "type": "image",
+        "url": "/data/sarkaniemi.jpg",
+        "form": 2
     },
     {
         "type": "image",
         "url": "/data/tappara.jpg",
-        "label": "Followed three Tappara players",
-        "form": 1
-    },
-    {
-        "type": "image",
-        "url": "/data/siskonsynttarit.jpg",
-        "label": "Tagged in this photo",
-        "form": 2
-    },
-    {
-        "type": "image",
-        "url": "/data/mopokurssi.jpg",
-        "label": "Browsed to this web page",
-        "form": 2
-    },
-    {
-        "type": "image",
-        "url": "/data/counterstrike.jpg",
-        "label": "Five friends recommended this video",
         "form": 3
+    },
+    {
+        "type": "image",
+        "url": "/data/map.jpg",
+        "form": 3
+    },
+    {
+        "type": "image",
+        "url": "/data/WA.jpg",
+        "form": 3
+    },
+    {
+        "type": "image",
+        "url": "/data/greta.jpg",
+        "form": 3
+    },
+    {
+        "type": "question",
+        "text": "Describe this person. How did you generate this profile? On what basis? How sure can you be?",
+        "form": 4,
+        "fontSize": 1.5
+    },
+    {
+        "type": "question",
+        "text": "Based on the profile what would you advertise & try to sell to this person and why?  What would this person probably be interested in buying?",
+        "form": 5,
+        "fontSize": 1.5
+    },
+    {
+        "type": "question",
+        "text": "Based on the profile what content would keep this person spending time on Tiktok?",
+        "form": 6,
+        "fontSize": 1.5
     }
 ]

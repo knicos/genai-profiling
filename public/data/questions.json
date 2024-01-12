@@ -31,15 +31,25 @@
             "type": "largetext"
         },
         {
+            "id": 6,
+            "text": "Describe this person",
+            "type": "largetext"
+        },
+        {
+            "id": 7,
+            "text": "What would you advertise and try to sell, and why?",
+            "type": "largetext"
+        },
+        {
+            "id": 8,
+            "text": "What content would keep this person spending time on Tiktok?",
+            "type": "largetext"
+        },
+        {
             "id": 10,
             "text": "Guess Profile",
             "type": "message"
         }
     ],
-    "forms": [
-        [10, 2],
-        [10, 2, 1],
-        [10, 2, 1, 4, 5],
-        [10, 2, 1, 4, 5, 3]
-    ]
+    "forms": [[10, 2], [10, 2, 1], [10, 2, 1, 4, 5], [10, 2, 1, 4, 5, 3], [6], [7], [8]]
 }
