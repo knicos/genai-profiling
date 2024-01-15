@@ -10,7 +10,7 @@ import Loading from '@genaipg/components/Loading/Loading';
 import StartDialog from './StartDialog';
 import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
-import { addTeacherLog, addUserName, addUserResponse } from './userState';
+import { addTeacherLog, addUserName, addUserResponse, usePersistentData } from './userState';
 import SlideContainer from '@genaipg/components/Slide/SlideContainer';
 import { SmallButton } from '@genaipg/components/Button/Button';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
@@ -29,6 +29,7 @@ export function Component() {
     const [slides, setSlides] = useState<SlideMeta[]>();
     const [params] = useSearchParams();
     const [showQR, setShowQR] = useState(false);
+    const saver = usePersistentData(MYCODE);
 
     useEffect(() => {
         fetch(SLIDE_URL).then((response) => {
@@ -67,8 +68,9 @@ export function Component() {
             const form = slides[npage]?.form;
             addTeacherLog(params.get('name') || 'NoName', form === undefined ? -1 : form, slides?.[npage]);
             send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
+            saver();
         }
-    }, [npage, send, slides, params]);
+    }, [npage, send, slides, params, saver]);
 
     return (
         <Loading loading={!ready || !slides}>

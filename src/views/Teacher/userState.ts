@@ -1,6 +1,7 @@
 import { QuestionData } from '@genaipg/components/Question/types';
 import { SlideMeta } from '@genaipg/components/Slide/types';
 import { ResponseData } from '@genaipg/protocol/protocol';
+import { useCallback, useEffect } from 'react';
 
 interface UserState {
     name: string;
@@ -101,4 +102,39 @@ export function dumpUserData() {
         responses: result,
         logs: logs,
     };
+}
+
+type SerializedState = ReturnType<typeof dumpUserData>;
+
+export function usePersistentData(code: string) {
+    useEffect(() => {
+        const data = window.sessionStorage.getItem(`genai-pg-data-${code}`);
+        if (data) {
+            const pdata = JSON.parse(data) as SerializedState;
+            pdata.responses.forEach((u) => {
+                addUserName(u.id, u.name);
+                const userState = state.get(u.id) || {
+                    name: '',
+                    responses: new Map<number, string>(),
+                    log: [],
+                };
+
+                u.responses.forEach((r) => {
+                    userState.responses.set(typeof r.question === 'number' ? r.question : r.question.id, r.value);
+                    if (typeof r.question !== 'number') {
+                        questionRecord.set(r.question.id, r.question);
+                    }
+                });
+            });
+            logs.splice(0, logs.length);
+            pdata.logs.forEach((l) => logs.push(l));
+        }
+
+        return () => {
+            window.sessionStorage.setItem(`genai-pg-data-${code}`, JSON.stringify(dumpUserData()));
+        };
+    }, [code]);
+    return useCallback(() => {
+        window.sessionStorage.setItem(`genai-pg-data-${code}`, JSON.stringify(dumpUserData()));
+    }, [code]);
 }

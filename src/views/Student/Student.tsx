@@ -2,18 +2,16 @@ import useRandom from '@genaipg/hooks/random';
 import { EventProtocol } from '@genaipg/protocol/protocol';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import { DataConnection } from 'peerjs';
 import usePeer from '@genaipg/hooks/peer';
 import Loading from '@genaipg/components/Loading/Loading';
 import EnterUsername from './EnterUsername';
 import { QuestionData } from '@genaipg/components/Question/types';
 import Form from '@genaipg/components/Form/Form';
 import { useQuestionLogger } from '@genaipg/services/questionLogger/hook';
-import randomId from '@genaipg/util/randomId';
+import { useID } from '@genaipg/hooks/id';
 
 const USERNAME_KEY = 'genai_pg_username';
 const QUESTION_URL = '/data/questions.json';
-const MYID = randomId(8);
 
 function loadUser() {
     const name = window.sessionStorage.getItem(USERNAME_KEY);
@@ -39,6 +37,7 @@ export function Component() {
     const { code } = useParams();
     const [username, setUsername] = useState<string | undefined>(loadUser);
     const MYCODE = useRandom(10);
+    const MYID = useID(8);
     const [questions, setQuestions] = useState<QuestionData[]>();
     const [forms, setForms] = useState<number[][]>();
     const [currentForm, setCurrentForm] = useState(0);
@@ -76,7 +75,7 @@ export function Component() {
                 });
             }
         },
-        [send, username, currentForm, questions]
+        [send, username, currentForm, questions, MYID]
     );
     useQuestionLogger(logFn);
 
@@ -85,7 +84,7 @@ export function Component() {
             window.sessionStorage.setItem(USERNAME_KEY, username);
             send({ event: 'pg:reguser', username, id: MYID });
         }
-    }, [username, send, ready]);
+    }, [username, send, ready, MYID]);
 
     return (
         <Loading loading={!ready || !questions || !forms}>
