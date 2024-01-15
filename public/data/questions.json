@@ -2,11 +2,6 @@
     "questions": [
         {
             "id": 1,
-            "text": "Where does this person live?",
-            "type": "text"
-        },
-        {
-            "id": 2,
             "text": "Minkä ikäinen henkilö on?",
             "type": "slider",
             "min": 10,
@@ -14,42 +9,50 @@
             "range": true
         },
         {
+            "id": 2,
+            "text": "Mitä voit päätellä henkilön perheestä?",
+            "type": "largetext"
+        },
+        {
             "id": 3,
-            "text": "What are their hobbies?",
-            "type": "multichoice",
-            "options": ["Gaming", "Reading", "Hiking", "Skateboarding"]
+            "text": "Mitä voit päätellä henkilön asuinpaikasta?",
+            "type": "largetext"
         },
         {
             "id": 4,
-            "text": "What pets might they have?",
-            "type": "multichoice",
-            "options": ["Cat", "Dog", "Rabbit"]
-        },
-        {
-            "id": 5,
-            "text": "Describe the family members",
+            "text": "Mitä voit päätellä henkilön kiinnostuksen kohteista?",
             "type": "largetext"
         },
         {
             "id": 6,
-            "text": "Describe this person",
+            "text": "Mitä voit päätellä henkilön päivittäisistä rutiineista?",
             "type": "largetext"
         },
         {
             "id": 7,
-            "text": "What would you advertise and try to sell, and why?",
+            "text": "Millä perusteella päädyitte vastaukseen?",
             "type": "largetext"
         },
         {
             "id": 8,
-            "text": "What content would keep this person spending time on Tiktok?",
+            "text": "Mistä asioista olet varma ja miksi? Mistä taas et ole?  Perustele vastauksesi.",
+            "type": "largetext"
+        },
+        {
+            "id": 9,
+            "text": "Mitkä datajäljet olivat hyödyllisimpiä profiloinnin kannalta?  Perustele vastauksesi.",
             "type": "largetext"
         },
         {
             "id": 10,
+            "text": "Mitä lisädataa  tarvitset, että voit profiloida henkilöä tarkemmin?  Perustele vastauksesi.",
+            "type": "largetext"
+        },
+        {
+            "id": 100,
             "text": "Guess Profile",
             "type": "message"
         }
     ],
-    "forms": [[10, 2], [10, 2, 1], [10, 2, 1, 4, 5], [10, 2, 1, 4, 5, 3], [6], [7], [8]]
+    "forms": [[1], [1, 2], [1, 2, 3], [1, 2, 3, 4], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6], [7, 8, 9, 10]]
 }

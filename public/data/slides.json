@@ -2,65 +2,66 @@
     {
         "type": "image",
         "url": "/data/spotify.jpg",
-        "label": "Tämä henkilö kuunteli Spotifystä kappaleen Jami Faltin: Kertoimia vastaan",
+        "label": "Hän kuunteli Spotifystä Jami Faltin kappaleen: “Kertoimia vastaan”",
         "form": 0
     },
     {
         "type": "image",
-        "url": "/data/skeitti.jpg",
-        "form": 1
-    },
-    {
-        "type": "image",
         "url": "/data/merkkaus.jpg",
+        "label": "Hänet on merkitty tähän valokuvaa Instagramissa",
         "form": 1
-    },
-    {
-        "type": "image",
-        "url": "/data/moped.jpg",
-        "form": 2
     },
     {
         "type": "image",
         "url": "/data/sarkaniemi.jpg",
+        "label": "Hän julkaisi tämän tarinan Snapchatissa.",
         "form": 2
     },
     {
         "type": "image",
-        "url": "/data/tappara.jpg",
+        "url": "/data/skeitti.jpg",
+        "label": "Hän katsoi Tiktok videon Skate SM kiertueen tulevasta tapahtumasta.",
         "form": 3
     },
     {
         "type": "image",
-        "url": "/data/map.jpg",
+        "url": "/data/tappara.jpg",
+        "label": "Hän seuraa aktiivisesti erään jääkiekkojoukkueen pelaajia sosiaalisessa mediassa.",
         "form": 3
     },
     {
         "type": "image",
         "url": "/data/WA.jpg",
-        "form": 3
+        "label": "Viisi kaveria suositteli hänelle tätä videota.",
+        "form": 4
     },
     {
         "type": "image",
-        "url": "/data/greta.jpg",
-        "form": 3
+        "url": "/data/mainos.jpg",
+        "label": "Hän pysähtyi katsomaan tätä verkkokaupan mainosta Instagramissa.",
+        "form": 4
     },
     {
-        "type": "question",
-        "text": "Describe this person. How did you generate this profile? On what basis? How sure can you be?",
-        "form": 4,
-        "fontSize": 1.5
+        "type": "image",
+        "url": "/data/moped.jpg",
+        "label": "Hän haki tietoa mopokortista.",
+        "form": 4
     },
     {
-        "type": "question",
-        "text": "Based on the profile what would you advertise & try to sell to this person and why?  What would this person probably be interested in buying?",
-        "form": 5,
-        "fontSize": 1.5
+        "type": "image",
+        "url": "/data/map.jpg",
+        "label": "Hän käy säännöllisesti kolmessa eri paikassa.",
+        "form": 5
     },
     {
-        "type": "question",
-        "text": "Based on the profile what content would keep this person spending time on Tiktok?",
-        "form": 6,
-        "fontSize": 1.5
+        "type": "image",
+        "url": "/data/koonta.jpg",
+        "label": "Kuvailkaa henkilö ja mitä tiedätte hänestä.",
+        "form": 5
+    },
+    {
+        "type": "image",
+        "url": "/data/koonta.jpg",
+        "form": 6
     }
 ]
