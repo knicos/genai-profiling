@@ -1,0 +1,50 @@
+.postit {
+    background: #fecb8b;
+    cursor: move;
+    position: absolute;
+    box-shadow: 4px 4px 8px #bbb;
+    touch-action: none;
+}
+
+.postitContent {
+    padding: 0.2rem 0.6rem;
+    user-select: none;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Andika, Helvetica, Arial, sans-serif;
+    font-size: 1em;
+    gap: 0.5rem;
+    overflow: hidden;
+}
+
+.postitContent h3 {
+    margin: 0;
+    font-size: 1em;
+    text-wrap: nowrap;
+    overflow: hidden;
+    font-style: italic;
+    flex-shrink: 0;
+}
+
+.postitContent ul {
+    flex-grow: 1;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    margin: 0;
+}
+
+.postitContent li {
+    padding: 0;
+    text-align: center;
+}
+
+.number {
+    font-size: 1.6em;
+    font-weight: bold;
+}

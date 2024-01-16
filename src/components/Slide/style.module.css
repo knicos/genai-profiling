@@ -11,7 +11,7 @@
     border-top: 10px solid secondary;
     border-bottom: 10px solid secondary;
     background: white;
-    padding: 1rem 2rem;
+    padding: 0 10px;
     box-sizing: border-box;
     min-height: 0;
     overflow: hidden;

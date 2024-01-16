@@ -63,5 +63,17 @@
         "type": "image",
         "url": "/data/koonta.jpg",
         "form": 6
+    },
+    {
+        "type": "board",
+        "questions": [1]
+    },
+    {
+        "type": "board",
+        "questions": [3]
+    },
+    {
+        "type": "board",
+        "questions": [4]
     }
 ]

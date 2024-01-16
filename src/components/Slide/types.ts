@@ -1,4 +1,4 @@
-export type SlideType = 'qr' | 'question' | 'image';
+export type SlideType = 'qr' | 'question' | 'image' | 'board';
 
 interface SlideBase {
     type: SlideType;
@@ -11,6 +11,11 @@ export interface SlideQuestion extends SlideBase {
     fontSize?: number;
 }
 
+export interface SlideBoard extends SlideBase {
+    type: 'board';
+    questions: number[];
+}
+
 export interface SlideImage extends SlideBase {
     type: 'image';
     url: string;
@@ -18,4 +23,4 @@ export interface SlideImage extends SlideBase {
     label?: string;
 }
 
-export type SlideMeta = SlideQuestion | SlideImage;
+export type SlideMeta = SlideQuestion | SlideImage | SlideBoard;

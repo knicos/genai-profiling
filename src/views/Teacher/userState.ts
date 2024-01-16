@@ -3,7 +3,7 @@ import { SlideMeta } from '@genaipg/components/Slide/types';
 import { ResponseData } from '@genaipg/protocol/protocol';
 import { useCallback, useEffect } from 'react';
 
-interface UserState {
+export interface UserState {
     name: string;
     responses: Map<number, string>;
 }
@@ -137,4 +137,12 @@ export function usePersistentData(code: string) {
     return useCallback(() => {
         window.sessionStorage.setItem(`genai-pg-data-${code}`, JSON.stringify(dumpUserData()));
     }, [code]);
+}
+
+export function getQuestionData(id: number): QuestionData {
+    return questionRecord.get(id) || { type: 'message', text: '', id: -1 };
+}
+
+export function getUserData() {
+    return Array.from(state.values());
 }
