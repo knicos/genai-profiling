@@ -8,13 +8,13 @@
     {
         "type": "image",
         "url": "/data/merkkaus.jpg",
-        "label": "Hänet on merkitty tähän valokuvaa Instagramissa",
+        "label": "Hänet on merkitty tähän valokuvaan Instagramissa",
         "form": 1
     },
     {
         "type": "image",
-        "url": "/data/sarkaniemi.jpg",
-        "label": "Hän julkaisi tämän tarinan Snapchatissa.",
+        "url": "/data/sarkanniemi.jpg",
+        "label": "Hän julkaisi tämän tarinan kotikaupungistaan Snapchatissa.",
         "form": 2
     },
     {
@@ -49,20 +49,25 @@
     },
     {
         "type": "image",
-        "url": "/data/map.jpg",
-        "label": "Hän käy säännöllisesti kolmessa eri paikassa.",
+        "url": "/data/news.jpg",
+        "label": "Hän reagoi paikallisuutiseen emonjilla.",
         "form": 5
     },
     {
         "type": "image",
-        "url": "/data/koonta.jpg",
-        "label": "Kuvailkaa henkilö ja mitä tiedätte hänestä.",
-        "form": 5
+        "url": "/data/map.jpg",
+        "label": "Hän käy säännöllisesti kolmessa eri paikassa.",
+        "form": 6
     },
     {
         "type": "image",
         "url": "/data/koonta.jpg",
         "form": 6
+    },
+    {
+        "type": "image",
+        "url": "/data/koonta.jpg",
+        "form": 7
     },
     {
         "type": "board",

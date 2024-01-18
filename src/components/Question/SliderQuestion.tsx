@@ -1,5 +1,6 @@
 import { Slider, Typography } from '@mui/material';
 import { QuestionSlider } from './types';
+import { useEffect, useState } from 'react';
 
 interface Props {
     question: QuestionSlider;
@@ -26,6 +27,12 @@ function joinRange(value: number | number[]) {
 }
 
 export default function SliderQuestion({ question, value, onChange }: Props) {
+    const [v, setV] = useState<number | number[]>(question.range ? [question.min, question.max] : question.min);
+
+    useEffect(() => {
+        setV(question.range ? parseRange(value, question) : Number(value) || question.min);
+    }, [value, question]);
+
     return (
         <div>
             <Typography
@@ -37,8 +44,11 @@ export default function SliderQuestion({ question, value, onChange }: Props) {
             </Typography>
             <Slider
                 style={{ marginTop: '2rem' }}
-                defaultValue={question.range ? parseRange(value, question) : Number(value) || question.min}
-                onChangeCommitted={(_, val) => onChange(question.id, joinRange(val))}
+                value={v}
+                onChange={(_, newValue) => setV(newValue)}
+                onChangeCommitted={(_, val) => {
+                    onChange(question.id, joinRange(val));
+                }}
                 aria-labelledby="input-slider"
                 min={question.min}
                 max={question.max}

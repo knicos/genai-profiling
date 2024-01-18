@@ -7,6 +7,16 @@ export interface UserRegistrationEvent extends PeerEvent {
     id: string;
 }
 
+export interface UserEntry {
+    name: string;
+    id: string;
+}
+
+export interface UserListEvent extends PeerEvent {
+    event: 'pg:users';
+    users: UserEntry[];
+}
+
 export interface ChangeFormEvent extends PeerEvent {
     event: 'pg:changeform';
     form: number;
@@ -26,4 +36,21 @@ export interface QuestionResponseEvent extends PeerEvent, ResponseData {
     userId: string;
 }
 
-export type EventProtocol = BuiltinEvent | UserRegistrationEvent | ChangeFormEvent | QuestionResponseEvent;
+export interface ResponseEntry {
+    id: number;
+    value: string;
+}
+
+export interface ResponsesEvent extends PeerEvent {
+    event: 'pg:responses';
+    userId: string;
+    responses: ResponseEntry[];
+}
+
+export type EventProtocol =
+    | BuiltinEvent
+    | UserRegistrationEvent
+    | ChangeFormEvent
+    | QuestionResponseEvent
+    | ResponsesEvent
+    | UserListEvent;

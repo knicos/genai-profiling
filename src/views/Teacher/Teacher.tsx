@@ -5,12 +5,20 @@ import usePeer from '@genaipg/hooks/peer';
 import { useID } from '@genaipg/hooks/id';
 import { UserInfo } from './userinfo';
 import { DataConnection } from 'peerjs';
-import { EventProtocol } from '@genaipg/protocol/protocol';
+import { EventProtocol, UserEntry } from '@genaipg/protocol/protocol';
 import Loading from '@genaipg/components/Loading/Loading';
 import StartDialog from './StartDialog';
 import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
-import { addTeacherLog, addUserName, addUserResponse, usePersistentData } from './userState';
+import {
+    addTeacherLog,
+    addUserName,
+    addUserResponse,
+    getAllUsers,
+    getUserName,
+    getUserResponses,
+    usePersistentData,
+} from './userState';
 import SlideContainer from '@genaipg/components/Slide/SlideContainer';
 import { SmallButton } from '@genaipg/components/Button/Button';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
@@ -19,6 +27,14 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { Dialog } from '@mui/material';
 
 const SLIDE_URL = '/data/slides.json';
+
+function getOfflineUsers(online: string[]): UserEntry[] {
+    const allUsers = getAllUsers();
+    const set = new Set<string>(online);
+    const offline = allUsers.filter((u) => !set.has(u));
+    const named = offline.map((u: string) => ({ id: u, name: getUserName(u) }));
+    return named.filter((u) => u.name !== '');
+}
 
 export function Component() {
     const { t } = useTranslation();
@@ -44,16 +60,31 @@ export function Component() {
             console.log('GOT DATA', data);
             if (data.event === 'pg:reguser') {
                 addUserName(data.id, data.username);
-                setUsers((old) => [...old, { username: data.username, connection: conn }]);
+                setUsers((old) => [...old, { username: data.username, id: data.id, connection: conn }]);
+
+                const rep = getUserResponses(data.id);
+                if (rep) {
+                    conn.send({
+                        event: 'pg:responses',
+                        id: data.id,
+                        responses: Array.from(rep).map((r) => ({
+                            id: r[0],
+                            value: r[1],
+                        })),
+                    });
+                }
+
                 if (slides) {
                     const form = slides[npage]?.form;
                     conn.send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
                 }
+            } else if (data.event === 'eter:join') {
+                conn.send({ event: 'pg:users', users: getOfflineUsers(users.map((u) => u.id)) });
             } else if (data.event === 'pg:response') {
                 addUserResponse(params.get('name') || 'NoName', data.userId, data, slides?.[npage]);
             }
         },
-        [slides, npage, params]
+        [slides, npage, params, users]
     );
     const closeHandler = useCallback((conn?: DataConnection) => {
         if (conn) {

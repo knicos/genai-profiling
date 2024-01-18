@@ -8,7 +8,10 @@ import EnterUsername from './EnterUsername';
 import { QuestionData } from '@genaipg/components/Question/types';
 import Form from '@genaipg/components/Form/Form';
 import { useQuestionLogger } from '@genaipg/services/questionLogger/hook';
-import { useID } from '@genaipg/hooks/id';
+import { useChangeableID } from '@genaipg/hooks/id';
+import { useSetRecoilState } from 'recoil';
+import { availableUsers } from '@genaipg/state/sessionState';
+import { updateAllResponses } from '@genaipg/services/questionLogger/logger';
 
 const USERNAME_KEY = 'genai_pg_username';
 const QUESTION_URL = '/data/questions.json';
@@ -37,10 +40,11 @@ export function Component() {
     const { code } = useParams();
     const [username, setUsername] = useState<string | undefined>(loadUser);
     const MYCODE = useRandom(10);
-    const MYID = useID(8);
+    const [MYID, changeId] = useChangeableID(8);
     const [questions, setQuestions] = useState<QuestionData[]>();
     const [forms, setForms] = useState<number[][]>();
     const [currentForm, setCurrentForm] = useState(0);
+    const setAvailable = useSetRecoilState(availableUsers);
 
     useEffect(() => {
         fetch(QUESTION_URL).then((response) => {
@@ -51,12 +55,19 @@ export function Component() {
         });
     }, []);
 
-    const onData = useCallback((data: EventProtocol) => {
-        console.log('GOT DATA', data);
-        if (data.event === 'pg:changeform') {
-            setCurrentForm(data.form);
-        }
-    }, []);
+    const onData = useCallback(
+        (data: EventProtocol) => {
+            console.log('GOT DATA', data);
+            if (data.event === 'pg:changeform') {
+                setCurrentForm(data.form);
+            } else if (data.event === 'pg:users') {
+                setAvailable(data.users);
+            } else if (data.event === 'pg:responses') {
+                updateAllResponses(data.responses);
+            }
+        },
+        [setAvailable]
+    );
 
     const { ready, send } = usePeer<EventProtocol>({ code: code && `pg-${MYCODE}`, server: `pg-${code}`, onData });
 
@@ -88,9 +99,17 @@ export function Component() {
 
     return (
         <Loading loading={!ready || !questions || !forms}>
-            {!username && <EnterUsername onUsername={setUsername} />}
+            {!username && (
+                <EnterUsername
+                    onUsername={setUsername}
+                    onChangeId={changeId}
+                />
+            )}
             {username && forms && questions && (
-                <Form questions={currentForm >= 0 ? filterQuestions(questions, forms[currentForm]) : []} />
+                <Form
+                    key={`form-${currentForm}`}
+                    questions={currentForm >= 0 ? filterQuestions(questions, forms[currentForm]) : []}
+                />
             )}
         </Loading>
     );

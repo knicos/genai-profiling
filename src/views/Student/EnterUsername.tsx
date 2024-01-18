@@ -1,11 +1,15 @@
 import { SmallButton } from '@genaipg/components/Button/Button';
-import { TextField } from '@mui/material';
+import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
+import { useRecoilValue } from 'recoil';
+import { availableUsers } from '@genaipg/state/sessionState';
+import RestoreIcon from '@mui/icons-material/Restore';
 
 interface Props {
     onUsername: (name: string) => void;
+    onChangeId?: (id: string) => void;
 }
 
 interface FormErrors {
@@ -13,10 +17,12 @@ interface FormErrors {
     fullname?: 'missing' | 'bad';
 }
 
-export default function EnterUsername({ onUsername }: Props) {
+export default function EnterUsername({ onUsername, onChangeId }: Props) {
     const { t } = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<FormErrors>({});
+    const users = useRecoilValue(availableUsers);
+    const [showRestore, setShowRestore] = useState(false);
 
     const doUsernameKey = useCallback(
         (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -27,6 +33,18 @@ export default function EnterUsername({ onUsername }: Props) {
             }
         },
         [onUsername]
+    );
+
+    const doSelect = useCallback(
+        (e: SelectChangeEvent) => {
+            const id = e.target.value;
+            if (onChangeId) onChangeId(id);
+            const item = users.find((u) => u.id === id);
+            if (item) {
+                onUsername(item.name);
+            }
+        },
+        [onUsername, users, onChangeId]
     );
 
     return (
@@ -54,6 +72,28 @@ export default function EnterUsername({ onUsername }: Props) {
                 >
                     {t('Enter')}
                 </SmallButton>
+                {!showRestore && (
+                    <div>
+                        <IconButton onClick={() => setShowRestore(true)}>
+                            <RestoreIcon />
+                        </IconButton>
+                    </div>
+                )}
+                {showRestore && (
+                    <Select
+                        value=""
+                        onChange={doSelect}
+                    >
+                        {users.map((u) => (
+                            <MenuItem
+                                key={u.id}
+                                value={u.id}
+                            >
+                                {u.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                )}
             </div>
         </div>
     );

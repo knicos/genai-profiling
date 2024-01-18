@@ -146,3 +146,21 @@ export function getQuestionData(id: number): QuestionData {
 export function getUserData() {
     return Array.from(state.values());
 }
+
+export function getUserName(id: string) {
+    const d = state.get(id);
+    if (d) return d.name;
+    return '';
+}
+
+export function getUserResponses(id: string) {
+    const d = state.get(id);
+    if (d) {
+        return d.responses;
+    }
+    return null;
+}
+
+export function getAllUsers() {
+    return Array.from(state.keys());
+}
