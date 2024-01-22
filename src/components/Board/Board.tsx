@@ -44,6 +44,7 @@ export default function Board({ data, questions }: Props) {
             className={style.board}
             ref={divRef}
         >
+            {questions.length === 1 && <h1>{questions[0].text}</h1>}
             {data.map((d, ix) => (
                 <Postit
                     key={ix}

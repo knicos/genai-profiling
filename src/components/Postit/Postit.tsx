@@ -74,8 +74,8 @@ export default function Postit({ data, questions, x = 0, y = 0, size = 150 }: Pr
             <div className={style.postitContent}>
                 <h3>{data.name}</h3>
                 <ul>
-                    {questions.map((q) => (
-                        <li>{resultString(q, data.responses.get(q.id))}</li>
+                    {questions.map((q, ix) => (
+                        <li key={ix}>{resultString(q, data.responses.get(q.id))}</li>
                     ))}
                 </ul>
             </div>

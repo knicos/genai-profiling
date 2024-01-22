@@ -23,7 +23,7 @@ export default function ConfigurationForm() {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate(`/classroom?name=${formData.className}&audio=${formData.enableRecordings ? '1' : '0'}`);
+        navigate(`/classroom/smwk1?name=${formData.className}&audio=${formData.enableRecordings ? '1' : '0'}`);
     };
 
     return (

@@ -4,3 +4,7 @@
     height: 100%;
     font-size: 1rem;
 }
+
+.board h1 {
+    text-align: center;
+}

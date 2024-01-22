@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    max-width: 700px;
+    max-width: 800px;
     box-sizing: border-box;
     z-index: 2;
     font-family: Andika, Helvetica, Arial, sans-serif;
@@ -60,7 +60,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: #d14bcf;
+    background-color: #444;
     color: textDark;
     display: flex;
     flex-direction: column;
@@ -72,6 +72,6 @@
     position: absolute;
     right: 1rem;
     bottom: 1rem;
-    opacity: 0.5;
+    opacity: 0.8;
     user-select: none;
 }

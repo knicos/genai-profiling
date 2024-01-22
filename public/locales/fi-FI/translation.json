@@ -1,0 +1,17 @@
+{
+    "Enter Code": "ESyötä koodi",
+    "Go": "Aloita",
+    "Create New": "Luo uusi",
+    "Enter Class Name": "Enter Class Name",
+    "Enter Session Detail": "Enter Session Detail",
+    "Enable Recordings": "Enable Recordings",
+    "Enter Username": "Anna oikea nimesi",
+    "Enter": "Aloita",
+    "Download": "Tallenna",
+    "connection": "Mene allaolevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>, tai käytä QR -koodia.",
+    "waitingPeople": "Odotetaan käyttäjiä...",
+    "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
+    "manyPeople": "{{count}} käyttäjää on liittynyt mukaan.",
+    "pleaseWait": "Please wait",
+    "loading": "Loading"
+}

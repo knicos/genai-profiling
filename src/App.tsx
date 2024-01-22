@@ -30,7 +30,7 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Quiz/Quiz')}
             />
             <Route
-                path="classroom/:page"
+                path="classroom/:material/:page"
                 lazy={() => import('./views/Teacher/Teacher')}
             />
             <Route
@@ -38,7 +38,7 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Student/Student')}
             />
             <Route
-                path="classroom"
+                path="classroom/:material"
                 lazy={() => import('./views/Teacher/Teacher')}
             />
             <Route

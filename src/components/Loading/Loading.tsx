@@ -14,7 +14,7 @@ export default function Loading({ loading, children, message }: Props) {
     return loading ? (
         <div className={style.container}>
             <Spinner size="large" />
-            <h1>{message || t('dashboard.messages.loading')}</h1>
+            <h1>{message || t('loading')}</h1>
         </div>
     ) : (
         children

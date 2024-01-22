@@ -38,7 +38,7 @@ function getOfflineUsers(online: string[]): UserEntry[] {
 
 export function Component() {
     const { t } = useTranslation();
-    const { page } = useParams();
+    const { page, material } = useParams();
     const MYCODE = useID(5);
     const [users, setUsers] = useState<UserInfo[]>([]);
     const navigate = useNavigate();
@@ -57,7 +57,7 @@ export function Component() {
 
     const dataHandler = useCallback(
         (data: EventProtocol, conn: DataConnection) => {
-            console.log('GOT DATA', data);
+            // console.log('GOT DATA', data);
             if (data.event === 'pg:reguser') {
                 addUserName(data.id, data.username);
                 setUsers((old) => [...old, { username: data.username, id: data.id, connection: conn }]);
@@ -115,7 +115,7 @@ export function Component() {
                     onQRCode={() => setShowQR(true)}
                     onChange={(index: number) =>
                         navigate({
-                            pathname: index >= 0 ? `/classroom/${index}` : '/classroom',
+                            pathname: index >= 0 ? `/classroom/${material}/${index}` : `/classroom/${material}`,
                             search: params.toString(),
                         })
                     }
