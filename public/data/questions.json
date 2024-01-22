@@ -53,11 +53,53 @@
             "text": "Mitä voit päätellä henkilön reaktiosta?",
             "type": "largetext"
         },
+
+        {
+            "id": 12,
+            "text": "Miten päättelitte iän? Mitä kaikkea dataa käytitte?",
+            "type": "largetext"
+        },
+        {
+            "id": 13,
+            "text": "Miten päättelitte perhesuhteet? Mitä kaikkea dataa käytitte?",
+            "type": "largetext"
+        },
+        {
+            "id": 14,
+            "text": "Miten päättelitte asuinpaikan? Mitä kaikkea dataa käytitte?",
+            "type": "largetext"
+        },
+        {
+            "id": 15,
+            "text": "Miten päättelitte kiinnostuksen kohteet? Mitä kaikkea dataa käytitte?",
+            "type": "largetext"
+        },
+        {
+            "id": 16,
+            "text": "Miten päättelitte päivittäiset rutiinit? Mitä kaikkea dataa käytitte?",
+            "type": "largetext"
+        },
+        {
+            "id": 17,
+            "text": "Mistä asioista olet varma ja miksi? Mistä taas et ole?  Perustele vastauksesi.",
+            "type": "largetext"
+        },
+
         {
             "id": 100,
             "text": "Guess Profile",
             "type": "message"
         }
     ],
-    "forms": [[1], [1, 2], [1, 2, 3], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4, 11], [1, 2, 3, 4, 11, 6], [9, 10]]
+    "forms": [
+        [1],
+        [1, 2],
+        [1, 2, 3],
+        [1, 2, 3, 4],
+        [1, 2, 3, 4],
+        [1, 2, 3, 4, 11],
+        [1, 2, 3, 4, 11, 6],
+        [9, 10],
+        [12, 13, 14, 15, 16, 17]
+    ]
 }

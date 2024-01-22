@@ -50,7 +50,7 @@
     {
         "type": "image",
         "url": "/data/news.jpg",
-        "label": "Hän reagoi paikallisuutiseen emonjilla.",
+        "label": "Hän reagoi paikallisuutiseen emojilla.",
         "form": 5
     },
     {
@@ -62,11 +62,19 @@
     {
         "type": "image",
         "url": "/data/koonta.jpg",
+        "label": "Täydentäkää henkilön profiilia kaikkien annettujen vihjeiden perusteella. Selvittäkää mahdollisimman tarkasti henkilön ikä, asuinpaikka, kiinnostuksen kohteet ja päivittäiset rutiinit.",
         "form": 6
     },
     {
         "type": "image",
         "url": "/data/koonta.jpg",
+        "label": "Profiilin perustelu",
+        "form": 8
+    },
+    {
+        "type": "image",
+        "url": "/data/koonta.jpg",
+        "label": "Profiilin parantaminen",
         "form": 7
     },
     {
