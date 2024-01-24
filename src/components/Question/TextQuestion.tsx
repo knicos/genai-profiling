@@ -1,5 +1,6 @@
 import { TextField, Typography } from '@mui/material';
 import { QuestionText } from './types';
+import { useEffect, useRef } from 'react';
 
 interface Props {
     question: QuestionText;
@@ -8,6 +9,17 @@ interface Props {
 }
 
 export default function TextQuestion({ question, value, onChange }: Props) {
+    const ref = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const r = ref.current;
+        return () => {
+            if (r && r.value && r.value !== '') {
+                onChange(question.id, r.value);
+            }
+        };
+    }, [onChange, question]);
+
     return (
         <div>
             <Typography
@@ -18,6 +30,7 @@ export default function TextQuestion({ question, value, onChange }: Props) {
                 {question.text}
             </Typography>
             <TextField
+                inputRef={ref}
                 fullWidth
                 margin="normal"
                 defaultValue={value}
