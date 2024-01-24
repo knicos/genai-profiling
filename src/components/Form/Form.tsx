@@ -4,6 +4,7 @@ import { QuestionData } from '../Question/types';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useQuestionResponses } from '@genaipg/services/questionLogger/hook';
+import { useCallback } from 'react';
 
 interface Props {
     questions: QuestionData[];
@@ -12,6 +13,8 @@ interface Props {
 export default function Form({ questions }: Props) {
     const { t } = useTranslation();
     const responses = useQuestionResponses(questions);
+
+    const change = useCallback((field: number, value: string) => updateResponse(field, value), []);
 
     return (
         <div className={style.outerContainer}>
@@ -23,7 +26,7 @@ export default function Form({ questions }: Props) {
                             question={q}
                             key={q.id}
                             value={responses[ix]}
-                            onChange={(field, value) => updateResponse(field, value)}
+                            onChange={change}
                         />
                     ))}
                 </section>
