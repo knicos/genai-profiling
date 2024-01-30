@@ -17,6 +17,12 @@ export interface UserListEvent extends PeerEvent {
     users: UserEntry[];
 }
 
+export interface DoneEvent extends PeerEvent {
+    event: 'pg:done';
+    done: boolean;
+    id: string;
+}
+
 export interface ChangeFormEvent extends PeerEvent {
     event: 'pg:changeform';
     form: number;
@@ -53,4 +59,5 @@ export type EventProtocol =
     | ChangeFormEvent
     | QuestionResponseEvent
     | ResponsesEvent
+    | DoneEvent
     | UserListEvent;

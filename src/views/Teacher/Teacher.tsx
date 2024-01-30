@@ -46,6 +46,7 @@ export function Component() {
     const [params] = useSearchParams();
     const [showQR, setShowQR] = useState(false);
     const saver = usePersistentData(MYCODE);
+    const [done, setDone] = useState(new Set<string>());
 
     useEffect(() => {
         fetch(SLIDE_URL).then((response) => {
@@ -82,6 +83,16 @@ export function Component() {
                 conn.send({ event: 'pg:users', users: getOfflineUsers(users.map((u) => u.id)) });
             } else if (data.event === 'pg:response') {
                 addUserResponse(params.get('name') || 'NoName', data.userId, data, slides?.[npage]);
+            } else if (data.event === 'pg:done') {
+                setDone((old) => {
+                    const newSet = new Set<string>(old);
+                    if (data.done) {
+                        newSet.add(data.id);
+                    } else {
+                        newSet.delete(data.id);
+                    }
+                    return newSet;
+                });
             }
         },
         [slides, npage, params, users]
@@ -107,6 +118,7 @@ export function Component() {
         <Loading loading={!ready || !slides}>
             <div className={style.page}>
                 <SlideShow
+                    doneCount={users.length - done.size}
                     index={npage}
                     slides={slides || []}
                     showControls

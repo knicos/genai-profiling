@@ -1,6 +1,6 @@
 import useRandom from '@genaipg/hooks/random';
 import { EventProtocol } from '@genaipg/protocol/protocol';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import usePeer from '@genaipg/hooks/peer';
 import Loading from '@genaipg/components/Loading/Loading';
@@ -45,6 +45,7 @@ export function Component() {
     const [forms, setForms] = useState<number[][]>();
     const [currentForm, setCurrentForm] = useState(0);
     const setAvailable = useSetRecoilState(availableUsers);
+    const [count, increment] = useReducer((old) => ++old, 0);
 
     useEffect(() => {
         fetch(QUESTION_URL).then((response) => {
@@ -60,6 +61,7 @@ export function Component() {
             console.log('GOT DATA', data);
             if (data.event === 'pg:changeform') {
                 setCurrentForm(data.form);
+                increment();
             } else if (data.event === 'pg:users') {
                 setAvailable(data.users);
             } else if (data.event === 'pg:responses') {
@@ -97,6 +99,20 @@ export function Component() {
         }
     }, [username, send, ready, MYID]);
 
+    const doDone = useCallback(
+        (state: boolean) => {
+            if (send) {
+                send({ event: 'pg:done', done: state, id: MYID });
+            }
+        },
+        [send, MYID]
+    );
+
+    const selectedQuestions = useMemo(() => {
+        return questions && forms && currentForm >= 0 ? filterQuestions(questions, forms[currentForm]) : [];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [questions, forms, currentForm, count]);
+
     return (
         <Loading loading={!ready || !questions || !forms}>
             {!username && (
@@ -107,8 +123,9 @@ export function Component() {
             )}
             {username && forms && questions && (
                 <Form
+                    onDone={doDone}
                     key={`form-${currentForm}`}
-                    questions={currentForm >= 0 ? filterQuestions(questions, forms[currentForm]) : []}
+                    questions={selectedQuestions}
                 />
             )}
         </Loading>

@@ -16,12 +16,14 @@ interface Props {
     defaultSlide?: JSX.Element;
     onDownload?: () => void;
     onQRCode?: () => void;
+    doneCount?: number;
 }
 
 export default function SlideShow({
     index,
     slides,
     showControls,
+    doneCount,
     onChange,
     hasNext,
     defaultSlide,
@@ -30,7 +32,14 @@ export default function SlideShow({
 }: Props) {
     return (
         <div className={style.container}>
-            {index >= 0 && index < slides.length ? <Slide meta={slides[index]} /> : defaultSlide || null}
+            {index >= 0 && index < slides.length ? (
+                <Slide
+                    meta={slides[index]}
+                    doneCount={doneCount}
+                />
+            ) : (
+                defaultSlide || null
+            )}
             {showControls && (
                 <div className={style.controls}>
                     <IconButton

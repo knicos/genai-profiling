@@ -43,7 +43,7 @@ export default function SliderQuestion({ question, value, onChange }: Props) {
                 {question.text}
             </Typography>
             <Slider
-                style={{ marginTop: '2rem' }}
+                style={{ marginTop: '2rem', marginLeft: '1rem', marginRight: '1rem', width: 'calc(100% - 2rem)' }}
                 value={v}
                 onChange={(_, newValue) => setV(newValue)}
                 onChangeCommitted={(_, val) => {

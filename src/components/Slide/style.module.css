@@ -8,14 +8,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-top: 10px solid secondary;
-    border-bottom: 10px solid secondary;
+    /*border-top: 10px solid secondary;
+    border-bottom: 10px solid secondary;*/
     background: white;
     padding: 0 10px;
     box-sizing: border-box;
     min-height: 0;
     overflow: hidden;
     position: relative;
+    box-shadow: 0 0 10px black;
 }
 
 .image {
@@ -50,4 +51,11 @@
     position: absolute;
     right: 1rem;
     bottom: 0.6rem;
+}
+
+.doneContainer {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.5rem;
+    transform: scale(1.2);
 }

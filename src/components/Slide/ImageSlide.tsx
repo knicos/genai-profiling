@@ -11,6 +11,7 @@ export default function ImageSlide({ meta }: Props) {
             <img
                 src={meta.url}
                 alt={meta.label || ''}
+                style={meta.scale !== undefined ? { height: `${Math.floor(meta.scale * 100)}%` } : undefined}
             />
             {meta.label && <h2>{meta.label}</h2>}
         </div>

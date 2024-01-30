@@ -62,6 +62,7 @@
     {
         "type": "image",
         "url": "/data/koonta.jpg",
+        "scale": 0.8,
         "label": "Täydentäkää henkilön profiilia kaikkien annettujen vihjeiden perusteella. Selvittäkää mahdollisimman tarkasti henkilön ikä, asuinpaikka, kiinnostuksen kohteet ja päivittäiset rutiinit.",
         "form": 6
     },
