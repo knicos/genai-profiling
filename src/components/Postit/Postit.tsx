@@ -1,7 +1,7 @@
 import { UserState } from '@genaipg/views/Teacher/userState';
 import { QuestionData } from '../Question/types';
 import style from './style.module.css';
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { PointerEvent } from 'react';
 
 function resultString(question: QuestionData, value?: string): JSX.Element {
     if (!value) return <span></span>;
@@ -28,50 +28,21 @@ interface Props {
     x?: number;
     y?: number;
     zoom?: number;
+    index: number;
+    onPointerDown: (e: PointerEvent<HTMLDivElement>, index: number) => void;
 }
 
-export default function Postit({ data, questions, x = 0, y = 0, size = 150, zoom = 1 }: Props) {
-    const [pos, setPos] = useState<[number, number]>([0, 0]);
-    const startPos = useRef<[number, number, number, number] | undefined>();
-
-    useEffect(() => {
-        if (x !== undefined && y !== undefined) {
-            setPos([x, y]);
-        }
-    }, [x, y]);
-
-    const doMouseDown = (e: MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        startPos.current = [e.clientX, e.clientY, ...pos];
-    };
-
-    const doMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (startPos.current) {
-            e.preventDefault();
-            const factor = 1 / zoom;
-            const dx = (e.clientX - startPos.current[0]) * factor;
-            const dy = (e.clientY - startPos.current[1]) * factor;
-            setPos([dx + startPos.current[2], dy + startPos.current[3]]);
-        }
-    };
-
-    const doEndDrag = () => {
-        startPos.current = undefined;
-    };
-
+export default function Postit({ data, questions, onPointerDown, x = 0, y = 0, size = 150, index }: Props) {
     return (
         <div
             className={style.postit}
             style={{
-                top: `${pos[1]}px`,
-                left: `${pos[0]}px`,
+                top: `${y}px`,
+                left: `${x}px`,
                 width: `${size}px`,
                 height: `${size}px`,
             }}
-            onPointerDown={doMouseDown}
-            onPointerMove={doMouseMove}
-            onPointerUp={doEndDrag}
-            onPointerLeave={doEndDrag}
+            onPointerDown={(e: PointerEvent<HTMLDivElement>) => onPointerDown(e, index)}
         >
             <div className={style.postitContent}>
                 <h3>{data.name}</h3>

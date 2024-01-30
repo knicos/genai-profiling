@@ -5,7 +5,7 @@ import { IconButton } from '@mui/material';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import style from './style.module.css';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 interface Props {
     meta: SlideBoard;
@@ -15,11 +15,14 @@ export default function BoardSlide({ meta }: Props) {
     const [zoom, setZoom] = useState(1);
     const questions = meta.questions.map((id) => getQuestionData(id));
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const userData = useMemo(() => getUserData(), [meta]);
+
     return (
         <>
             <Board
                 questions={questions}
-                data={getUserData()}
+                data={userData}
                 zoom={zoom}
             />
             <div className={style.zoomControls}>

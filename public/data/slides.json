@@ -68,12 +68,6 @@
     {
         "type": "image",
         "url": "/data/koonta.jpg",
-        "label": "Profiilin perustelu",
-        "form": 8
-    },
-    {
-        "type": "image",
-        "url": "/data/koonta.jpg",
         "label": "Profiilin parantaminen",
         "form": 7
     },
