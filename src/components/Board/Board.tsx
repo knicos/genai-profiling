@@ -8,9 +8,10 @@ import cloudLayout from '@genaipg/util/cloud/cloudLayout';
 interface Props {
     data: UserState[];
     questions: QuestionData[];
+    zoom?: number;
 }
 
-export default function Board({ data, questions }: Props) {
+export default function Board({ data, questions, zoom }: Props) {
     const divRef = useRef<HTMLDivElement>(null);
     const [offset, setOffset] = useState([0, 0]);
     const [size, setSize] = useState(150);
@@ -29,6 +30,7 @@ export default function Board({ data, questions }: Props) {
         return cloudLayout(
             data.map(() => ({ width: size, height: size, id: '' })),
             500,
+            280,
             10
         );
     }, [data, size]);
@@ -43,6 +45,7 @@ export default function Board({ data, questions }: Props) {
         <div
             className={style.board}
             ref={divRef}
+            style={zoom ? { transform: `scale(${zoom})` } : undefined}
         >
             {questions.length === 1 && <h1>{questions[0].text}</h1>}
             {data.map((d, ix) => (
@@ -51,6 +54,7 @@ export default function Board({ data, questions }: Props) {
                     data={d}
                     questions={questions}
                     size={size}
+                    zoom={zoom}
                     x={layout[0][ix].x + offset[0]}
                     y={layout[0][ix].y + offset[1]}
                 />

@@ -147,6 +147,14 @@ export function getUserData() {
     return Array.from(state.values());
 }
 
+export function getFakeUserData(size: number) {
+    const fake: UserState[] = [];
+    for (let i = 0; i < size; ++i) {
+        fake.push({ name: `Name${i}`, responses: new Map<number, string>() });
+    }
+    return fake;
+}
+
 export function getUserName(id: string) {
     const d = state.get(id);
     if (d) return d.name;

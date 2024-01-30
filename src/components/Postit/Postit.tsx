@@ -27,9 +27,10 @@ interface Props {
     size?: number;
     x?: number;
     y?: number;
+    zoom?: number;
 }
 
-export default function Postit({ data, questions, x = 0, y = 0, size = 150 }: Props) {
+export default function Postit({ data, questions, x = 0, y = 0, size = 150, zoom = 1 }: Props) {
     const [pos, setPos] = useState<[number, number]>([0, 0]);
     const startPos = useRef<[number, number, number, number] | undefined>();
 
@@ -47,8 +48,9 @@ export default function Postit({ data, questions, x = 0, y = 0, size = 150 }: Pr
     const doMouseMove = (e: MouseEvent<HTMLDivElement>) => {
         if (startPos.current) {
             e.preventDefault();
-            const dx = e.clientX - startPos.current[0];
-            const dy = e.clientY - startPos.current[1];
+            const factor = 1 / zoom;
+            const dx = (e.clientX - startPos.current[0]) * factor;
+            const dy = (e.clientY - startPos.current[1]) * factor;
             setPos([dx + startPos.current[2], dy + startPos.current[3]]);
         }
     };

@@ -29,7 +29,8 @@ function calculateDistance(minX: number, maxX: number, minY: number, maxY: numbe
 
 export default function cloudLayout<T extends string>(
     content: SizedItem<T>[],
-    size: number,
+    width: number,
+    height: number,
     padding?: number
 ): [LocationItem<T>[], number] {
     const results: LocationItem<T>[] = [];
@@ -38,8 +39,8 @@ export default function cloudLayout<T extends string>(
     if (content.length === 0) return [[], padding || 10];
 
     //const sumWeight = content.reduce((p, v) => p + v.weight, 0) / 2;
-    const spiral = archimedeanSpiral([size, size]);
-    const tree = createQuadTree(0, 0, 2 * size, 2 * size, 4);
+    const spiral = archimedeanSpiral([width, height]);
+    const tree = createQuadTree(0, 0, 2 * width, 2 * height, 4);
     const tcache = new Map<number, number>();
 
     let cx = 0;

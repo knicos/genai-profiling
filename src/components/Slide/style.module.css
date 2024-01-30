@@ -15,6 +15,7 @@
     box-sizing: border-box;
     min-height: 0;
     overflow: hidden;
+    position: relative;
 }
 
 .image {
@@ -43,4 +44,10 @@
 
 .questionSlide {
     padding: 0 3rem;
+}
+
+.zoomControls {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.6rem;
 }
