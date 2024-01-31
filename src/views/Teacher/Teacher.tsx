@@ -61,7 +61,10 @@ export function Component() {
             // console.log('GOT DATA', data);
             if (data.event === 'pg:reguser') {
                 addUserName(data.id, data.username);
-                setUsers((old) => [...old, { username: data.username, id: data.id, connection: conn }]);
+                setUsers((old) => [
+                    ...old.filter((v) => v.id !== data.id),
+                    { username: data.username, id: data.id, connection: conn },
+                ]);
 
                 const rep = getUserResponses(data.id);
                 if (rep) {
