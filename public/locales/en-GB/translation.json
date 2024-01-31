@@ -16,5 +16,6 @@
     "onePerson": "{{count}} person has joined.",
     "manyPeople": "{{count}} people have joined.",
     "pleaseWait": "Please wait",
-    "loading": "Loading"
+    "loading": "Loading",
+    "done": "Done"
 }

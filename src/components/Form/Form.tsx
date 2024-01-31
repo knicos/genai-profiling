@@ -49,7 +49,7 @@ export default function Form({ questions, onDone }: Props) {
                             onClick={() => setDone(true)}
                             disabled={done}
                         >
-                            Done
+                            {t('done')}
                         </Button>
                     )}
                 </section>

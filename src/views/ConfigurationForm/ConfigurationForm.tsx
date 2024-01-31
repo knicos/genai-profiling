@@ -1,9 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { SmallButton } from '@genaipg/components/Button/Button';
-import { TextField, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import LangSelect from '@genaipg/components/LangSelect/LangSelect';
 
 export default function ConfigurationForm() {
     const { t } = useTranslation();
@@ -38,16 +39,7 @@ export default function ConfigurationForm() {
                     value={formData.className}
                     onChange={handleInputChange}
                 />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            name="enableRecordings"
-                            checked={formData.enableRecordings}
-                            onChange={handleInputChange}
-                        />
-                    }
-                    label={t('Enable Recordings')}
-                />
+                <LangSelect />
                 <SmallButton
                     type="submit"
                     variant="contained"

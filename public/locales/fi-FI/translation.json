@@ -12,6 +12,7 @@
     "waitingPeople": "Odotetaan käyttäjiä...",
     "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
     "manyPeople": "{{count}} käyttäjää on liittynyt mukaan.",
-    "pleaseWait": "Please wait",
-    "loading": "Loading"
+    "pleaseWait": "Odota",
+    "loading": "Loading",
+    "done": "Valmis"
 }
