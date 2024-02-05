@@ -9,16 +9,16 @@ function resultString(question: QuestionData, value?: string): JSX.Element {
     if (question.type === 'slider') {
         if (question.range) {
             const s = value.split(':');
-            return <span className={style.number}>{`${s[0]} - ${s[1]}`}</span>;
+            return <div className={style.number}>{`${s[0]} - ${s[1]}`}</div>;
         } else {
-            return <span className={style.number}>{value}</span>;
+            return <div className={style.number}>{value}</div>;
         }
     } else if (question.type === 'multichoice') {
         const s = value.split(',');
-        return <span>{s.join(', ')}</span>;
+        return <div>{s.join(', ')}</div>;
     }
 
-    return <span>{value}</span>;
+    return <div>{value}</div>;
 }
 
 interface Props {
@@ -48,7 +48,12 @@ export default function Postit({ data, questions, onPointerDown, x = 0, y = 0, s
                 <h3>{data.name}</h3>
                 <ul>
                     {questions.map((q, ix) => (
-                        <li key={ix}>{resultString(q, data.responses.get(q.id))}</li>
+                        <li
+                            key={ix}
+                            style={{ height: questions.length === 1 ? '100%' : undefined }}
+                        >
+                            {resultString(q, data.responses.get(q.id))}
+                        </li>
                     ))}
                 </ul>
             </div>
