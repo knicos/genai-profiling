@@ -5,9 +5,7 @@ import './App.css';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { theme } from './style/theme';
 import Loading from './components/Loading/Loading';
-import UsernameForm from './views/UsernameForm/UsernameForm';
 import ConfigurationForm from './views/ConfigurationForm/ConfigurationForm';
-import Dashboard from './views/Dashboard/Dashboard';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,10 +24,6 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Start/Start')}
             />
             <Route
-                path="quiz"
-                lazy={() => import('./views/Quiz/Quiz')}
-            />
-            <Route
                 path="classroom/:material/:page"
                 lazy={() => import('./views/Teacher/Teacher')}
             />
@@ -42,16 +36,8 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Teacher/Teacher')}
             />
             <Route
-                path="username"
-                element={<UsernameForm />}
-            />
-            <Route
                 path="configure"
                 element={<ConfigurationForm />}
-            />
-            <Route
-                path="dashboard"
-                element={<Dashboard />}
             />
         </Route>
     )

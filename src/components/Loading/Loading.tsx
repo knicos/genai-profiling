@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 import style from './style.module.css';
-import { useTranslation } from 'react-i18next';
 import Spinner from '@genaipg/components/Spinner/Spinner';
 
 interface Props extends PropsWithChildren {
@@ -8,13 +7,10 @@ interface Props extends PropsWithChildren {
     message?: string;
 }
 
-export default function Loading({ loading, children, message }: Props) {
-    const { t } = useTranslation();
-
+export default function Loading({ loading, children }: Props) {
     return loading ? (
         <div className={style.container}>
-            <Spinner size="large" />
-            <h1>{message || t('loading')}</h1>
+            <Spinner />
         </div>
     ) : (
         children

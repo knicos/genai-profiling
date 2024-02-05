@@ -6,7 +6,7 @@
             "type": "slider",
             "min": 10,
             "max": 100,
-            "range": true
+            "range": false
         },
         {
             "id": 2,
