@@ -53,6 +53,10 @@ export function Component() {
         });
     }, []);
 
+    const doReady = useCallback((r: boolean) => {
+        if (r) setReady(true);
+    }, []);
+
     const selectedQuestions = useMemo(() => {
         return questions && forms && currentForm >= 0 ? filterQuestions(questions, forms[currentForm]) : [];
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +90,7 @@ export function Component() {
                 userID={MYID}
                 server={code}
                 username={username}
-                onReady={setReady}
+                onReady={doReady}
                 questions={questions}
                 form={currentForm}
                 onFormChange={doFormChange}
