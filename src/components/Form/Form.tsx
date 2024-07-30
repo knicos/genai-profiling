@@ -5,7 +5,7 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useQuestionResponses } from '@genaipg/services/questionLogger/hook';
 import { useCallback, useEffect, useState } from 'react';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@knicos/genai-base/components/Button';
 
 interface Props {
     onDone: (state: boolean) => void;

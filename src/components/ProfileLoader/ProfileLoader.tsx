@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { QuestionData } from '../Question/types';
 import { SlideMeta } from '../Slide/types';
-import { ContentLoader, ZipData } from '@knicos/genai-base';
+import ContentLoader from '@knicos/genai-base/components/ContentLoader';
+import { ZipData } from '@knicos/genai-base/util/zip';
 import { addImage } from '@genaipg/services/images/images';
 import { Manifest } from './types';
 

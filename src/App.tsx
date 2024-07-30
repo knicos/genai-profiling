@@ -6,6 +6,7 @@ import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { theme } from './style/theme';
 import Loading from './components/Loading/Loading';
 import ConfigurationForm from './views/ConfigurationForm/ConfigurationForm';
+import About from './views/About/About';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -38,6 +39,10 @@ const router = createBrowserRouter(
             <Route
                 path="configure"
                 element={<ConfigurationForm />}
+            />
+            <Route
+                path="about"
+                element={<About />}
             />
         </Route>
     )

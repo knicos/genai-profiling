@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent, useEffect, useCallback } from 'react';
-import { LargeButton } from '@knicos/genai-base';
+import { LargeButton } from '@knicos/genai-base/components/Button';
 import { MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';

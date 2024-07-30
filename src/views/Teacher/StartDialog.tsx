@@ -1,6 +1,6 @@
 import { UserInfo } from './userinfo';
 import style from './style.module.css';
-import { QRCode } from '@knicos/genai-base';
+import QRCode from '@knicos/genai-base/components/QRCode';
 import { useTranslation, Trans } from 'react-i18next';
 
 interface Props {

@@ -3,7 +3,8 @@ import { UserInfo } from './userinfo';
 import { EventProtocol, ResponseData, UserEntry } from '@genaipg/protocol/protocol';
 import { DataConnection } from 'peerjs';
 import { addUserName, getAllUsers, getUserName, getUserResponses } from './userState';
-import { usePeer, ConnectionMonitor } from '@knicos/genai-base';
+import usePeer from '@knicos/genai-base/hooks/peer';
+import ConnectionMonitor from '@knicos/genai-base/components/ConnectionMonitor';
 
 function getOfflineUsers(online: string[]): UserEntry[] {
     const allUsers = getAllUsers();

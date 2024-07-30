@@ -1,10 +1,11 @@
 import { QuestionData } from '@genaipg/components/Question/types';
-import { usePeer, ConnectionMonitor } from '@knicos/genai-base';
+import usePeer from '@knicos/genai-base/hooks/peer';
+import ConnectionMonitor from '@knicos/genai-base/components/ConnectionMonitor';
 import { EventProtocol, UserEntry } from '@genaipg/protocol/protocol';
 import { useQuestionLogger } from '@genaipg/services/questionLogger/hook';
 import { updateAllResponses } from '@genaipg/services/questionLogger/logger';
 import { useCallback, useEffect } from 'react';
-import { useRandom } from '@knicos/genai-base';
+import useRandom from '@knicos/genai-base/hooks/random';
 
 const USERNAME_KEY = 'genai_pg_username';
 

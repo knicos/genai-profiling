@@ -10,13 +10,15 @@ import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
 import { addTeacherLog, addUserResponse, usePersistentData } from './userState';
 import SlideContainer from '@genaipg/components/Slide/SlideContainer';
-import { LargeButton } from '@knicos/genai-base';
+import { LargeButton } from '@knicos/genai-base/components/Button';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
 import { useTranslation } from 'react-i18next';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Dialog } from '@mui/material';
 import TeacherProtocol from './TeacherProtocol';
 import ProfileLoader from '@genaipg/components/ProfileLoader/ProfileLoader';
+import { Privacy } from '@knicos/genai-base';
+import gitInfo from '../../generatedGitInfo.json';
 
 export function Component() {
     const { t } = useTranslation();
@@ -128,6 +130,10 @@ export function Component() {
                             height={64}
                         />
                     </div>
+                    <Privacy
+                        appName="profiling"
+                        tag={gitInfo.gitTag || 'notag'}
+                    />
                 </div>
             </Loading>
             {ready && (

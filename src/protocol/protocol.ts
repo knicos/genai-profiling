@@ -1,5 +1,5 @@
 import { QuestionData } from '@genaipg/components/Question/types';
-import { PeerEvent, BuiltinEvent } from '@knicos/genai-base';
+import { PeerEvent, BuiltinEvent } from '@knicos/genai-base/hooks/peer';
 
 export interface UserRegistrationEvent extends PeerEvent {
     event: 'pg:reguser';

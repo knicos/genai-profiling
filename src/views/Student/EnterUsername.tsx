@@ -1,4 +1,4 @@
-import { LargeButton } from '@knicos/genai-base';
+import { LargeButton } from '@knicos/genai-base/components/Button';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
