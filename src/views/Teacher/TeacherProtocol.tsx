@@ -3,8 +3,7 @@ import { UserInfo } from './userinfo';
 import { EventProtocol, ResponseData, UserEntry } from '@genaipg/protocol/protocol';
 import { DataConnection } from 'peerjs';
 import { addUserName, getAllUsers, getUserName, getUserResponses } from './userState';
-import usePeer from '@genaipg/hooks/peer';
-import ConnectionMonitor from '@genaipg/components/ConnectionMonitor/ConnectionMonitor';
+import { usePeer, ConnectionMonitor } from '@knicos/genai-base';
 
 function getOfflineUsers(online: string[]): UserEntry[] {
     const allUsers = getAllUsers();
@@ -67,7 +66,15 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
         }
     }, []);
 
-    const { ready, send, error, status } = usePeer({ code: `pg-${code}`, onData: dataHandler, onClose: closeHandler });
+    const { ready, send, error, status } = usePeer({
+        host: import.meta.env.VITE_APP_PEER_SERVER,
+        secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+        key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+        port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
+        code: `pg-${code}`,
+        onData: dataHandler,
+        onClose: closeHandler,
+    });
 
     useEffect(() => {
         if (send) {
@@ -85,6 +92,8 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
 
     return (
         <ConnectionMonitor
+            api={import.meta.env.VITE_APP_APIURL}
+            appName="classroom"
             ready={ready}
             error={error}
             status={status}

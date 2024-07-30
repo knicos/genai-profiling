@@ -1,4 +1,4 @@
-import randomId from '@genaipg/util/randomId';
+import { randomId } from '@knicos/genai-base';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 function makeId(size: number) {

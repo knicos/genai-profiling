@@ -1,4 +1,4 @@
-import { SmallButton } from '@genaipg/components/Button/Button';
+import { LargeButton } from '@knicos/genai-base';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
@@ -58,7 +58,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
                     error={!!errors.username}
                     helperText={errors.username ? t(`feed.messages.usernameError.${errors.username}`) : undefined}
                 />
-                <SmallButton
+                <LargeButton
                     onClick={() => {
                         if (ref.current) {
                             if (!ref.current.value) {
@@ -71,7 +71,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
                     variant="contained"
                 >
                     {t('Enter')}
-                </SmallButton>
+                </LargeButton>
                 {!showRestore && (
                     <div>
                         <IconButton onClick={() => setShowRestore(true)}>

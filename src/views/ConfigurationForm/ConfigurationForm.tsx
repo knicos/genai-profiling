@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { SmallButton } from '@genaipg/components/Button/Button';
+import { LargeButton } from '@knicos/genai-base';
 import { TextField } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
@@ -40,12 +40,12 @@ export default function ConfigurationForm() {
                     onChange={handleInputChange}
                 />
                 <LangSelect />
-                <SmallButton
+                <LargeButton
                     type="submit"
                     variant="contained"
                 >
                     {t('Go')}
-                </SmallButton>
+                </LargeButton>
             </form>
         </div>
     );

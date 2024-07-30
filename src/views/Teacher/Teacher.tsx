@@ -10,7 +10,7 @@ import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
 import { addTeacherLog, addUserResponse, usePersistentData } from './userState';
 import SlideContainer from '@genaipg/components/Slide/SlideContainer';
-import { SmallButton } from '@genaipg/components/Button/Button';
+import { LargeButton } from '@knicos/genai-base';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
 import { useTranslation } from 'react-i18next';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -95,7 +95,7 @@ export function Component() {
                                 </SlideContainer>
                             ) : npage >= (slides?.length || -1) ? (
                                 <SlideContainer>
-                                    <SmallButton
+                                    <LargeButton
                                         variant="contained"
                                         onClick={() => {
                                             saveFile();
@@ -103,7 +103,7 @@ export function Component() {
                                         startIcon={<DownloadIcon />}
                                     >
                                         {t('Download')}
-                                    </SmallButton>
+                                    </LargeButton>
                                 </SlideContainer>
                             ) : undefined
                         }

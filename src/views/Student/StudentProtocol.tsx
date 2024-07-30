@@ -1,11 +1,10 @@
-import ConnectionMonitor from '@genaipg/components/ConnectionMonitor/ConnectionMonitor';
 import { QuestionData } from '@genaipg/components/Question/types';
-import usePeer from '@genaipg/hooks/peer';
-import useRandom from '@genaipg/hooks/random';
+import { usePeer, ConnectionMonitor } from '@knicos/genai-base';
 import { EventProtocol, UserEntry } from '@genaipg/protocol/protocol';
 import { useQuestionLogger } from '@genaipg/services/questionLogger/hook';
 import { updateAllResponses } from '@genaipg/services/questionLogger/logger';
 import { useCallback, useEffect } from 'react';
+import { useRandom } from '@knicos/genai-base';
 
 const USERNAME_KEY = 'genai_pg_username';
 
@@ -48,6 +47,10 @@ export default function StudentProtocol({
     );
 
     const { ready, send, status, error } = usePeer<EventProtocol>({
+        host: import.meta.env.VITE_APP_PEER_SERVER,
+        secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+        key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+        port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
         code: server && `pg-${MYCODE}`,
         server: `pg-${server}`,
         onData,
@@ -91,6 +94,8 @@ export default function StudentProtocol({
 
     return (
         <ConnectionMonitor
+            api={import.meta.env.VITE_APP_APIURL}
+            appName="classroom"
             ready={ready}
             status={status}
             error={error}

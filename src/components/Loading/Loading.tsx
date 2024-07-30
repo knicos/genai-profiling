@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import style from './style.module.css';
-import Spinner from '@genaipg/components/Spinner/Spinner';
+import { Spinner } from '@knicos/genai-base';
 
 interface Props extends PropsWithChildren {
     loading: boolean;
