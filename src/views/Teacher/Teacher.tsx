@@ -10,19 +10,17 @@ import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
 import { addTeacherLog, addUserResponse, usePersistentData } from './userState';
 import SlideContainer from '@genaipg/components/Slide/SlideContainer';
-import { ContentLoader, LargeButton, ZipData } from '@knicos/genai-base';
+import { LargeButton } from '@knicos/genai-base';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
 import { useTranslation } from 'react-i18next';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Dialog } from '@mui/material';
 import TeacherProtocol from './TeacherProtocol';
-import { addImage } from '@genaipg/services/images/images';
-
-const SLIDE_URL = 'https://store.gen-ai.fi/classroom/profile1_fi.zip';
+import ProfileLoader from '@genaipg/components/ProfileLoader/ProfileLoader';
 
 export function Component() {
     const { t } = useTranslation();
-    const { page, material } = useParams();
+    const { page, material, lang } = useParams();
     const MYCODE = useID(5);
     const [users, setUsers] = useState<UserInfo[]>([]);
     const navigate = useNavigate();
@@ -34,17 +32,6 @@ export function Component() {
     const [ready, setReady] = useState(false);
 
     const npage = page ? parseInt(page) : -1;
-
-    const doLoad = useCallback(async (data: ZipData) => {
-        if ('slides' in data) {
-            setSlides(data.slides as SlideMeta[]);
-        }
-        if (data.images) {
-            data.images.forEach((content, name) => {
-                addImage(name, content);
-            });
-        }
-    }, []);
 
     useEffect(() => {
         if (slides) {
@@ -87,7 +74,10 @@ export function Component() {
                         onQRCode={() => setShowQR(true)}
                         onChange={(index: number) =>
                             navigate({
-                                pathname: index >= 0 ? `/classroom/${material}/${index}` : `/classroom/${material}`,
+                                pathname:
+                                    index >= 0
+                                        ? `/classroom/${material}/${lang}/${index}`
+                                        : `/classroom/${material}/${lang}`,
                                 search: params.toString(),
                             })
                         }
@@ -95,6 +85,8 @@ export function Component() {
                             page === undefined ? (
                                 <SlideContainer>
                                     <StartDialog
+                                        material={material || 'default'}
+                                        lang={lang || 'fi'}
                                         users={users}
                                         code={MYCODE}
                                     />
@@ -121,6 +113,8 @@ export function Component() {
                             onClose={() => setShowQR(false)}
                         >
                             <StartDialog
+                                material={material || 'default'}
+                                lang={lang || 'fi'}
                                 users={users}
                                 code={MYCODE}
                             />
@@ -137,9 +131,10 @@ export function Component() {
                 </div>
             </Loading>
             {ready && (
-                <ContentLoader
-                    content={[SLIDE_URL]}
-                    onLoad={doLoad}
+                <ProfileLoader
+                    lang={lang || 'fi'}
+                    profile={material || 'default'}
+                    onSlides={setSlides}
                 />
             )}
             <TeacherProtocol

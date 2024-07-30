@@ -6,16 +6,18 @@ import { useTranslation, Trans } from 'react-i18next';
 interface Props {
     users: UserInfo[];
     code: string;
+    material: string;
+    lang: string;
 }
 
-export default function StartDialog({ users, code }: Props) {
+export default function StartDialog({ users, code, material, lang }: Props) {
     const { t } = useTranslation();
 
     return (
         <div className={style.groupedItems}>
             <div className={style.connectMessage}>
                 <QRCode
-                    url={`${window.location.origin}/individual/${code}`}
+                    url={`${window.location.origin}/individual/${code}/${material}/${lang}`}
                     size="large"
                 />
                 <div className={style.column}>

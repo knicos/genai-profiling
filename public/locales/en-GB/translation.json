@@ -18,6 +18,9 @@
     "pleaseWait": "Please wait",
     "loading": "Loading",
     "done": "Done",
+    "app": {
+        "selectProfile": "Select a profile"
+    },
     "loader": {
         "messages": {
             "getIceConfig": "Retrieving network configuration",

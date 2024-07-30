@@ -8,10 +8,9 @@ import { useChangeableID } from '@genaipg/hooks/id';
 import { useSetRecoilState } from 'recoil';
 import { availableUsers } from '@genaipg/state/sessionState';
 import StudentProtocol from './StudentProtocol';
-import { ContentLoader, ZipData } from '@knicos/genai-base';
+import ProfileLoader from '@genaipg/components/ProfileLoader/ProfileLoader';
 
 const USERNAME_KEY = 'genai_pg_username';
-const QUESTION_URL = 'https://store.gen-ai.fi/classroom/profile1_fi.zip';
 
 function loadUser() {
     const name = window.sessionStorage.getItem(USERNAME_KEY);
@@ -34,7 +33,7 @@ function filterQuestions(questions: QuestionData[], form: number[]) {
 }
 
 export function Component() {
-    const { code } = useParams();
+    const { code, material, lang } = useParams();
     const [username, setUsername] = useState<string | undefined>(loadUser);
     const [MYID, changeId] = useChangeableID(8);
     const [questions, setQuestions] = useState<QuestionData[]>();
@@ -44,14 +43,6 @@ export function Component() {
     const [count, increment] = useReducer((old) => ++old, 0);
     const [done, setDone] = useState(false);
     const [ready, setReady] = useState(false);
-
-    const doLoad = useCallback(async (data: ZipData) => {
-        if ('questions' in data) {
-            const d = data.questions as { questions: QuestionData[]; forms: number[][] };
-            setQuestions(d.questions);
-            setForms(d.forms);
-        }
-    }, []);
 
     const doReady = useCallback((r: boolean) => {
         if (r) setReady(true);
@@ -85,9 +76,11 @@ export function Component() {
                 )}
             </Loading>
             {ready && (
-                <ContentLoader
-                    content={[QUESTION_URL]}
-                    onLoad={doLoad}
+                <ProfileLoader
+                    lang={lang || 'fi'}
+                    profile={material || 'default'}
+                    onQuestions={setQuestions}
+                    onForms={setForms}
                 />
             )}
             <StudentProtocol
