@@ -10,14 +10,15 @@ import style from './style.module.css';
 import { SlideMeta } from '@genaipg/components/Slide/types';
 import { addTeacherLog, addUserResponse, usePersistentData } from './userState';
 import SlideContainer from '@genaipg/components/Slide/SlideContainer';
-import { LargeButton } from '@knicos/genai-base';
+import { ContentLoader, LargeButton, ZipData } from '@knicos/genai-base';
 import { saveFile } from '@genaipg/services/exporter/zipExport';
 import { useTranslation } from 'react-i18next';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Dialog } from '@mui/material';
 import TeacherProtocol from './TeacherProtocol';
+import { addImage } from '@genaipg/services/images/images';
 
-const SLIDE_URL = '/data/slides.json';
+const SLIDE_URL = 'https://store.gen-ai.fi/classroom/profile1_fi.zip';
 
 export function Component() {
     const { t } = useTranslation();
@@ -32,13 +33,18 @@ export function Component() {
     const [done, setDone] = useState(new Set<string>());
     const [ready, setReady] = useState(false);
 
-    useEffect(() => {
-        fetch(SLIDE_URL).then((response) => {
-            response.json().then((j) => setSlides(j));
-        });
-    }, []);
-
     const npage = page ? parseInt(page) : -1;
+
+    const doLoad = useCallback(async (data: ZipData) => {
+        if ('slides' in data) {
+            setSlides(data.slides as SlideMeta[]);
+        }
+        if (data.images) {
+            data.images.forEach((content, name) => {
+                addImage(name, content);
+            });
+        }
+    }, []);
 
     useEffect(() => {
         if (slides) {
@@ -130,6 +136,12 @@ export function Component() {
                     </div>
                 </div>
             </Loading>
+            {ready && (
+                <ContentLoader
+                    content={[SLIDE_URL]}
+                    onLoad={doLoad}
+                />
+            )}
             <TeacherProtocol
                 code={MYCODE}
                 onReady={setReady}

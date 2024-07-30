@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import { useCallback, useMemo, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '@genaipg/components/Loading/Loading';
 import EnterUsername from './EnterUsername';
@@ -8,9 +8,10 @@ import { useChangeableID } from '@genaipg/hooks/id';
 import { useSetRecoilState } from 'recoil';
 import { availableUsers } from '@genaipg/state/sessionState';
 import StudentProtocol from './StudentProtocol';
+import { ContentLoader, ZipData } from '@knicos/genai-base';
 
 const USERNAME_KEY = 'genai_pg_username';
-const QUESTION_URL = '/data/questions.json';
+const QUESTION_URL = 'https://store.gen-ai.fi/classroom/profile1_fi.zip';
 
 function loadUser() {
     const name = window.sessionStorage.getItem(USERNAME_KEY);
@@ -44,13 +45,12 @@ export function Component() {
     const [done, setDone] = useState(false);
     const [ready, setReady] = useState(false);
 
-    useEffect(() => {
-        fetch(QUESTION_URL).then((response) => {
-            response.json().then((data) => {
-                setQuestions(data.questions);
-                setForms(data.forms);
-            });
-        });
+    const doLoad = useCallback(async (data: ZipData) => {
+        if ('questions' in data) {
+            const d = data.questions as { questions: QuestionData[]; forms: number[][] };
+            setQuestions(d.questions);
+            setForms(d.forms);
+        }
     }, []);
 
     const doReady = useCallback((r: boolean) => {
@@ -84,6 +84,12 @@ export function Component() {
                     />
                 )}
             </Loading>
+            {ready && (
+                <ContentLoader
+                    content={[QUESTION_URL]}
+                    onLoad={doLoad}
+                />
+            )}
             <StudentProtocol
                 onAvailableUsers={setAvailable}
                 done={done}
