@@ -19,6 +19,7 @@ interface Props {
     onAvailableUsers: (users: UserEntry[]) => void;
     userID: string;
     onReady: (ready: boolean) => void;
+    onConfig: (material: string, lang: string) => void;
 }
 
 export default function StudentProtocol({
@@ -31,6 +32,7 @@ export default function StudentProtocol({
     onFormChange,
     onAvailableUsers,
     onReady,
+    onConfig,
 }: Props) {
     const MYCODE = useRandom(10);
 
@@ -42,9 +44,11 @@ export default function StudentProtocol({
                 onAvailableUsers(data.users);
             } else if (data.event === 'pg:responses') {
                 updateAllResponses(data.responses);
+            } else if (data.event === 'pg:config') {
+                onConfig(data.material, data.lang);
             }
         },
-        [onAvailableUsers, onFormChange]
+        [onAvailableUsers, onFormChange, onConfig]
     );
 
     const { ready, send, status, error } = usePeer<EventProtocol>({

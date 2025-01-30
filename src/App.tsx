@@ -29,7 +29,7 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Teacher/Teacher')}
             />
             <Route
-                path="individual/:code/:material/:lang"
+                path="individual/:code"
                 lazy={() => import('./views/Student/Student')}
             />
             <Route

@@ -17,6 +17,12 @@ export interface UserListEvent extends PeerEvent {
     users: UserEntry[];
 }
 
+export interface ConfigEvent extends PeerEvent {
+    event: 'pg:config';
+    material: string;
+    lang: string;
+}
+
 export interface DoneEvent extends PeerEvent {
     event: 'pg:done';
     done: boolean;
@@ -60,4 +66,5 @@ export type EventProtocol =
     | QuestionResponseEvent
     | ResponsesEvent
     | DoneEvent
+    | ConfigEvent
     | UserListEvent;

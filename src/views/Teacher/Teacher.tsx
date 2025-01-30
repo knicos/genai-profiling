@@ -87,8 +87,6 @@ export function Component() {
                             page === undefined ? (
                                 <SlideContainer>
                                     <StartDialog
-                                        material={material || 'default'}
-                                        lang={lang || 'fi'}
                                         users={users}
                                         code={MYCODE}
                                     />
@@ -115,8 +113,6 @@ export function Component() {
                             onClose={() => setShowQR(false)}
                         >
                             <StartDialog
-                                material={material || 'default'}
-                                lang={lang || 'fi'}
                                 users={users}
                                 code={MYCODE}
                             />
@@ -150,6 +146,8 @@ export function Component() {
                 onDone={doDone}
                 form={slides?.[npage]?.form}
                 onResponse={doResponse}
+                material={material}
+                lang={lang}
             />
         </>
     );

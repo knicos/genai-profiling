@@ -17,13 +17,15 @@ function getOfflineUsers(online: string[]): UserEntry[] {
 interface Props {
     form?: number;
     code: string;
+    material?: string;
+    lang?: string;
     onDone: (done: boolean, id: string) => void;
     onUsers: (users: UserInfo[]) => void;
     onResponse: (id: string, data: ResponseData) => void;
     onReady: (ready: boolean) => void;
 }
 
-export default function TeacherProtocol({ form, code, onDone, onUsers, onResponse, onReady }: Props) {
+export default function TeacherProtocol({ form, code, onDone, onUsers, onResponse, onReady, material, lang }: Props) {
     const [users, setUsers] = useState<UserInfo[]>([]);
 
     const dataHandler = useCallback(
@@ -53,13 +55,16 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
                 }
             } else if (data.event === 'eter:join') {
                 conn.send({ event: 'pg:users', users: getOfflineUsers(users.map((u) => u.id)) });
+                if (material && lang) {
+                    conn.send({ event: 'pg:config', material, lang });
+                }
             } else if (data.event === 'pg:response') {
                 onResponse(data.userId, data);
             } else if (data.event === 'pg:done') {
                 onDone(data.done, data.id);
             }
         },
-        [form, users, onDone, onResponse]
+        [form, users, onDone, onResponse, material, lang]
     );
     const closeHandler = useCallback((conn?: DataConnection) => {
         if (conn) {

@@ -33,7 +33,9 @@ function filterQuestions(questions: QuestionData[], form: number[]) {
 }
 
 export function Component() {
-    const { code, material, lang } = useParams();
+    const { code } = useParams();
+    const [material, setMaterial] = useState<string>();
+    const [lang, setLang] = useState<string>();
     const [username, setUsername] = useState<string | undefined>(loadUser);
     const [MYID, changeId] = useChangeableID(8);
     const [questions, setQuestions] = useState<QuestionData[]>();
@@ -46,6 +48,11 @@ export function Component() {
 
     const doReady = useCallback((r: boolean) => {
         if (r) setReady(true);
+    }, []);
+
+    const doConfig = useCallback((m: string, l: string) => {
+        setMaterial(m);
+        setLang(l);
     }, []);
 
     const selectedQuestions = useMemo(() => {
@@ -75,7 +82,7 @@ export function Component() {
                     />
                 )}
             </Loading>
-            {ready && (
+            {ready && material && lang && (
                 <ProfileLoader
                     lang={lang || 'fi'}
                     profile={material || 'default'}
@@ -93,6 +100,7 @@ export function Component() {
                 questions={questions}
                 form={currentForm}
                 onFormChange={doFormChange}
+                onConfig={doConfig}
             />
         </>
     );
