@@ -23,6 +23,10 @@
         {
             "route": "/configure*",
             "rewrite": "index.html"
+        },
+        {
+            "route": "/about*",
+            "rewrite": "index.html"
         }
     ]
 }
