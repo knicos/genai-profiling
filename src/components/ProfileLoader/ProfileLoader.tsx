@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { QuestionData } from '../Question/types';
 import { SlideMeta } from '../Slide/types';
-import ContentLoader from '@enoch-genai-fi/baseomponents/ContentLoader';
-import { ZipData } from '@k@enoch-genai-fi/basel/zip';
+import ContentLoader from '@knicos/genai-base/components/ContentLoader';
+import { ZipData } from '@knicos/genai-base/util/zip';
 import { addImage } from '@genaipg/services/images/images';
 import { Manifest } from './types';
 import localManifest from '../../assets/manifest.local.json'; // Local backup manifest
