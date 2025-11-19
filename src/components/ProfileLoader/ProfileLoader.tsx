@@ -5,7 +5,7 @@ import ContentLoader from '@enoch-genai-fi/baseomponents/ContentLoader';
 import { ZipData } from '@k@enoch-genai-fi/basel/zip';
 import { addImage } from '@genaipg/services/images/images';
 import { Manifest } from './types';
-import localManifest from '../assets/manifest.local.json'; // Local backup manifest
+import localManifest from '../../assets/manifest.local.json'; // Local backup manifest
 
 interface Props {
     lang: string;
