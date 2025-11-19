@@ -45,13 +45,13 @@ export default function ProfileLoader({ lang, profile, onSlides, onForms, onQues
                 setProfileURL(m.url);
             } else {
                 console.warn('Using local fallback');
-                const local = localManifest.profiles[lang]?.[profile];
+                const local = (localManifest as Manifest).profiles[lang]?.[profile];
                 if (local) setProfileURL(local.url);
                 else if (onError) onError();
             }
             } catch {
             console.warn('⚠️ Error checking profile URL, using local fallback');
-            const local = localManifest.profiles[lang]?.[profile];
+            const local = (localManifest as Manifest).profiles[lang]?.[profile];
             if (local) setProfileURL(local.url);
             else if (onError) onError();
             }
