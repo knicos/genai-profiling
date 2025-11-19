@@ -69,7 +69,7 @@ export default function ProfileLoader({ lang, profile, onSlides, onForms, onQues
                 onSlides(data.slides as SlideMeta[]);
             }
             if (data.images) {
-                data.images.forEach((content, name) => {
+                data.images.forEach((content: any, name: string) => {
                     addImage(name, content);
                 });
             }
