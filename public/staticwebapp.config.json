@@ -27,6 +27,10 @@
         {
             "route": "/about*",
             "rewrite": "index.html"
+        },
+        {
+           "route": "/create*",
+           "rewrite": "index.html"
         }
     ]
 }
