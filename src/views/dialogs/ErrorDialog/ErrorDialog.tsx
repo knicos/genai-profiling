@@ -1,12 +1,12 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import style from './style.module.css';
 import { errorNotification } from '@genaipg/state/errorState';
 
 export default function ErrorDialog() {
     const { t } = useTranslation();
-    const errorType = useRecoilValue(errorNotification);
+    const errorType = useAtomValue(errorNotification);  
 
     return (
         <Dialog open={errorType.size > 0}>

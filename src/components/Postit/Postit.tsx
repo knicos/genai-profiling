@@ -1,9 +1,9 @@
 import { UserState } from '@genaipg/views/Teacher/userState';
 import { QuestionData } from '../Question/types';
 import style from './style.module.css';
-import { PointerEvent } from 'react';
+import { PointerEvent, ReactElement } from 'react';
 
-function resultString(question: QuestionData, value?: string): JSX.Element {
+function resultString(question: QuestionData, value?: string): ReactElement {
     if (!value) return <span></span>;
 
     if (question.type === 'slider') {

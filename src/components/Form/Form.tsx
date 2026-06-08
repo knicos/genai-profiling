@@ -5,7 +5,7 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useQuestionResponses } from '@genaipg/services/questionLogger/hook';
 import { useCallback, useEffect, useState } from 'react';
-import { Button } from '@knicos/genai-base/components/Button';
+import { Button } from '@genai-fi/base/components/Button';
 
 interface Props {
     onDone: (state: boolean) => void;
@@ -17,8 +17,9 @@ export default function Form({ questions, onDone }: Props) {
     const [done, setDone] = useState(false);
     const responses = useQuestionResponses(questions);
 
-    const change = useCallback((field: number, value: string) => {
-        updateResponse(field, value);
+    //Temporary fix
+    const change = useCallback((field: number, value: string | string[]) => {
+        updateResponse(field, Array.isArray(value) ? value.join(',') : value);
         setDone(false);
     }, []);
 

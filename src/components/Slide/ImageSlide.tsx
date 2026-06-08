@@ -7,6 +7,7 @@ interface Props {
 }
 
 export default function ImageSlide({ meta }: Props) {
+
     return (
         <div className={style.image}>
             <img

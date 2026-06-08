@@ -4,6 +4,7 @@ import SlideContainer from './SlideContainer';
 import ImageSlide from './ImageSlide';
 import BoardSlide from './BoardSlide';
 import Done from './Done';
+import DemoSlide from './DemoSlide';
 
 interface Props {
     meta: SlideMeta;
@@ -13,6 +14,7 @@ interface Props {
 export default function Slide({ meta, doneCount }: Props) {
     return (
         <SlideContainer>
+            {meta.type === 'demo' && <DemoSlide meta={meta} />}
             {meta.type === 'question' && <QuestionSlide meta={meta} />}
             {meta.type === 'image' && <ImageSlide meta={meta} />}
             {meta.type === 'board' && <BoardSlide meta={meta} />}

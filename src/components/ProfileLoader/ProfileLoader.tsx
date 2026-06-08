@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { QuestionData } from '../Question/types';
 import { SlideMeta } from '../Slide/types';
-import ContentLoader from '@knicos/genai-base/components/ContentLoader';
-import { ZipData } from '@knicos/genai-base/util/zip';
+import ContentLoader from '@genai-fi/base/components/ContentLoader';
+import { ZipData } from '@genai-fi/base/util/zip';
 import { addImage } from '@genaipg/services/images/images';
 import { Manifest } from './types';
 
@@ -16,12 +16,25 @@ interface Props {
 }
 
 const MANIFEST_URL = 'https://store.gen-ai.fi/classroom/manifest.json';
+const LOCAL_PROFILE_KEY = '__local__';
 
 export default function ProfileLoader({ lang, profile, onSlides, onForms, onQuestions, onError }: Props) {
     const [manifest, setManifest] = useState<Manifest>();
     const [profileURL, setProfileURL] = useState<string>();
 
     useEffect(() => {
+        if (profile === LOCAL_PROFILE_KEY) {
+            const localProfileURL = sessionStorage.getItem('localProfile');
+            if (localProfileURL) {
+                setProfileURL(localProfileURL);
+            } else {
+                if (onError) onError();
+                console.error('No local profile found in sessionStorage');
+            }
+            return;
+        }
+
+
         fetch(MANIFEST_URL)
             .then((response) => {
                 response
@@ -30,9 +43,11 @@ export default function ProfileLoader({ lang, profile, onSlides, onForms, onQues
                     .catch(() => onError && onError());
             })
             .catch(() => onError && onError());
-    }, [onError]);
+    }, [onError, profile]);
 
     useEffect(() => {
+        if (profile === LOCAL_PROFILE_KEY) return;
+
         if (manifest) {
             const m = manifest.profiles[lang]?.[profile];
             if (m) {
@@ -46,6 +61,7 @@ export default function ProfileLoader({ lang, profile, onSlides, onForms, onQues
 
     const doLoad = useCallback(
         async (data: ZipData) => {
+            console.log('Loaded profile data', data);
             if (onSlides && 'slides' in data) {
                 onSlides(data.slides as SlideMeta[]);
             }

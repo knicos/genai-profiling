@@ -2,6 +2,7 @@
     "Enter Code": "Enter Code",
     "Go": "Go",
     "Create New": "Create New",
+    "Start a session": "Start a session",
     "Enter Class Name": "Enter Class Name",
     "Enter Session Detail": "Enter Session Detail",
     "Enable Recordings": "Enable Recordings",
@@ -18,6 +19,130 @@
     "pleaseWait": "Please wait",
     "loading": "Loading",
     "done": "Done",
+    "workflow": {
+        "profile": "Profile information",
+        "clues": "Clues",
+        "preview": "Preview"
+    },
+    "create": {
+        "buttons": {
+            "next": "Next",
+            "previous": "Previous",
+            "export": "Export",
+            "add": "Add",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "save": "Save"
+        },
+        "confirmation": {
+            "collage": "Collage",
+            "preview": "Preview"
+        },
+        "profileInformation": {
+            "title": "Mystery profile",
+            "description": "Fill in the categories below. Players will guess based on these clues. Pre-filled categories have default questions; hobbies is empty.",
+            "addCategory": "Add category",
+            "categoryPlaceholder": "Write the category here...",
+            "correctAnswer": "Correct",
+            "chooseCorrect": "Correct answer",
+            "markCorrect": "Mark correct",
+            "questionText": "Question text",
+            "questionTextPlaceholder": "e.g. Does this person play sports?...",
+            "age": {
+                "category": "Age",
+                "templateQuestion": "How old is this person?"
+            },
+            "interests": {
+                "category": "Interests",
+                "templateQuestion": "What are this person's interests?",
+                "options": [
+                    "Gaming",
+                    "Sports",
+                    "Music",
+                    "Reading",
+                    "Content creation",
+                    "Technology / Coding",
+                    "Traveling",
+                    "Cannot be determined"
+                ]
+            },
+            "location": {
+                "category": "Location",
+                "templateQuestion": "Where does this person live?",
+                "options": [
+                    "Urban area",
+                    "Suburban area",
+                    "Rural area",
+                    "Cannot be determined"
+                ]
+            },
+            "hobbies": {
+                "category": "Hobbies"
+            },
+            "questionType": "Question type",
+            "questionTypePlaceholder": "Choose the question type",
+            "questionTypeOptions": {
+                "text": "Text", 
+                "singlechoice": "Single Choice", 
+                "multichoice": "Multiple Choice", 
+                "slider": "Slider"
+            },
+            "questionOption": "Add options",
+            "questionOptionPlaceHolder": "Option",
+            "configSlider": "Configure Slider",
+            "configSliderDescription": "Range",
+            "min": "Min",
+            "max": "Max",
+            "questionSliderPlaceHolder": "e.g. 25",
+            "addQuestion": "Add question",
+            "updateQuestion": "Update question",
+            "noQuestions": "No questions yet"
+        },
+        "clues": {
+            "clue": "Clue",
+            "createImage": "Create image for your clue",
+            "imageButton": "Choose an image",
+            "useTemplate": "Use a template",
+            "addImage": "Add an image",
+            "addImageSubtitle": "Choose a template or upload your own image",
+            "chooseTemplate": "Choose a template",
+            "chooseTemplateSubtitle": "Select one to continue",
+            "fillTemplate": "Fill in template",
+            "fillTemplateSubtitle": "Fill in the template and save",
+            "uploadImage": "Upload an image",
+            "imageInstructions": "Upload an image for your clue",
+            "describeClue": "Describe the clue",
+            "describeCluePlaceholder": "e.g. The user made these searches recently...",
+            "categoryQuestion": "What does this clue tell about the mystery person?",
+            "templates": {
+                "streaming": {
+                    "label": "Streaming a song / podcast",
+                    "url": "Choose a cover image for the song/podcast:",
+                    "title": "Write a Song/Podcast Title: ",
+                    "artist": "Write an Artist/Host: ",
+                    "titlePlaceholder": "e.g. Shape of You",
+                    "artistPlaceholder": "e.g. Ed Sheeran"
+                },
+                "image": {
+                    "label": "Upload your own image as a clue",
+                    "noImage": "No Image"
+
+                }, 
+                "searches": {
+                    "label": "Search history",
+                    "searchesPlaceholder": "e.g Video game store near me",
+                    "searches": "Recent searches:"
+                },
+                "reactions": "Reacted to a post",
+                "forYou": "Recommended content",
+                "locations": "Traveled to, etc."
+            }
+        }
+    },
+    "student": {
+        "mysteryPerson": "Mystery Person",
+        "solve": "Mystery"
+    },
     "app": {
         "selectProfile": "Select a profile"
     },

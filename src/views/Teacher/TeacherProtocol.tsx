@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { UserInfo } from './userinfo';
 import { EventProtocol, ResponseData, UserEntry } from '@genaipg/protocol/protocol';
-import { DataConnection } from 'peerjs';
+import { Connection } from '@genai-fi/base';
 import { addUserName, getAllUsers, getUserName, getUserResponses } from './userState';
-import usePeer from '@knicos/genai-base/hooks/peer';
-import ConnectionMonitor from '@knicos/genai-base/components/ConnectionMonitor';
+import usePeer from '@genai-fi/base/hooks/peer';
+import { ConnectionStatus } from '@genai-fi/base';
 
 function getOfflineUsers(online: string[]): UserEntry[] {
     const allUsers = getAllUsers();
@@ -29,7 +29,7 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
     const [users, setUsers] = useState<UserInfo[]>([]);
 
     const dataHandler = useCallback(
-        (data: EventProtocol, conn: DataConnection) => {
+        (data: EventProtocol, conn: Connection<EventProtocol>) => {
             // console.log('GOT DATA', data);
             if (data.event === 'pg:reguser') {
                 addUserName(data.id, data.username);
@@ -42,7 +42,7 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
                 if (rep) {
                     conn.send({
                         event: 'pg:responses',
-                        id: data.id,
+                        userId: data.id,
                         responses: Array.from(rep).map((r) => ({
                             id: r[0],
                             value: r[1],
@@ -66,13 +66,13 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
         },
         [form, users, onDone, onResponse, material, lang]
     );
-    const closeHandler = useCallback((conn?: DataConnection) => {
+    const closeHandler = useCallback((conn?: Connection<EventProtocol>) => {
         if (conn) {
             setUsers((old) => old.filter((o) => o.connection !== conn));
         }
     }, []);
 
-    const { ready, send, error, status } = usePeer({
+    const { ready, send } = usePeer<EventProtocol>({
         host: import.meta.env.VITE_APP_PEER_SERVER,
         secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
         key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
@@ -97,12 +97,12 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
     }, [onReady, ready]);
 
     return (
-        <ConnectionMonitor
+        <ConnectionStatus
             api={import.meta.env.VITE_APP_APIURL}
             appName="classroom"
-            ready={ready}
-            error={error}
-            status={status}
+            checkURL={`${import.meta.env.VITE_APP_APIURL}/health`}
+            visibility={3}
+            noCheck={false}
         />
     );
 }

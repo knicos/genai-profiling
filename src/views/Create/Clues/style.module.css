@@ -1,0 +1,98 @@
+.mainContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar {
+    background-color: white;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    max-width: 300px;
+}
+
+.listItem {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    transform: border 0.3s ease;
+}
+
+.listItem.current {
+    background: var(--paleBlue-light);
+    border: 1px solid var(--paleGreen);
+    font-weight: bolder;
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--background);
+    width: 100%;
+    height: 100%;
+    gap: 2rem;
+}
+
+.navigationButtons {
+    display: flex;
+    gap: 2rem;
+}
+
+
+.form {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+    gap: 1rem;
+}
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+}
+
+.formSection {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.formButtons {
+    display: inline-flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.phoneFrame {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+
+    /* Padding trick: 750 / 366*/
+    padding-bottom: 204.92%;
+
+    border-radius: clamp(20px, 5.5%, 40px);
+    overflow: hidden;
+    align-self: center;
+}
+
+.uploadImage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    height: 100%;
+    width: 100%;
+
+}

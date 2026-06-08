@@ -1,4 +1,6 @@
-export type SlideType = 'qr' | 'question' | 'image' | 'board';
+import { ClueData } from "@genaipg/views/Create/types";
+
+export type SlideType = 'qr' | 'question' | 'image' | 'board' | 'demo';
 
 interface SlideBase {
     type: SlideType;
@@ -19,8 +21,15 @@ export interface SlideBoard extends SlideBase {
 export interface SlideImage extends SlideBase {
     type: 'image';
     url: string;
+    id?: number;
     scale?: number;
     label?: string;
 }
 
-export type SlideMeta = SlideQuestion | SlideImage | SlideBoard;
+export interface SlideDemo extends SlideBase {
+    type: 'demo';
+    label?: string;
+    clue: ClueData;
+}
+
+export type SlideMeta = SlideQuestion | SlideImage | SlideBoard | SlideDemo;

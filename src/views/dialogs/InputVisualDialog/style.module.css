@@ -1,0 +1,51 @@
+.dialogContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 2rem;
+}
+
+.dialogActions {
+    margin-top: 1rem;
+    border-top: 1px solid var(--background);
+}
+
+.formContainer {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.stepHeader {
+    display: inline-flex;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+}
+
+.stepBadge {
+    display: block;
+    padding: 0.5rem 1rem;
+    background: var(--primary);
+    color: white;
+    font-size: x-large;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.formFields{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: auto;
+    min-width: 250px;
+}
+
+.phoneFrame {
+    position: relative;
+    width: 200px;
+    aspect-ratio: 1/2;
+    flex-shrink: 0;
+    margin: auto 0;
+}

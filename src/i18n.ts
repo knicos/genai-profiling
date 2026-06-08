@@ -19,7 +19,7 @@ i18n.use(Backend)
         interpolation: {
             escapeValue: false,
         },
-        supportedLngs: ['en-GB', 'fi-FI'],
+        supportedLngs: ['en-GB', /*'fi-FI'*/],        
     });
 
 export default i18n;

@@ -1,6 +1,6 @@
-import { useState, ChangeEvent, FormEvent, useEffect, useCallback } from 'react';
-import { LargeButton } from '@knicos/genai-base/components/Button';
-import { MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { useState, ChangeEvent, FormEvent, useEffect, useCallback, useRef } from 'react';
+import { LargeButton } from '@genai-fi/base/components/Button';
+import { MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,10 @@ import LangSelect from '@genaipg/components/LangSelect/LangSelect';
 import { Manifest } from '@genaipg/components/ProfileLoader/types';
 
 const MANIFEST_URL = 'https://store.gen-ai.fi/classroom/manifest.json';
+const LOCAL_PROFILE_KEY = '__local__';
 
 export default function ConfigurationForm() {
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ export default function ConfigurationForm() {
     });
     const [manifest, setManifest] = useState<Manifest>();
     const [profile, setProfile] = useState<string>('');
+    const [localProfiles, setLocalProfiles] = useState<{name: string, url: string} | null>(null);
 
     useEffect(() => {
         fetch(MANIFEST_URL).then((response) => {
@@ -42,6 +45,13 @@ export default function ConfigurationForm() {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (profile === LOCAL_PROFILE_KEY && localProfiles) {
+            sessionStorage.setItem('localProfile', localProfiles.url);
+        } else {
+            sessionStorage.removeItem('localProfile');
+        }
+
         navigate(
             `/classroom/${profile}/${lang}?name=${formData.className}&audio=${formData.enableRecordings ? '1' : '0'}`
         );
@@ -50,6 +60,22 @@ export default function ConfigurationForm() {
     const doChangeProfile = useCallback((e: SelectChangeEvent) => {
         setProfile(e.target.value);
     }, []);
+
+    const handleProfileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+
+        if (!file) return;
+
+        if (localProfiles?.url.startsWith('blob:')) {
+            URL.revokeObjectURL(localProfiles.url);
+        }
+
+        const url = URL.createObjectURL(file);
+        const name = file.name.replace(/\.zip$/i, '');
+        setLocalProfiles({ name, url });
+        setProfile(LOCAL_PROFILE_KEY);
+        event.target.value = '';
+    };
 
     console.log(profile, manifest);
 
@@ -90,6 +116,16 @@ export default function ConfigurationForm() {
                         </MenuItem>
                     ))}
                 </Select>
+                <Typography variant="body1" style={{ marginTop: '1rem', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '0.5rem'   }}>
+                    Or
+                </Typography>
+                 <input type="file" accept=".zip" ref={fileInputRef} style={{ display: 'none' }} onChange={handleProfileUpload} />
+                <LargeButton
+                    variant="outlined"
+                    onClick={() => fileInputRef.current?.click()}
+                >
+                    Upload custom profile
+                </LargeButton>
                 <LargeButton
                     type="submit"
                     variant="contained"

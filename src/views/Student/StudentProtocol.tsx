@@ -1,11 +1,11 @@
 import { QuestionData } from '@genaipg/components/Question/types';
-import usePeer from '@knicos/genai-base/hooks/peer';
-import ConnectionMonitor from '@knicos/genai-base/components/ConnectionMonitor';
+import usePeer from '@genai-fi/base/hooks/peer';
+import { ConnectionStatus } from '@genai-fi/base';
 import { EventProtocol, UserEntry } from '@genaipg/protocol/protocol';
 import { useQuestionLogger } from '@genaipg/services/questionLogger/hook';
 import { updateAllResponses } from '@genaipg/services/questionLogger/logger';
 import { useCallback, useEffect } from 'react';
-import useRandom from '@knicos/genai-base/hooks/random';
+import useRandom from '@genai-fi/base/hooks/random';
 
 const USERNAME_KEY = 'genai_pg_username';
 
@@ -16,7 +16,7 @@ interface Props {
     form: number;
     questions?: QuestionData[];
     onFormChange: (newForm: number) => void;
-    onAvailableUsers: (users: UserEntry[]) => void;
+    onAvailableUsers: (users: Set<UserEntry>) => void;
     userID: string;
     onReady: (ready: boolean) => void;
     onConfig: (material: string, lang: string) => void;
@@ -41,7 +41,7 @@ export default function StudentProtocol({
             if (data.event === 'pg:changeform') {
                 onFormChange(data.form);
             } else if (data.event === 'pg:users') {
-                onAvailableUsers(data.users);
+                onAvailableUsers(new Set(data.users));
             } else if (data.event === 'pg:responses') {
                 updateAllResponses(data.responses);
             } else if (data.event === 'pg:config') {
@@ -51,7 +51,7 @@ export default function StudentProtocol({
         [onAvailableUsers, onFormChange, onConfig]
     );
 
-    const { ready, send, status, error } = usePeer<EventProtocol>({
+    const { ready, send } = usePeer<EventProtocol>({
         host: import.meta.env.VITE_APP_PEER_SERVER,
         secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
         key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
@@ -98,12 +98,12 @@ export default function StudentProtocol({
     }, [done, send, userID]);
 
     return (
-        <ConnectionMonitor
+        <ConnectionStatus
             api={import.meta.env.VITE_APP_APIURL}
             appName="classroom"
-            ready={ready}
-            status={status}
-            error={error}
+            checkURL={`${import.meta.env.VITE_APP_APIURL}/health`}
+            visibility={3}
+            noCheck={false}
         />
     );
 }

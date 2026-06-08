@@ -1,7 +1,4 @@
 import { UserEntry } from '@genaipg/protocol/protocol';
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const availableUsers = atom<UserEntry[]>({
-    key: 'availableUsers',
-    default: [],
-});
+export const availableUsers = atom<Set<UserEntry>>(new Set<UserEntry>());

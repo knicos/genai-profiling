@@ -1,0 +1,59 @@
+.outerContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 3rem;
+    padding: 16px;
+    box-sizing: border-box;
+    align-items: flex-start;
+    overflow: hidden;
+    background: var(--background);
+    justify-content: center;
+}
+
+.displayContainer {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 1000px;
+    max-height: 720px;
+    height: 100%;
+    margin: auto 0;
+}
+
+.slidesContainer {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.collageContainer {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    overflow-y: auto;
+    max-width: 1000px;
+    height: 100%;
+}
+
+.noImageFrame {
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.previewContainer {
+    aspect-ratio: 1 / 2;
+    border-radius: 18px;
+    position: relative;
+    margin: auto 0;
+    width: 300px;
+}

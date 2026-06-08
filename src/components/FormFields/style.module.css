@@ -1,0 +1,52 @@
+.fieldLabel {
+    font-size: larger;
+    font-weight: bold;
+    color: #444444;
+    padding: 0.5rem 0;
+}
+
+.formGroup {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem
+}
+
+ @container (max-width: 400px) {
+    .formGroup {
+        flex-direction: column;
+    }
+ }
+
+.choiceChip {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 2px solid var(--paleGreen);
+    outline: 3px solid transparent;
+    padding: 0.5rem 1.25rem;
+    border-radius: 5rem;
+    color: var(--primary-dark);
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.choiceChip:hover,
+.choiceChip:focus-within {
+    border-color: transparent;
+    outline-color: var(--primary-dark);
+}
+
+.selected {
+    background-color: #E1F5F6;
+    color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.hiddenCheckbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}

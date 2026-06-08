@@ -1,9 +1,9 @@
-import { LargeButton } from '@knicos/genai-base/components/Button';
+import { LargeButton } from '@genai-fi/base/components/Button';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { useRecoilValue } from 'recoil';
+import {  useAtomValue } from 'jotai';
 import { availableUsers } from '@genaipg/state/sessionState';
 import RestoreIcon from '@mui/icons-material/Restore';
 
@@ -21,7 +21,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
     const { t } = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<FormErrors>({});
-    const users = useRecoilValue(availableUsers);
+    const users = useAtomValue(availableUsers);
     const [showRestore, setShowRestore] = useState(false);
 
     const doUsernameKey = useCallback(
@@ -39,7 +39,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
         (e: SelectChangeEvent) => {
             const id = e.target.value;
             if (onChangeId) onChangeId(id);
-            const item = users.find((u) => u.id === id);
+            const item = Array.from(users).find((u) => u.id === id);
             if (item) {
                 onUsername(item.name);
             }
@@ -84,7 +84,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
                         value=""
                         onChange={doSelect}
                     >
-                        {users.map((u) => (
+                        {Array.from(users).map((u) => (
                             <MenuItem
                                 key={u.id}
                                 value={u.id}

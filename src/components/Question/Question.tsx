@@ -8,8 +8,8 @@ import MessageQuestion from './MessageQuestion';
 
 interface Props {
     question: QuestionData;
-    value: string;
-    onChange: (field: number, value: string) => void;
+    value: string | string[];
+    onChange: (field: number, value: string | string[]) => void;
 }
 
 export default function Question({ question, value, onChange }: Props) {
@@ -18,7 +18,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <TextQuestion
                     question={question}
-                    value={value}
+                    value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
                 />
             );
@@ -26,7 +26,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <LargeQuestion
                     question={question}
-                    value={value}
+                    value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
                 />
             );
@@ -34,7 +34,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <SliderQuestion
                     question={question}
-                    value={value}
+                    value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
                 />
             );
@@ -42,7 +42,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <MultiQuestion
                     question={question}
-                    value={value}
+                    value={Array.isArray(value) ? value : []}
                     onChange={onChange}
                 />
             );
@@ -51,7 +51,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <SingleQuestion
                     question={question}
-                    value={value}
+                    value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
                 />
             );

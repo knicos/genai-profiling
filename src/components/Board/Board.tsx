@@ -1,3 +1,4 @@
+
 import { UserState } from '@genaipg/views/Teacher/userState';
 import { QuestionData } from '../Question/types';
 import Postit from '../Postit/Postit';
@@ -15,7 +16,7 @@ export default function Board({ data, questions, zoom = 1 }: Props) {
     const divRef = useRef<HTMLDivElement>(null);
     const [offset, setOffset] = useState([0, 0]);
     const [size, setSize] = useState(150);
-    const startPos = useRef<[number, number, number, number, number] | undefined>();
+    const startPos = useRef<[number, number, number, number, number] | undefined>(undefined);
     const [positions, setPositions] = useState<[number, number][]>([]);
     const [order, setOrder] = useState<number[]>([]);
 

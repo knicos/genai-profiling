@@ -1,12 +1,12 @@
 import style from './style.module.css';
 import ErrorDialog from '../dialogs/ErrorDialog/ErrorDialog';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, TextField } from '@mui/material';
 import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function Component() {
-    // const { t } = useTranslation();
+    const { t } = useTranslation();
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
     const doKeyDown = useCallback(
@@ -36,7 +36,7 @@ export function Component() {
                     height={192}
                 />
                 <TextField
-                    label="Enter Code  "
+                    label={t("Enter Code")}
                     onKeyDown={doKeyDown}
                     fullWidth
                     className={style.textbox}
@@ -49,7 +49,7 @@ export function Component() {
                     component="a"
                     onClick={doGo}
                 >
-                    Go
+                    {t("Go")}
                 </Button>
                 <div className={style.spacer} />
                 <Button
@@ -57,7 +57,14 @@ export function Component() {
                     href="/configure"
                     className={style.createButton}
                 >
-                    Create New
+                    {t("Start a session")}
+                </Button>
+                <Button
+                    variant="outlined"
+                    href="/create/profile"
+                    className={style.createButton}
+                >
+                    {t("Create New")}
                 </Button>
                 <ErrorDialog />
             </div>

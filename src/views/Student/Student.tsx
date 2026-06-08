@@ -5,7 +5,7 @@ import EnterUsername from './EnterUsername';
 import { QuestionData } from '@genaipg/components/Question/types';
 import Form from '@genaipg/components/Form/Form';
 import { useChangeableID } from '@genaipg/hooks/id';
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 import { availableUsers } from '@genaipg/state/sessionState';
 import StudentProtocol from './StudentProtocol';
 import ProfileLoader from '@genaipg/components/ProfileLoader/ProfileLoader';
@@ -41,7 +41,7 @@ export function Component() {
     const [questions, setQuestions] = useState<QuestionData[]>();
     const [forms, setForms] = useState<number[][]>();
     const [currentForm, setCurrentForm] = useState(-1);
-    const setAvailable = useSetRecoilState(availableUsers);
+    const setAvailable = useSetAtom(availableUsers);
     const [count, increment] = useReducer((old) => ++old, 0);
     const [done, setDone] = useState(false);
     const [ready, setReady] = useState(false);

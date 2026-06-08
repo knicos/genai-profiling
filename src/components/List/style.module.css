@@ -1,0 +1,16 @@
+.listItemCard {
+    background: var(--paleBlue-light);
+    border-radius: 8px;
+    border: 1px solid var(--paleGreen);
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.actionItem {
+    background: #EEEFEC;
+    border-radius: 8px;
+    color: #000000;
+    gap: 5px;
+    margin: 5px 0;
+    align-items: center;
+}

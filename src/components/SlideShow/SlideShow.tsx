@@ -6,6 +6,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import DownloadIcon from '@mui/icons-material/Download';
+import { ReactElement } from 'react';
 
 interface Props {
     index: number;
@@ -13,7 +14,7 @@ interface Props {
     showControls?: boolean;
     hasNext?: boolean;
     onChange?: (index: number) => void;
-    defaultSlide?: JSX.Element;
+    defaultSlide?: ReactElement;
     onDownload?: () => void;
     onQRCode?: () => void;
     doneCount?: number;

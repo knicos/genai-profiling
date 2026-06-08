@@ -1,11 +1,27 @@
 #root {
   font-family: Andika, Helvetica, Arial, sans-serif;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+:root {
+  --background: #dfe5e8;
+  --foreground: #171717;
+  --secondary: rgb(156, 39, 176);
+  --secondaryLight: #e996e9;
+  --primary: #008297;
+  --primary-dark: #016f80;
+  --primary-verydark: #005866;
+  --paleBlue: #e8f0fe;
+  --paleGreen: #b3d7d8;
+  --palePurple: #b89ecd;
+  --paleBlue-dark: #e3ecfc;
+  --paleBlue-light: #f4faff;
+  --purpleBorder: #b89ecd;
+  --dropShadow: #a4acbb;
+  --lightSuccess: #4caf50;
+  --darkSuccess: #81c784;
 }

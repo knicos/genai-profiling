@@ -1,12 +1,16 @@
 import React from 'react';
 import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements, Navigate } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import { Provider } from 'jotai';
 import './App.css';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { theme } from './style/theme';
 import Loading from './components/Loading/Loading';
 import ConfigurationForm from './views/ConfigurationForm/ConfigurationForm';
 import About from './views/About/About';
+import Create from './views/Create/Create';
+import { QuestionForm } from './views/Create/ProfileInformation/QuestionForm';
+import { ClueCreation } from './views/Create/Clues/ClueCreation';
+import ConfirmationView from './views/Create/Confirmation/ConfirmationView';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -44,6 +48,24 @@ const router = createBrowserRouter(
                 path="about"
                 element={<About />}
             />
+            <Route
+                path="create"
+                element={<Create />} 
+            >
+                 <Route index element={<Navigate replace to="/create/profile" />} />
+                <Route
+                    path="profile"
+                    element={<QuestionForm />} 
+                />
+                <Route
+                    path="clues"
+                    element={<ClueCreation />}
+                />
+                <Route
+                    path="preview"
+                    element= {<ConfirmationView />}    
+                />
+            </Route>
         </Route>
     )
 );
@@ -52,7 +74,7 @@ function App() {
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
-                <RecoilRoot>
+                <Provider>
                     <React.Suspense
                         fallback={
                             <Loading
@@ -63,7 +85,7 @@ function App() {
                     >
                         <RouterProvider router={router} />
                     </React.Suspense>
-                </RecoilRoot>
+                </Provider>
             </ThemeProvider>
         </StyledEngineProvider>
     );
