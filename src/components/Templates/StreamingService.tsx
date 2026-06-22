@@ -1,3 +1,5 @@
+import { getImage } from "@genaipg/services/images/images";
+
 interface Props {
     url?: string;
     title?: string;
@@ -5,6 +7,8 @@ interface Props {
 }
 
 export default function StreamingService({ url, title, artist }: Props) {
+
+    
     return (
         <div style={{ width: "100%", height: "100%", padding: '0 10px', backgroundColor: 'black', boxSizing: 'border-box' }}>
             <svg
@@ -24,7 +28,7 @@ export default function StreamingService({ url, title, artist }: Props) {
                     >
                         <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
                             <img
-                                src={url}
+                                src={url ? getImage(url) : ""}
                                 style={{
                                     width: "100%",
                                     height: "100%",

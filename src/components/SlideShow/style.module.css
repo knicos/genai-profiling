@@ -9,6 +9,13 @@
     align-items: center;
 }
 
+.styleContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
 .controls {
     display: flex;
     gap: 5rem;
@@ -26,4 +33,5 @@
     gap: 0.2rem;
     align-items: center;
     justify-content: center;
+    background: white;
 }

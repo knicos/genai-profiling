@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function DemoSlide({ meta }: Props) {
-
     return (
         <div className={style.image}>
             <div className={style.phoneFrame}>

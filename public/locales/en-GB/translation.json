@@ -36,7 +36,13 @@
         },
         "confirmation": {
             "collage": "Collage",
-            "preview": "Preview"
+            "preview": "Preview",
+            "hardness": {
+                "placeholder": "Choose difficulty:",
+                "1": "Easy",
+                "2": "Medium",
+                "3": "Hard"
+            }
         },
         "profileInformation": {
             "title": "Mystery profile",

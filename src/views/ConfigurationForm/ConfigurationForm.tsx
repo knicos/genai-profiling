@@ -5,10 +5,12 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import LangSelect from '@genaipg/components/LangSelect/LangSelect';
-import { Manifest } from '@genaipg/components/ProfileLoader/types';
+import { Manifest } from '@genaipg/components/ContentLoaders/types';
+import { useAtom } from 'jotai';
+import { profileURLAtom } from '@genaipg/state/profileState';
 
 const MANIFEST_URL = 'https://store.gen-ai.fi/classroom/manifest.json';
-const LOCAL_PROFILE_KEY = '__local__';
+const LOCAL_PROFILE_KEY = 'custom';
 
 export default function ConfigurationForm() {
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -20,7 +22,7 @@ export default function ConfigurationForm() {
     });
     const [manifest, setManifest] = useState<Manifest>();
     const [profile, setProfile] = useState<string>('');
-    const [localProfiles, setLocalProfiles] = useState<{name: string, url: string} | null>(null);
+    const [profileURL, setProfileURL] = useAtom(profileURLAtom);
 
     useEffect(() => {
         fetch(MANIFEST_URL).then((response) => {
@@ -46,14 +48,8 @@ export default function ConfigurationForm() {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (profile === LOCAL_PROFILE_KEY && localProfiles) {
-            sessionStorage.setItem('localProfile', localProfiles.url);
-        } else {
-            sessionStorage.removeItem('localProfile');
-        }
-
         navigate(
-            `/classroom/${profile}/${lang}?name=${formData.className}&audio=${formData.enableRecordings ? '1' : '0'}`
+            `/game/classroom/${profile}/${lang}?name=${formData.className}&audio=${formData.enableRecordings ? '1' : '0'}`
         );
     };
 
@@ -66,18 +62,15 @@ export default function ConfigurationForm() {
 
         if (!file) return;
 
-        if (localProfiles?.url.startsWith('blob:')) {
-            URL.revokeObjectURL(localProfiles.url);
+        if (profileURL?.startsWith('blob:')) {
+            URL.revokeObjectURL(profileURL);
         }
 
         const url = URL.createObjectURL(file);
-        const name = file.name.replace(/\.zip$/i, '');
-        setLocalProfiles({ name, url });
+        setProfileURL(url);
         setProfile(LOCAL_PROFILE_KEY);
         event.target.value = '';
     };
-
-    console.log(profile, manifest);
 
     return (
         <div className={style.page}>

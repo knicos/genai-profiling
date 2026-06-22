@@ -1,64 +1,98 @@
+import { useMemo } from "react";
 import PhoneFrame from "@genaipg/components/Templates/PhoneFrame";
 import GridOnOutlined from '@mui/icons-material/GridOnOutlined';
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye';
-import { useAtomValue } from "jotai";
-import { cluesAtom, questionsAtom } from "@genaipg/state/createState";
+import { useAtomValue, useSetAtom } from "jotai";
+import { cluesAtom, createFormOrder, formOrderAtom } from "@genaipg/state/createState";
 import Visuals from "@genaipg/components/Slide/Visuals";
 import { SegmentedControl, SegmentedControlButton } from "@genaipg/components/SegmentedControl/SegmentedControl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SlideShow from "@genaipg/components/SlideShow/SlideShow";
 import { SlideMeta } from "@genaipg/components/Slide/types";
 import StudentPreview from "./StudentPreview";
 import style from './style.module.css'
 import { useTranslation } from "react-i18next";
+import { MenuItem, Select } from "@mui/material";
 
 export default function ConfirmationView() {
     const { t } = useTranslation();
     const clues = useAtomValue(cluesAtom);
-    const questions = useAtomValue(questionsAtom)
     const [preview, setPreview] = useState<boolean>(false);
-    const slides = clues.map((clue) => ({
-        type: 'demo',
-        clue,
-    })) as SlideMeta[];
     const [slidePages, setSlidePages] = useState<number>(0)
-    const MAX_SLIDES_PER_SECTION = 4;
-    const numSections = Math.ceil(slides.length / MAX_SLIDES_PER_SECTION);
-    const questionsPerSection = Math.ceil(questions.length / numSections);
-    const slidesPerSection = slides.length / numSections;
+    const forms = useAtomValue(formOrderAtom);
+    const setForms = useSetAtom(createFormOrder);
 
-    const currentSection = Math.min(
-        Math.floor(slidePages / slidesPerSection),
-        numSections - 1
-    );
 
-    const visibleQuestions = preview
-        ? questions.slice(0, (currentSection + 1) * questionsPerSection)
-        : questions;
+    const slides = useMemo(() => {
+        const base = clues.map(clue => ({
+            type: 'demo',
+            clue,
+        })) as SlideMeta[];
 
+        if (!Array.isArray(forms?.forms)) return base;
+
+        const result: SlideMeta[] = [...base];
+
+        for (let i = 0; i < forms.forms.length; i++) {
+            if (forms.forms[i]?.includes(100)) {
+                result.splice(i, 0, { type: 'checkpoint' });
+            }
+        }
+
+        return result;
+    }, [clues, forms]);
+
+    useEffect(() => {
+        if (!forms?.forms)
+            setForms({ level: 1 })
+    }, [forms?.forms, setForms])
 
     return (
         <div className={style.outerContainer}>
-            <StudentPreview categories={visibleQuestions} />
+            <StudentPreview formIndex={preview ? slidePages : undefined} />
             <div className={style.displayContainer}>
-                <SegmentedControl>
-                    <SegmentedControlButton
-                        value="collage"
-                        selected={!preview}
-                        onClick={() => setPreview(false)}
-                    >
-                        <GridOnOutlined />
-                        {t('create.confirmation.collage')}
-                    </SegmentedControlButton>
-                    <SegmentedControlButton
-                        value="preview"
-                        selected={preview}
-                        onClick={() => setPreview(true)}
-                    >
-                        <RemoveRedEye />
-                         {t('create.confirmation.preview')}
-                    </SegmentedControlButton>
-                </SegmentedControl>
+                <div className={style.topBar}>
+                    <SegmentedControl>
+                        <SegmentedControlButton
+                            value="collage"
+                            selected={!preview}
+                            onClick={() => setPreview(false)}
+                        >
+                            <GridOnOutlined />
+                            {t('create.confirmation.collage')}
+                        </SegmentedControlButton>
+                        <SegmentedControlButton
+                            value="preview"
+                            selected={preview}
+                            onClick={() => setPreview(true)}
+                        >
+                            <RemoveRedEye />
+                            {t('create.confirmation.preview')}
+                        </SegmentedControlButton>
+                    </SegmentedControl>
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px"
+                    }}>
+                        <span className={style.fieldLabel}>
+                            {t('create.confirmation.hardness.placeholder')}
+                        </span>
+                        <Select
+                            value={forms?.level ?? 1}
+                            onChange={(e) =>
+                                setForms({ level: e.target.value as 1 | 2 | 3 })
+                            }
+                            sx={{ background: 'white', minWidth: '100px', maxHeight: '50px' }}
+                        >
+                            {[1, 2, 3].map((value) => (
+                                <MenuItem key={value} value={value}>
+                                    {t(`create.confirmation.hardness.${value}`)}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
+                </div>
 
                 {preview ? (
                     <div className={style.slidesContainer}>
@@ -69,7 +103,7 @@ export default function ConfirmationView() {
                             hasNext={slidePages < slides.length - 1}
                             onChange={(index: number) => {
                                 if (index >= 0 && index < slides.length)
-                                    setSlidePages(index)
+                                    setSlidePages(index);
                             }}
                         />
                     </div>

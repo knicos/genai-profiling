@@ -31,13 +31,17 @@ export default function SlideShow({
     onDownload,
     onQRCode,
 }: Props) {
+
     return (
         <div className={style.container}>
             {index >= 0 && index < slides.length ? (
-                <Slide
-                    meta={slides[index]}
-                    doneCount={doneCount}
-                />
+                    <Slide
+                        index={index}
+                        slides={slides}
+                        meta={slides[index]}
+                        doneCount={doneCount}
+                    />
+
             ) : (
                 defaultSlide || null
             )}

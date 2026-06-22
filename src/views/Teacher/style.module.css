@@ -1,5 +1,13 @@
 @value bgColourful1, textDark, workspaceBg from "../../style/colours.module.css";
 
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    inset: 0;
+}
+
 .groupedItems {
     display: flex;
     justify-content: center;

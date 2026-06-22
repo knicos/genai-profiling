@@ -17,6 +17,7 @@
     overflow: hidden;
     position: relative;
     box-shadow: 0 0 10px black;
+    gap: 2rem;
 }
 
 .image {
@@ -39,7 +40,6 @@
     position: relative;
     margin: auto 0;
     width: auto;
-    max-width: 350px;
     height: 100cqh;
 }
 

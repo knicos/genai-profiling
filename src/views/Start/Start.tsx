@@ -54,7 +54,7 @@ export function Component() {
                 <div className={style.spacer} />
                 <Button
                     variant="outlined"
-                    href="/configure"
+                    href="/game/configure"
                     className={style.createButton}
                 >
                     {t("Start a session")}

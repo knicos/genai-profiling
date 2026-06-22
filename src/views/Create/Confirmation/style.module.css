@@ -57,3 +57,16 @@
     margin: auto 0;
     width: 300px;
 }
+
+.topBar {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fieldLabel {
+    font-size: large;
+    font-weight: bold;
+    color: #444444;
+    padding: 0.5rem 0;
+}

@@ -1,5 +1,6 @@
 import { QuestionData } from '@genaipg/components/Question/types';
 import { PeerEvent, BuiltinEvent } from '@genai-fi/base';
+import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
 
 export interface UserRegistrationEvent extends PeerEvent {
     event: 'pg:reguser';
@@ -27,6 +28,11 @@ export interface DoneEvent extends PeerEvent {
     event: 'pg:done';
     done: boolean;
     id: string;
+}
+
+export interface ProfileZipEvent extends PeerEvent {
+    event: 'pg:profile';
+    data: ProfileMeta;
 }
 
 export interface ChangeFormEvent extends PeerEvent {
@@ -67,4 +73,5 @@ export type EventProtocol =
     | ResponsesEvent
     | DoneEvent
     | ConfigEvent
-    | UserListEvent;
+    | UserListEvent
+    | ProfileZipEvent;

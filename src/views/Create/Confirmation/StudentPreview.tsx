@@ -4,25 +4,41 @@ import PhoneFrame from "@genaipg/components/Templates/PhoneFrame";
 import Overview from "@genaipg/views/Student/GameView/OverView";
 import { useState } from "react";
 import QuestionView from "@genaipg/views/Student/GameView/QuestionView";
+import { useAtomValue } from "jotai";
+import { formOrderAtom, questionsAtom } from "@genaipg/state/createState";
 
 interface Props {
-    categories: Category[];
+    formIndex?: number; 
 }
 
-export default function StudentPreview({ categories }: Props) {
+export default function StudentPreview({ formIndex }: Props) {
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
+    const categories = useAtomValue(questionsAtom);
+    const formOrder = useAtomValue(formOrderAtom);
+
+    const visibleCategories =
+        formIndex === undefined
+            ? categories
+            : categories.filter(c =>
+                formOrder?.forms[formIndex]?.includes(c.id)
+            );
+
     return (
-        <div
-            className={style.previewContainer}
-        >
+        <div className={style.previewContainer}>
             <PhoneFrame>
-                { selectedCategory ? (
-                    <QuestionView category={selectedCategory} goBack={() => setSelectedCategory(null)}/>
+                {selectedCategory ? (
+                    <QuestionView
+                        category={selectedCategory}
+                        goBack={() => setSelectedCategory(null)}
+                    />
                 ) : (
-                    <Overview categories={categories} onSelectCategory={setSelectedCategory}/>
+                    <Overview
+                        categories={visibleCategories}
+                        onSelectCategory={setSelectedCategory}
+                    />
                 )}
             </PhoneFrame>
         </div>
-    )
+    );
 }

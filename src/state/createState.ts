@@ -2,6 +2,10 @@ import { atom } from "jotai";
 import { ClueData } from "@genaipg/views/Create/types";
 import { Category, QuestionData } from "@genaipg/components/Question/types";
 
+// THIS WILL CHANGE
+const MAX_SLIDES_PER_SECTION = 3;
+
+
 export const questionsAtom = atom<Category[]>([]);
 
 export const questionCategoriesAtom = atom<string[]>((get) => {
@@ -97,7 +101,7 @@ export const deleteCategory = atom(
         const categories = get(questionsAtom)
 
         const updated = categories.filter((c) => c.category !== payload.category)
-        
+
         set(questionsAtom, updated);
     }
 )
@@ -177,3 +181,92 @@ export const updateClueAtom = atom(
         );
     }
 );
+
+type FormOrderState = { level: 1 | 2 | 3; forms: number[][]; };
+
+export const formOrderAtom = atom<FormOrderState>();
+
+export const createFormOrder = atom(
+    null,
+    (
+        get,
+        set,
+        payload: {
+            level: 1 | 2 | 3;
+        }
+    ) => {
+        const categories = get(questionsAtom);
+        const clues = get(cluesAtom);
+
+
+        // Number for break
+        const BREAK = 100;
+
+        // Easy mode: every clue opens the category it belongs to 
+        const forms: number[][] = [];
+
+        if (payload.level === 1) {
+            clues.forEach(clue => {
+                const form: number[] = []
+
+                clue.category.forEach(cat => {
+                    const category = categories.find(c => c.category === cat);
+                    if (category)
+                        form.push(category.id);
+                })
+
+                forms.push(form);
+            })
+        }
+        // Medium mode: Group of questions unlock per section. 
+        else if (payload.level === 2) {
+
+            for (let start = 0; start < clues.length; start += MAX_SLIDES_PER_SECTION) {
+                const section = clues.slice(start, start + MAX_SLIDES_PER_SECTION);
+
+                const sectionCategories: number[] = [];
+
+                section.forEach(clue => {
+                    clue.category.forEach(cat => {
+                        const category = categories.find(c => c.category === cat);
+
+                        if (category)
+                            sectionCategories.push(category.id);
+                    });
+                });
+
+                const uniqueCategories = [...new Set(sectionCategories)];
+
+                section.forEach(() => {
+                    forms.push(uniqueCategories);
+                });
+            }
+        }
+        //Hard mode: Every category is open 
+        else if (payload.level === 3) {
+            const allCategories: number[] = categories.map(c => c.id);
+
+            clues.forEach(() => {
+                forms.push([...allCategories]);
+            })
+        }
+
+        // Create the breaks
+        const withBreaks: number[][] = [];
+
+        for (let i = 0; i < forms.length; i++) {
+            withBreaks.push(forms[i]);
+
+            const isEndOfSection = (i + 1) % MAX_SLIDES_PER_SECTION === 0;
+            const isLast = i === forms.length - 1;
+
+            if (isEndOfSection && !isLast)
+                withBreaks.push([BREAK]);
+        }
+
+        set(formOrderAtom, {
+            level: payload.level,
+            forms: withBreaks,
+        });
+    }
+)

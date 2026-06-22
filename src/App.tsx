@@ -11,6 +11,7 @@ import Create from './views/Create/Create';
 import { QuestionForm } from './views/Create/ProfileInformation/QuestionForm';
 import { ClueCreation } from './views/Create/Clues/ClueCreation';
 import ConfirmationView from './views/Create/Confirmation/ConfirmationView';
+import Session from './views/Teacher/Session';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -29,33 +30,42 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Start/Start')}
             />
             <Route
-                path="classroom/:material/:lang/:page"
-                lazy={() => import('./views/Teacher/Teacher')}
-            />
-            <Route
                 path="individual/:code"
                 lazy={() => import('./views/Student/Student')}
-            />
-            <Route
-                path="classroom/:material/:lang"
-                lazy={() => import('./views/Teacher/Teacher')}
-            />
-            <Route
-                path="configure"
-                element={<ConfigurationForm />}
             />
             <Route
                 path="about"
                 element={<About />}
             />
             <Route
-                path="create"
-                element={<Create />} 
+                path="game"
+                element={<Session />}
             >
-                 <Route index element={<Navigate replace to="/create/profile" />} />
+                <Route
+                    index
+                    element={ <Navigate replace to="/game/configure"/>} 
+                />
+                <Route
+                    path="configure"
+                    element={<ConfigurationForm />}
+                />
+                <Route
+                    path="classroom/:material/:lang"
+                    lazy={() => import('./views/Teacher/Teacher')}
+                />
+                <Route
+                    path="classroom/:material/:lang/:page"
+                    lazy={() => import('./views/Teacher/Teacher')}
+                />
+            </Route>
+            <Route
+                path="create"
+                element={<Create />}
+            >
+                <Route index element={<Navigate replace to="/create/profile" />} />
                 <Route
                     path="profile"
-                    element={<QuestionForm />} 
+                    element={<QuestionForm />}
                 />
                 <Route
                     path="clues"
@@ -63,7 +73,7 @@ const router = createBrowserRouter(
                 />
                 <Route
                     path="preview"
-                    element= {<ConfirmationView />}    
+                    element={<ConfirmationView />}
                 />
             </Route>
         </Route>

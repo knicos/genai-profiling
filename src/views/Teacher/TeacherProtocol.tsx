@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserInfo } from './userinfo';
 import { EventProtocol, ResponseData, UserEntry } from '@genaipg/protocol/protocol';
 import { Connection } from '@genai-fi/base';
 import { addUserName, getAllUsers, getUserName, getUserResponses } from './userState';
-import usePeer from '@genai-fi/base/hooks/peer';
+import { usePeerClose, usePeerData, usePeerSender, usePeerStatus } from '@genai-fi/base/hooks/peer';
 import { ConnectionStatus } from '@genai-fi/base';
+import { useAtomValue } from 'jotai';
+import { profileAtom } from '@genaipg/state/profileState';
+import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
+
+const LOCAL_PROFILE_KEY = 'custom';
 
 function getOfflineUsers(online: string[]): UserEntry[] {
     const allUsers = getAllUsers();
@@ -16,7 +21,6 @@ function getOfflineUsers(online: string[]): UserEntry[] {
 
 interface Props {
     form?: number;
-    code: string;
     material?: string;
     lang?: string;
     onDone: (done: boolean, id: string) => void;
@@ -25,62 +29,66 @@ interface Props {
     onReady: (ready: boolean) => void;
 }
 
-export default function TeacherProtocol({ form, code, onDone, onUsers, onResponse, onReady, material, lang }: Props) {
+export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onReady, material, lang }: Props) {
     const [users, setUsers] = useState<UserInfo[]>([]);
+    const localProfile = useAtomValue(profileAtom);
 
-    const dataHandler = useCallback(
-        (data: EventProtocol, conn: Connection<EventProtocol>) => {
-            // console.log('GOT DATA', data);
-            if (data.event === 'pg:reguser') {
-                addUserName(data.id, data.username);
-                setUsers((old) => [
-                    ...old.filter((v) => v.id !== data.id),
-                    { username: data.username, id: data.id, connection: conn },
-                ]);
+    usePeerData((data: EventProtocol, conn: Connection<EventProtocol>) => {
+        // console.log('GOT DATA', data);
+        if (data.event === 'pg:reguser') {
+            addUserName(data.id, data.username);
+            setUsers((old) => [
+                ...old.filter((v) => v.id !== data.id),
+                { username: data.username, id: data.id, connection: conn },
+            ]);
 
-                const rep = getUserResponses(data.id);
-                if (rep) {
-                    conn.send({
-                        event: 'pg:responses',
-                        userId: data.id,
-                        responses: Array.from(rep).map((r) => ({
-                            id: r[0],
-                            value: r[1],
-                        })),
-                    });
-                }
-
-                if (form !== undefined) {
-                    conn.send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
-                }
-            } else if (data.event === 'eter:join') {
-                conn.send({ event: 'pg:users', users: getOfflineUsers(users.map((u) => u.id)) });
-                if (material && lang) {
-                    conn.send({ event: 'pg:config', material, lang });
-                }
-            } else if (data.event === 'pg:response') {
-                onResponse(data.userId, data);
-            } else if (data.event === 'pg:done') {
-                onDone(data.done, data.id);
+            const rep = getUserResponses(data.id);
+            if (rep) {
+                conn.send({
+                    event: 'pg:responses',
+                    userId: data.id,
+                    responses: Array.from(rep).map((r) => ({
+                        id: r[0],
+                        value: r[1],
+                    })),
+                });
             }
-        },
-        [form, users, onDone, onResponse, material, lang]
-    );
-    const closeHandler = useCallback((conn?: Connection<EventProtocol>) => {
+
+            if (form !== undefined) {
+                conn.send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
+            }
+        } else if (data.event === 'eter:join') {
+            conn.send({ event: 'pg:users', users: getOfflineUsers(users.map((u) => u.id)) });
+            if (material && lang) {
+                if (material === LOCAL_PROFILE_KEY && localProfile) {
+                    // extract images from data being send to user 
+                    const data: ProfileMeta = {
+                        questions: localProfile.questions.questions,
+                        forms: localProfile.questions.forms
+                    } 
+
+                    conn.send({
+                        event: 'pg:profile',
+                        data: data
+                    })
+                } 
+                conn.send({ event: 'pg:config', material, lang });
+            }
+        } else if (data.event === 'pg:response') {
+            onResponse(data.userId, data);
+        } else if (data.event === 'pg:done') {
+            onDone(data.done, data.id);
+        }
+    });
+
+    usePeerClose((conn?: Connection<EventProtocol>) => {
         if (conn) {
             setUsers((old) => old.filter((o) => o.connection !== conn));
         }
-    }, []);
-
-    const { ready, send } = usePeer<EventProtocol>({
-        host: import.meta.env.VITE_APP_PEER_SERVER,
-        secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
-        key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
-        port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
-        code: `pg-${code}`,
-        onData: dataHandler,
-        onClose: closeHandler,
     });
+
+    const send = usePeerSender<EventProtocol>();
+    const ready = usePeerStatus();
 
     useEffect(() => {
         if (send) {
@@ -93,7 +101,7 @@ export default function TeacherProtocol({ form, code, onDone, onUsers, onRespons
     }, [users, onUsers]);
 
     useEffect(() => {
-        onReady(ready);
+        onReady(ready === 'ready');
     }, [onReady, ready]);
 
     return (

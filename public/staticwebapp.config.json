@@ -13,15 +13,11 @@
             "rewrite": "index.html"
         },
         {
-            "route": "/classroom*",
+            "route": "/game*",
             "rewrite": "index.html"
         },
         {
             "route": "/individual*",
-            "rewrite": "index.html"
-        },
-        {
-            "route": "/configure*",
             "rewrite": "index.html"
         },
         {

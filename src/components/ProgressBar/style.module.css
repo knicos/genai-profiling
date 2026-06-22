@@ -1,0 +1,52 @@
+.stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: clamp(4px, 1vw, 10px);
+    width: 40%;
+}
+
+.segment {
+    flex: 1 1 40px;         
+    height: clamp(2px, 0.5vw, 5px);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background: var(--secondaryLight);
+    transition: background 0.2s ease, border 0.2s ease;
+    min-width: 18px;        
+}
+
+.segment.selected {
+    border-color: var(--purple);
+}
+
+.segment.past {
+    background: var(--purple);
+}
+
+.separator {
+    width: clamp(18px, 2vw, 46px);
+    height: clamp(18px, 2vw, 46px);
+    font-size: clamp(14px, 2vw, 24px);
+    border-radius: 50%;
+    background: var(--secondaryLight);
+    color: var(--secondaryLight);
+    border: 2px solid transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.separator.selected {
+    border-color: var(--purple);
+}
+
+.separator.past {
+    color: white;
+    background: var(--purple);
+}

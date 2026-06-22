@@ -1,14 +1,18 @@
 import { useCallback, useMemo, useReducer, useState } from 'react';
+import { Peer } from '@genai-fi/base/hooks/peer';
 import { useParams } from 'react-router-dom';
 import Loading from '@genaipg/components/Loading/Loading';
 import EnterUsername from './EnterUsername';
 import { QuestionData } from '@genaipg/components/Question/types';
 import Form from '@genaipg/components/Form/Form';
 import { useChangeableID } from '@genaipg/hooks/id';
-import { useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { availableUsers } from '@genaipg/state/sessionState';
 import StudentProtocol from './StudentProtocol';
-import ProfileLoader from '@genaipg/components/ProfileLoader/ProfileLoader';
+import { useRandom } from '@genai-fi/base';
+import { formAtom } from '@genaipg/state/profileState';
+import Gameview from './GameView/GameView';
+import QuestionLoader from '@genaipg/components/ContentLoaders/QuestionLoader';
 
 const USERNAME_KEY = 'genai_pg_username';
 
@@ -29,10 +33,12 @@ function filterQuestions(questions: QuestionData[], form: number[]) {
             result.push(q);
         }
     });
+
     return result;
 }
 
 export function Component() {
+    const MYCODE = useRandom(10);
     const { code } = useParams();
     const [material, setMaterial] = useState<string>();
     const [lang, setLang] = useState<string>();
@@ -42,9 +48,10 @@ export function Component() {
     const [forms, setForms] = useState<number[][]>();
     const [currentForm, setCurrentForm] = useState(-1);
     const setAvailable = useSetAtom(availableUsers);
-    const [count, increment] = useReducer((old) => ++old, 0);
+    const [, increment] = useReducer((old) => ++old, 0);
     const [done, setDone] = useState(false);
     const [ready, setReady] = useState(false);
+    const form = useAtomValue(formAtom)
 
     const doReady = useCallback((r: boolean) => {
         if (r) setReady(true);
@@ -55,10 +62,10 @@ export function Component() {
         setLang(l);
     }, []);
 
+    /*TODO: delete later*/
     const selectedQuestions = useMemo(() => {
         return questions && forms && currentForm >= 0 ? filterQuestions(questions, forms[currentForm]) : [];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [questions, forms, currentForm, count]);
+    }, [questions, forms, currentForm]);
 
     const doFormChange = useCallback((newForm: number) => {
         setCurrentForm(newForm);
@@ -67,41 +74,54 @@ export function Component() {
 
     return (
         <>
-            <Loading loading={!ready || !questions || !forms}>
-                {!username && (
-                    <EnterUsername
-                        onUsername={setUsername}
-                        onChangeId={changeId}
+            <Peer
+                host={import.meta.env.VITE_APP_PEER_SERVER}
+                secure={import.meta.env.VITE_APP_PEER_SECURE === '1'}
+                peerkey={import.meta.env.VITE_APP_PEER_KEY || 'peerjs'}
+                port={import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443}
+                code={`pg-${MYCODE}`}
+                server={`pg-${code}`}
+            >
+                <Loading loading={!form?.questions}>
+                    {!username && (
+                        <EnterUsername
+                            onUsername={setUsername}
+                            onChangeId={changeId}
+                        />
+                    )}
+                    {username && form?.forms && form?.questions && (
+                        /*TODO: Delete later */
+                        material && material === 'default' ? ( 
+                            <Form
+                                onDone = { setDone }
+                                key = {`form-${currentForm}`}
+                                questions={selectedQuestions}
+                            />
+                        ) : (
+                            <Gameview formIndex={currentForm} />
+                        )
+                    )}
+                </Loading>
+                {ready && material && lang && !form && (
+                    <QuestionLoader
+                        lang={lang || 'fi'}
+                        profile={material || 'default'}
+                        onQuestions={setQuestions}
+                        onForms={setForms}
                     />
                 )}
-                {username && forms && questions && (
-                    <Form
-                        onDone={setDone}
-                        key={`form-${currentForm}`}
-                        questions={selectedQuestions}
-                    />
-                )}
-            </Loading>
-            {ready && material && lang && (
-                <ProfileLoader
-                    lang={lang || 'fi'}
-                    profile={material || 'default'}
-                    onQuestions={setQuestions}
-                    onForms={setForms}
+                <StudentProtocol
+                    onAvailableUsers={setAvailable}
+                    done={done}
+                    userID={MYID}
+                    username={username}
+                    onReady={doReady}
+                    questions={questions}
+                    form={currentForm}
+                    onFormChange={doFormChange}
+                    onConfig={doConfig}
                 />
-            )}
-            <StudentProtocol
-                onAvailableUsers={setAvailable}
-                done={done}
-                userID={MYID}
-                server={code}
-                username={username}
-                onReady={doReady}
-                questions={questions}
-                form={currentForm}
-                onFormChange={doFormChange}
-                onConfig={doConfig}
-            />
+            </Peer>
         </>
     );
 }
