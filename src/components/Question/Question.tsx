@@ -42,7 +42,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <MultiQuestion
                     question={question}
-                    value={Array.isArray(value) ? value : []}
+                    value={Array.isArray(value) ? value : value ? value.split(',') : []}
                     onChange={onChange}
                 />
             );
@@ -51,7 +51,7 @@ export default function Question({ question, value, onChange }: Props) {
             return (
                 <SingleQuestion
                     question={question}
-                    value={Array.isArray(value) ? value[0] ?? '' : value}
+                    value={Array.isArray(value) ? value[0] : value}
                     onChange={onChange}
                 />
             );

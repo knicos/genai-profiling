@@ -4,13 +4,18 @@ import style from './style.module.css';
 import { Typography } from "@mui/material";
 import ChevronLeft  from "@mui/icons-material/ChevronLeft";
 import { Button } from "@genai-fi/base";
+import { useAtomValue } from "jotai";
+import { responseAtom } from "@genaipg/state/responseState";
 
 interface Props {
     category: Category;
     goBack?: () => void;
+    change?: (categoryId: number, questionId:number, values: string | string[]) => void;
 }
 
-export default function QuestionView({ category, goBack }: Props) {
+export default function QuestionView({ category, goBack, change }: Props) {
+    const responses = useAtomValue(responseAtom)[category.id] ?? {};
+
     return (
         <div className={style.container}>
             <div className={style.topBar}>
@@ -31,8 +36,8 @@ export default function QuestionView({ category, goBack }: Props) {
                     <Question
                         key={ix}
                         question={q}
-                        value={''}
-                        onChange={() => {/*TODO: Add action*/}}
+                        value={responses[q.id] ?? ''}
+                        onChange={(field, value) => change?.(category.id, field, value)}
                     />
                 ))}
             </div>

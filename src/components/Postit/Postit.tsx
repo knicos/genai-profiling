@@ -3,22 +3,26 @@ import { QuestionData } from '../Question/types';
 import style from './style.module.css';
 import { PointerEvent, ReactElement } from 'react';
 
-function resultString(question: QuestionData, value?: string): ReactElement {
-    if (!value) return <span></span>;
+function resultString(question: QuestionData, value?: string | string[] ): ReactElement {
+    if (!value) return <span />;
 
     if (question.type === 'slider') {
+        const stringValue = Array.isArray(value) ? value.join(', ') : value;
+
         if (question.range) {
-            const s = value.split(':');
-            return <div className={style.number}>{`${s[0]} - ${s[1]}`}</div>;
-        } else {
-            return <div className={style.number}>{value}</div>;
+            const [min, max] = stringValue.split(':');
+            return <div className={style.number}>{`${min} - ${max}`}</div>;
         }
-    } else if (question.type === 'multichoice') {
-        const s = value.split(',');
-        return <div>{s.join(', ')}</div>;
+
+        return <div className={style.number}>{stringValue}</div>;
     }
 
-    return <div>{value}</div>;
+    if (question.type === 'multichoice') {
+        const values = Array.isArray(value) ? value : value.split(',');
+        return <div>{values.join(', ')}</div>;
+    }
+
+    return <div>{Array.isArray(value) ? value.join(', ') : value}</div>;
 }
 
 interface Props {
@@ -52,7 +56,7 @@ export default function Postit({ data, questions, onPointerDown, x = 0, y = 0, s
                             key={ix}
                             style={{ height: questions.length === 1 ? '100%' : undefined }}
                         >
-                            {resultString(q, data.responses.get(q.id))}
+                            {resultString(q /*data.responses.get(q.i)*/)}
                         </li>
                     ))}
                 </ul>

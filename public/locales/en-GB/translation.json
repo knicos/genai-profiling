@@ -88,9 +88,9 @@
             "questionType": "Question type",
             "questionTypePlaceholder": "Choose the question type",
             "questionTypeOptions": {
-                "text": "Text", 
-                "singlechoice": "Single Choice", 
-                "multichoice": "Multiple Choice", 
+                "text": "Text",
+                "singlechoice": "Single Choice",
+                "multichoice": "Multiple Choice",
                 "slider": "Slider"
             },
             "questionOption": "Add options",
@@ -132,8 +132,7 @@
                 "image": {
                     "label": "Upload your own image as a clue",
                     "noImage": "No Image"
-
-                }, 
+                },
                 "searches": {
                     "label": "Search history",
                     "searchesPlaceholder": "e.g Video game store near me",
@@ -142,6 +141,26 @@
                 "reactions": "Reacted to a post",
                 "forYou": "Recommended content",
                 "locations": "Traveled to, etc."
+            }
+        }
+    },
+    "game": {
+        "checkpoint": {
+            "studentQuestion": "How confident are you in your prediction?",
+            "asClass": "As a class:",
+            "next": "Reveal correctness",
+            "confidence": {
+                "title": "Average confidence",
+                "vote": "Rate how confident you are in your predictions.",
+                "low": "Not very confident?\nLet's see why.",
+                "medium": "Fairly confident.\nLet's see how you did!",
+                "high": "Very confident!\nLet's find out if you're right."
+            },
+            "correctness": {
+                "title": "Average correctness",
+                "low": "Uh oh...\nNot quite there yet.",
+                "medium": "On the right track,\nkeep going!",
+                "high": "Great job!\nYou got it."
             }
         }
     },

@@ -16,11 +16,15 @@ export function ProgressBar({ index, slides }: Props) {
         <Stack direction="row" className={style.stack}>
             {slides.map((slide, ix) =>
                 slide.type === 'checkpoint' ? (
-                    <div className={`${style.separator} ${index == ix ? style.selected : ""} ${index > ix ? style.past : ""}`}>
+                    <div
+                        key={ix}
+                        className={`${style.separator} ${index == ix ? style.selected : ""} ${index > ix ? style.past : ""}`}
+                    >
                         <Check fontSize="inherit" />
                     </div>
                 ) : (
                     <div
+                        key={ix}
                         className={`${style.segment} ${ix == index ? style.selected : ""} ${ix < index ? style.past : ""
                             }`}
                     />

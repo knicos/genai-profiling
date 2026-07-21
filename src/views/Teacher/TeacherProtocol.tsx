@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { UserInfo } from './userinfo';
 import { EventProtocol, ResponseData, UserEntry } from '@genaipg/protocol/protocol';
 import { Connection } from '@genai-fi/base';
-import { addUserName, getAllUsers, getUserName, getUserResponses } from './userState';
+import { addUserIntermission, addUserName, getAllUsers, getUserName, getUserResponses } from './userState';
 import { usePeerClose, usePeerData, usePeerSender, usePeerStatus } from '@genai-fi/base/hooks/peer';
 import { ConnectionStatus } from '@genai-fi/base';
 import { useAtomValue } from 'jotai';
@@ -47,9 +47,12 @@ export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onR
                 conn.send({
                     event: 'pg:responses',
                     userId: data.id,
-                    responses: Array.from(rep).map((r) => ({
-                        id: r[0],
-                        value: r[1],
+                    responses: Array.from(rep.entries()).map(([categoryId, questions]) => ({
+                        id: categoryId,
+                        questions: Array.from(questions.entries()).map(([questionId, value]) => ({
+                            id: questionId,
+                            value,
+                        })),
                     })),
                 });
             }
@@ -65,19 +68,21 @@ export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onR
                     const data: ProfileMeta = {
                         questions: localProfile.questions.questions,
                         forms: localProfile.questions.forms
-                    } 
+                    }
 
                     conn.send({
                         event: 'pg:profile',
                         data: data
                     })
-                } 
+                }
                 conn.send({ event: 'pg:config', material, lang });
             }
         } else if (data.event === 'pg:response') {
             onResponse(data.userId, data);
         } else if (data.event === 'pg:done') {
             onDone(data.done, data.id);
+        } else if (data.event == 'pg:intermission') {
+            addUserIntermission(data.userId, data.form, data.value);
         }
     });
 

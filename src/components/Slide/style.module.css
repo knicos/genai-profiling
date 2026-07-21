@@ -23,7 +23,7 @@
 .image {
     container-type: size;
     width: 100%;
-    height: 100%; 
+    height: 100%;
     display: flex;
     flex-direction: row;
     gap: 2rem;
@@ -76,4 +76,140 @@
     right: 1rem;
     bottom: 0.5rem;
     transform: scale(1.2);
+}
+
+.checkpoint {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.checpointInnerContainer {
+    display: inline-flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.checkpointCards {
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin: 1rem 1rem;
+}
+
+.chartContainer {
+    display: inline-flex;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    gap: 5rem;
+    justify-content: flex-end;
+}
+
+.chartInnerContainer {
+    width: 100%;
+    height: 95%;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 2rem;
+    box-shadow: 0px 0px 5px var(--dropShadow);
+    background-color: rgb(253, 252, 252);
+    border-radius: 50px;
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+}
+
+.textSection {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
+    text-align: right;
+    margin-left: 10px;
+}
+
+.innerParagraph {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.leftAlignment {
+    text-align: left;
+    align-items: flex-start;
+}
+
+.textAlignment {
+    display: inline-flex;
+    font-weight: bolder;
+    align-items: flex-end;
+    gap: 0.5rem;
+    font-size: xxx-large;
+}
+
+.revealButton {
+    padding: 10px 2rem;
+    border-radius: 50px;
+    max-width: fit-content;
+    align-items: center;
+    align-self: center;
+    font-size: x-large;
+    margin: 2rem 0;
+}
+
+.checkpointIcon {
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    margin: 2rem;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.checkpointIcon.confidence {
+    background-color: var(--secondary-light);
+    color: var(--purple);
+}
+
+.checkpointIcon.correctness {
+    background-color: var(--bg-ok);
+    color: var(--success);
+}
+
+.mediumTitle {
+    font-weight: bold;
+    white-space: pre-line;
+    font-size: x-large;
+}
+
+.mediumSubtitle {
+    white-space: pre-line;
+    color: var(--text-dark);
+    font-size: x-large;
+}
+
+.largeTitle {
+    font-size: 1.75em;
+    font-weight: bold;
+    line-height: 1.35;
+}
+
+.largerTitle {
+    font-size: 3em;
+    font-weight: bolder;
+    line-height: 1;
+    align-items: flex-end;
+    color: inherit;
 }

@@ -57,12 +57,9 @@ export function Component() {
         });
     }, []);
 
-    const doResponse = useCallback(
-        (id: string, data: ResponseData) => {
+    const doResponse = useCallback((id: string, data: ResponseData) => {
             addUserResponse(params.get('name') || 'NoName', id, data, profile?.slides[npage]);
-        },
-        [params, profile, npage]
-    );
+        },[params, profile, npage]);
 
     return (
         <>

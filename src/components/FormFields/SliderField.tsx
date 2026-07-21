@@ -1,5 +1,6 @@
 import { Slider } from '@mui/material';
 import { useEffect, useState } from 'react';
+import style from './style.module.css';
 
 interface Props {
     label: string;
@@ -32,7 +33,7 @@ export default function SliderField({ label, min, max, step = 1, range, value, o
 
     return (
         <fieldset style={{ border: 0, padding: 0, margin: 0, width: '100%' }}>
-            <legend>{label}</legend>
+            <legend className={style.fieldLabel}>{label}</legend>
             <Slider
                 style={{ marginTop: '2rem', marginLeft: '1rem', marginRight: '1rem', width: 'calc(100% - 2rem)' }}
                 value={v}

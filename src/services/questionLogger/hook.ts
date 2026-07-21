@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { addResponseListener, removeResponseListener } from './events';
 import { getResponse } from './logger';
-import { QuestionData } from '@genaipg/components/Question/types';
+import { Category, QuestionData } from '@genaipg/components/Question/types';
 
 export function useQuestionLogger(callback: (id: number, value: string) => void) {
     useEffect(() => {
@@ -13,12 +13,12 @@ export function useQuestionLogger(callback: (id: number, value: string) => void)
     }, [callback]);
 }
 
-function getAllResponses(questions: QuestionData[]) {
+function getAllResponses(questions: QuestionData[] | Category[] ) {
     const res = questions.map((q) => getResponse(q.id));
     return res;
 }
 
-export function useQuestionResponses(questions: QuestionData[]) {
+export function useQuestionResponses(questions: QuestionData[] | Category[] ) {
     const [responses, setResponses] = useState<string[]>([]);
     useEffect(() => {
         const handler = () => {
@@ -30,6 +30,30 @@ export function useQuestionResponses(questions: QuestionData[]) {
             removeResponseListener(handler);
         };
     }, [questions]);
+
+    return responses;
+}
+
+function getAllResp(category: Category) {
+    const res = category.questions.map((q) => getResponse(q.id));
+    return res;
+}
+
+export function useCategoryResponses(category: Category) {
+    const [responses, setResponses] = useState<string[]>([]);
+
+    useEffect(() => {
+        const handler = () => {
+            setResponses(getAllResp(category));
+        };
+
+        addResponseListener(handler);
+        setResponses(getAllResp(category));
+        return () => {
+            removeResponseListener(handler);
+        };
+
+    }, [category])
 
     return responses;
 }

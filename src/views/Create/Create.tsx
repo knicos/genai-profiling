@@ -54,7 +54,9 @@ export default function Create() {
             for (let i = 0; i < forms.forms.length; i++) {
                 if (forms.forms[i]?.includes(100)) {
                     slideData.splice(i, 0, { type: 'checkpoint' })
-                }
+                } 
+
+                slideData[i].form = i;
             }
         }
 

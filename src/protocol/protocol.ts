@@ -43,9 +43,10 @@ export interface ChangeFormEvent extends PeerEvent {
 export interface ResponseData {
     timestamp: number;
     date: string;
+    category: number;
     question: QuestionData | number;
-    value: string;
-    form: number;
+    value: string | string[];
+    form?: number;
 }
 
 export interface QuestionResponseEvent extends PeerEvent, ResponseData {
@@ -54,15 +55,33 @@ export interface QuestionResponseEvent extends PeerEvent, ResponseData {
     userId: string;
 }
 
+export interface IntermissionResponseData {
+    timestamp: number;
+    date: string;
+    value: string;
+    form: number
+}
+
+export interface IntermissionResponseEvent extends PeerEvent, IntermissionResponseData {
+    event: 'pg:intermission',
+    username: string,
+    userId: string;
+}
+
 export interface ResponseEntry {
     id: number;
-    value: string;
+    value: string | string[];
+}
+
+export interface CategoryEntry {
+    id: number;
+    questions: ResponseEntry[];
 }
 
 export interface ResponsesEvent extends PeerEvent {
     event: 'pg:responses';
     userId: string;
-    responses: ResponseEntry[];
+    responses: CategoryEntry[];
 }
 
 export type EventProtocol =
@@ -74,4 +93,5 @@ export type EventProtocol =
     | DoneEvent
     | ConfigEvent
     | UserListEvent
-    | ProfileZipEvent;
+    | ProfileZipEvent
+    | IntermissionResponseEvent;

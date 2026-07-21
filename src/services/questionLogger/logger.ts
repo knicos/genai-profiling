@@ -10,7 +10,7 @@ export function updateResponse(id: number, value: string) {
 
 export function updateAllResponses(responses: ResponseEntry[]) {
     responses.forEach((r) => {
-        state.set(r.id, r.value);
+         state.set(r.id, Array.isArray(r.value) ? r.value.join(',') : r.value);
     });
 }
 

@@ -21,7 +21,7 @@ export default function Slide({ meta, slides, doneCount, index }: Props) {
             <ProgressBar index={index} slides={slides}/>
             {meta.type === 'demo' && <DemoSlide meta={meta} />}
             {meta.type === 'question' && <QuestionSlide meta={meta} />}
-            {meta.type === 'checkpoint' && <CheckpointSlide />}
+            {meta.type === 'checkpoint' && meta.form && <CheckpointSlide form={meta.form} done={doneCount === 0}/>}
             {meta.type === 'image' && <ImageSlide meta={meta} />}
             {meta.type === 'board' && <BoardSlide meta={meta} />}
             {meta.form !== undefined && meta.form >= 0 && <Done count={doneCount || 0} />}

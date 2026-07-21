@@ -98,7 +98,7 @@ export function Component() {
                                 questions={selectedQuestions}
                             />
                         ) : (
-                            <Gameview formIndex={currentForm} />
+                            <Gameview onDone={setDone} formIndex={currentForm} />
                         )
                     )}
                 </Loading>
@@ -113,11 +113,10 @@ export function Component() {
                 <StudentProtocol
                     onAvailableUsers={setAvailable}
                     done={done}
+                    form={currentForm}
                     userID={MYID}
                     username={username}
                     onReady={doReady}
-                    questions={questions}
-                    form={currentForm}
                     onFormChange={doFormChange}
                     onConfig={doConfig}
                 />
