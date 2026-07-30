@@ -1,0 +1,20 @@
+.listIcon {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 40px;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--bg-blue);
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.listIcon.best {
+    color: var(--success);
+}
+
+.listIcon.worst {
+    color: var(--error);
+}

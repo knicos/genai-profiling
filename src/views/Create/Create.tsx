@@ -13,7 +13,7 @@ import { SlideMeta } from "@genaipg/components/Slide/types";
 export default function Create() {
     const { t } = useTranslation()
     const [questions, setQuestions] = useAtom(questionsAtom);
-    const [clues,] = useAtom(cluesAtom)
+    const clues = useAtomValue(cluesAtom)
     const forms = useAtomValue(formOrderAtom);
 
     useEffect(() => {
@@ -52,12 +52,28 @@ export default function Create() {
         if (Array.isArray(forms?.forms)) {
             /*Before implementing the add your own breaks  */
             for (let i = 0; i < forms.forms.length; i++) {
+                const isLastForm = i === forms.forms.length - 1;
+
                 if (forms.forms[i]?.includes(100)) {
                     slideData.splice(i, 0, { type: 'checkpoint' })
-                } 
+                }
 
-                slideData[i].form = i;
+                // If last available form push the collage
+                if (isLastForm) {
+                    slideData.push({
+                        type: "collage",
+                        form: i,
+                        id: i
+                    });
+                } else {
+                    slideData[i].form = i;
+                }
             }
+
+            // Lastly push ending slide
+            slideData.push({
+                type: "ending",
+            });
         }
 
         zip.file("slides.json", JSON.stringify(slideData, null, 2));

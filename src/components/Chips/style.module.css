@@ -1,0 +1,63 @@
+.answerChip {
+    display: inline-flex;
+    padding: 3px 18px;
+    background-color: var(--background);
+    color: var(--text-dark);
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.true {
+    background-color: var(--bg-ok);
+    color: var(--text-dark);
+    border: none;
+}
+
+.correctness {
+    display: inline-flex;
+    padding: 3px 15px;
+    border-radius: 30px;
+    font-size: x-large;
+}
+
+.correct {
+    background-color: white;
+    color: var(--success);
+    border: 2px solid var(--success);
+}
+
+.incorrect {
+    background-color: white;
+    border: 2px solid var(--error);
+    color: var(--error);
+}
+
+.medium {
+    background-color: white;
+    border: 2px solid var(--bg-colorful2);
+    color: var(--bg-colorful2);
+}
+
+.placementChip {
+    display: inline-flex;
+    padding: 2px 15px;
+    background-color: white;
+    color: var(--bg-blue);
+    border-radius: 30px;
+    width: fit-content;
+    margin-bottom: 0.25rem;
+    margin-left: -5px;
+    font-size: clamp(0.875rem, 1.25vw, 1rem);
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.best {
+    color: var(--success);
+}
+
+.worst {
+    color: var(--error);
+}

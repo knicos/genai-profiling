@@ -46,7 +46,7 @@ export interface ResponseData {
     category: number;
     question: QuestionData | number;
     value: string | string[];
-    form?: number;
+    form: number;
 }
 
 export interface QuestionResponseEvent extends PeerEvent, ResponseData {

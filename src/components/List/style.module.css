@@ -14,3 +14,129 @@
     margin: 5px 0;
     align-items: center;
 }
+
+.questionItem {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    border-bottom: 2px solid var(--bg-workspace);
+}
+
+.cardItem {
+    display: flex;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--paleBlue-dark) 60%, transparent);
+    border-radius: 20px;
+    margin: 10px;
+    max-height: 150px;
+    outline: 3px solid transparent;
+}
+
+.cardItem:hover {
+    background-color: var(--paleBlue-dark);
+    outline-color: color-mix(in srgb, var(--bg-blue) 40%, transparent);
+}
+
+.cardItem.best:hover {
+    background-color: color-mix(in srgb, var(--bg-ok) 70%, transparent);
+    outline-color: color-mix(in srgb, var(--bg-ok) 90%, transparent);
+}
+
+.cardItem.best {
+    background-color: color-mix(in srgb, var(--bg-ok) 50%, transparent);
+}
+
+.cardItem.worst {
+    background-color: color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.cardItem.worst:hover {
+    background-color: color-mix(in srgb, var(--error) 30%, transparent);
+    outline-color: color-mix(in srgb, var(--error) 40%, transparent);
+}
+
+.listIcon {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 40px;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--bg-blue);
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.listIcon.best {
+    color: var(--success);
+}
+
+.listIcon.worst {
+    color: var(--error);
+}
+
+.cardTitle {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.cardTitle p {
+    font-size: clamp(0.875rem, 1.25vw, 1rem);
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.cardContent {
+    display: inline-flex;
+    width: 100%;
+    gap: 0.25rem;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+.placementChip {
+    display: inline-flex;
+    padding: 2px 15px;
+    background-color: white;
+    color: var(--bg-blue);
+    border-radius: 30px;
+    width: fit-content;
+    margin-bottom: 0.25rem;
+    margin-left: -5px;
+}
+
+.placementChip.best {
+    color: var(--success);
+}
+
+.placementChip.worst {
+    color: var(--error);
+}
+
+.titleGroup {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    flex: 1;
+}
+
+.titleGroup h3 {
+    font-size: clamp(0.875rem, 1.25vw, 1rem);
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 0;
+    white-space: pre-line;
+}
+
+.titleGroup p {
+    font-size: clamp(0.75rem, 1vw, 0.85rem);
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.6;
+}

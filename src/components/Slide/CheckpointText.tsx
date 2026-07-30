@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import style from './style.module.css';
 
 interface Props {
@@ -11,9 +10,9 @@ interface Props {
 export default function CheckpointText({color, label, children, alignment} : Props) {
     return(
         <div className={style.textSection} style={{ alignItems: alignment }}>
-            <Typography variant='h5' color={color} fontWeight={'bold'}>
+            <span className={style.label} style={{color: `${color}`}}>
                 {label}
-            </Typography>
+            </span>
             {children}
         </div>
     )

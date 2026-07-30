@@ -32,7 +32,7 @@ export function CheckpointSlide({ form, done }: Props) {
 
     // useEffect animates the numeric values. 
     useEffect(() => {
-        if (!displayCorrectness) {
+        if (!displayCorrectness || correctness.correct === 0) {
             setCorrectValue(0);
             return;
         }
@@ -120,20 +120,20 @@ export function CheckpointSlide({ form, done }: Props) {
                             color="var(--purple)"
                         >
                             <div className={style.innerParagraph}>
-                                <span className={style.mediumTitle}>
+                                <h1>
                                     {t("game.checkpoint.confidence.title")}
-                                </span>
-                                <div className={style.textAlignment} style={{ color: 'var(--purple)' }}>
-                                    <span className={style.largerTitle}>
+                                </h1>
+                                <div className={style.score} style={{ color: 'var(--purple)' }}>
+                                    <p>
                                         {displayValue}
-                                    </span>
-                                    <span className={style.largeTitle}>
-                                        %
-                                    </span>
+                                        <span className={style.subDisplay}>
+                                            %
+                                        </span>
+                                    </p>
                                 </div>
-                                <span className={style.mediumSubtitle}>
+                                <p>
                                     {getConfidenceText()}
-                                </span>
+                                </p>
                             </div>
                         </CheckpointText>
                         <BasicBar value={displayValue} />
@@ -155,21 +155,20 @@ export function CheckpointSlide({ form, done }: Props) {
                                 alignment="flex-start"
                             >
                                 <div className={`${style.innerParagraph} ${style.leftAlignment}`}>
-                                    <span className={style.mediumTitle}>
+                                    <h1>
                                         {t("game.checkpoint.correctness.title")}
-                                    </span>
-                                    <div className={style.textAlignment} style={{ color: 'var(--success)' }}>
-                                        <span className={style.largerTitle}>
+                                    </h1>
+                                    <div className={style.score} style={{ color: 'var(--success)' }}>
+                                        <p>
                                             {!displayCorrectness ? '0' : correctValue}
-                                        </span>
-                                        <span className={style.largeTitle} style={{ color: "var(--text-dark)" }}>
-                                            /{correctness.total}
-                                        </span>
-
+                                            <span className={style.subDisplay} style={{ color: "var(--text-dark)" }}>
+                                                /{correctness.total}
+                                            </span>
+                                        </p>
                                     </div>
-                                    <span className={style.mediumSubtitle}>
+                                    <p>
                                         {getCorrectnessText()}
-                                    </span>
+                                    </p>
                                 </div>
                             </CheckpointText>
                             <span className={`${style.checkpointIcon} ${style.correctness}`}>

@@ -41,3 +41,4 @@ export const updateAllResponseAtom = atom(
         set(responseAtom, next);
     }
 )
+

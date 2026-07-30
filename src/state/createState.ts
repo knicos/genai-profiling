@@ -264,6 +264,10 @@ export const createFormOrder = atom(
                 withBreaks.push([BREAK]);
         }
 
+        // Collage slide where every clue is available and every category.
+        const collageForm: number[] = categories.map(c => c.id);
+        withBreaks.push(collageForm);
+
         set(formOrderAtom, {
             level: payload.level,
             forms: withBreaks,

@@ -36,12 +36,11 @@ export default function StudentProtocol({
     const setForm = useSetAtom(formAtom);
     const updateAll = useSetAtom(updateAllResponseAtom)
     const intermissions = useAtomValue(intermissionAtom);
-    
+
 
     function isCategoryEntries(responses: ResponseEntry[] | CategoryEntry[]): responses is CategoryEntry[] {
         return (responses[0] as CategoryEntry)?.questions !== undefined;
     }
-
     usePeerData(async (data: EventProtocol) => {
         if (data.event === 'pg:changeform') {
             onFormChange(data.form);
@@ -83,10 +82,11 @@ export default function StudentProtocol({
                     date: new Date().toISOString(),
                     username,
                     userId: userID,
+                    form: form
                 })
             }
         },
-        [send, username, userID]
+        [send, username, userID, form]
     )
 
     useResponseLogger(logResponses);

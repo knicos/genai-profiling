@@ -1,11 +1,19 @@
-import { Category, QuestionData } from '@genaipg/components/Question/types';
-import { SlideMeta } from '@genaipg/components/Slide/types';
+import { LocalProfile } from '@genaipg/components/ContentLoaders/types';
+import { Category, QuestionData, QuestionType } from '@genaipg/components/Question/types';
+import { SlideCollage, SlideDemo, SlideMeta } from '@genaipg/components/Slide/types';
 import { ResponseData } from '@genaipg/protocol/protocol';
 import { emitIntermissionEvent } from '@genaipg/services/intermissionLogger/events';
 import { useCallback, useEffect } from 'react';
 
+interface ResponseSnapshot {
+    form: number;
+    responses: Map<number, Map<number, string | string[]>>;
+}
+
 export interface UserState {
     name: string;
+    form: number;
+    history: ResponseSnapshot[];
     responses: Map<number, Map<number, string | string[]>>;
     intermission: Map<number, string>;
 }
@@ -42,6 +50,8 @@ const logs: LogData[] = [];
 export function addUserResponse(className: string, id: string, data: ResponseData, slide?: SlideMeta) {
     const userState = state.get(id) || {
         name: '',
+        form: 0,
+        history: [],
         responses: new Map<number, Map<number, string | string[]>>(),
         intermission: new Map<number, string>(),
     };
@@ -65,6 +75,15 @@ export function addUserResponse(className: string, id: string, data: ResponseDat
 
     const questionId = typeof data.question === 'number' ? data.question : data.question.id;
     userState.responses.get(data.category)!.set(questionId, data.value);
+    userState.history.push({
+        form: data.form,
+        responses: new Map(
+            [...userState.responses.entries()].map(([categoryId, questions]) => [
+                categoryId,
+                new Map(questions),
+            ])
+        ),
+    });
 
     if (typeof data.question !== 'number')
         questionRecord.set(questionId, data.question);
@@ -75,6 +94,8 @@ export function addUserResponse(className: string, id: string, data: ResponseDat
 export function addUserIntermission(id: string, checkpointId: number, value: string) {
     const userState = state.get(id) || {
         name: '',
+        form: 0,
+        history: [],
         responses: new Map<number, Map<number, string | string[]>>(),
         intermission: new Map<number, string>(),
     };
@@ -97,6 +118,8 @@ export function addTeacherLog(className: string, form: number, slide?: SlideMeta
 export function addUserName(id: string, name: string) {
     const userState = state.get(id) || {
         name,
+        form: 0,
+        history: [],
         responses: new Map<number, Map<number, string | string[]>>(),
         intermission: new Map<number, string>(),
         log: [],
@@ -134,6 +157,8 @@ export function usePersistentData(code: string) {
                 addUserName(u.id, u.name);
                 const userState = state.get(u.id) || {
                     name: '',
+                    form: 0,
+                    history: [],
                     responses: new Map<number, Map<number, string | string[]>>(),
                     intermission: new Map<number, string>(),
                     log: [],
@@ -172,7 +197,7 @@ export function getUserData() {
 export function getFakeUserData(size: number) {
     const fake: UserState[] = [];
     for (let i = 0; i < size; ++i) {
-        fake.push({ name: `Name${i}`, responses: new Map<number, Map<number, string | string[]>>(), intermission: new Map<number, string>() });
+        fake.push({ name: `Name${i}`, form: 0, history: [], responses: new Map<number, Map<number, string | string[]>>(), intermission: new Map<number, string>() });
     }
     return fake;
 }
@@ -212,13 +237,16 @@ export function getIntermissionAverage(checkpointId: number): number {
 function scoreQuestion(question: QuestionData, response: string | string[]) {
     switch (question.type) {
         case 'slider': {
-            if (question.correct) {
+            if (question.correct !== undefined && question.correct !== null) {
                 const guess = Number(response);
-                const range = question.max - question.min;
+                const correct = Number(question.correct);
+                const min = Number(question.min);
+                const max = Number(question.max);
+                const range = max - min;
 
                 return Math.max(
                     0,
-                    1 - Math.abs((guess - question.correct) / range)
+                    1 - Math.abs((guess - correct) / range)
                 );
             }
             return 0;
@@ -293,4 +321,224 @@ export function getIntermissionCorrect(categories: Category[] | undefined) {
         correct: Math.round(totalCorrect / users.length),
         total: categories.length,
     };
+}
+
+function getSnapshotAtForm(userId: string, form: number) {
+    const user = state.get(userId);
+    if (!user) return;
+
+    const history = user.history;
+
+    for (let i = history.length - 1; i >= 0; i--) {
+        if (history[i].form <= form) {
+            return history[i];
+        }
+    }
+}
+
+export function scoreUserAtForm(userId: string, form: number, profile: LocalProfile | undefined) {
+    const user = state.get(userId);
+    if (!user || !profile) return 0;
+
+    const snapshot = getSnapshotAtForm(userId, form);
+    if (!snapshot || !profile) return 0;
+
+    let total = 0;
+    const count = profile.questions.questions.length;
+
+    for (const category of profile.questions.questions) {
+        const responses = snapshot.responses.get(category.id);
+        if (!responses) continue;
+
+        total += scoreCategory(category, responses);
+    }
+
+    return count === 0 ? 0 : total / count;
+}
+
+function scoreCategoryFromSnapshot(snapshot: ResponseSnapshot | undefined, category: Category) {
+    if (!snapshot) return 0;
+
+    const responses = snapshot.responses.get(category.id);
+    return responses ? scoreCategory(category, responses) : 0;
+}
+
+export type InfluentialClue = {
+    clue: SlideDemo | SlideCollage;
+    studentsImproved: number;
+    studentsWorsened: number;
+    netChange: number;
+};
+
+export function getTopInfluentialClues(profile: LocalProfile | undefined) {
+    if (!profile) return [];
+
+    const clues = profile.slides.filter(slide => slide.type === "demo" || slide.type === "collage");
+    const users = getAllUsers();
+
+
+    const results = clues.map(clue => {
+        const change = new Map<number, number>();
+
+        const form = clue.form ?? 0;
+
+        const snapshots = users.map(userId => ({
+            before: form > 0 ? getSnapshotAtForm(userId, form - 1) : undefined,
+            after: getSnapshotAtForm(userId, form),
+        }));
+
+        snapshots.forEach(({ before, after }) => {
+            let studentDelta = 0;
+
+            for (const category of profile.questions.questions) {
+                const beforeScore = scoreCategoryFromSnapshot(before, category);
+                const afterScore = scoreCategoryFromSnapshot(after, category);
+
+                if (afterScore > beforeScore) {
+                    studentDelta++;
+                } else if (afterScore < beforeScore) {
+                    studentDelta--;
+                }
+            }
+
+            if (studentDelta !== 0) {
+                change.set(studentDelta, (change.get(studentDelta) ?? 0) + 1);
+            }
+        });
+
+        if (change.size === 0) {
+            return {
+                clue,
+                studentsImproved: 0,
+                studentsWorsened: 0,
+                netChange: 0,
+            } satisfies InfluentialClue;
+        }
+
+        const [key, value] = [...change.entries()].reduce((max, entry) =>
+            entry[1] > max[1] ? entry : max
+        );
+
+        return {
+            clue,
+            studentsImproved: key >= 0 ? value : 0,
+            studentsWorsened: key < 0 ? value : 0,
+            netChange: key,
+        } satisfies InfluentialClue;
+    });
+
+    const sorted = [...results].sort((a, b) => b.netChange - a.netChange);
+
+    const hasNegative = sorted.some(r => r.netChange < 0);
+
+    return hasNegative
+        ? [...sorted.slice(0, 2), sorted[sorted.length - 1]]
+        : sorted.slice(0, 3);
+}
+
+export type popularQuestion = {
+    id: number;
+    type?: QuestionType;
+    text: string;
+    correct: string | string[] | number;
+    popular: string | string[] | number | null;
+    isCorrect: boolean;
+}
+
+export type popularCategory = {
+    id: number;
+    label: string;
+    questions: popularQuestion[];
+    isCorrect: 'correct' | 'medium' | 'incorrect';
+}
+
+export function getCorrectAnswers(categories: Category[]): popularCategory[] {
+    const users = Array.from(state.values());
+    const result: popularCategory[] = [];
+
+    for (const category of categories) {
+        const questions: popularQuestion[] = [];
+        for (const question of category.questions) {
+
+            switch (question.type) {
+                case 'slider':
+                case 'singlechoice':
+                case 'multichoice':
+                    break;
+                default:
+                    continue;
+            }
+
+            if (question.correct === undefined) {
+                continue;
+            }
+            const count = new Map<string, number>();
+
+            for (const user of users) {
+                const responses = user.responses.get(category.id);
+                if (!responses) continue;
+
+                const answer = responses.get(question.id);
+                if (!answer) continue;
+
+                const key = JSON.stringify(answer);
+                count.set(key, (count.get(key) ?? 0) + 1);
+            }
+
+            let popular: string | string[] | number | undefined;
+            let popularValue: string | string[] | undefined;
+            let max = 0;
+
+            for (const [key, counts] of count) {
+                if (counts > max) {
+                    max = counts;
+                    const value = JSON.parse(key);
+                    popularValue = typeof value === "number"
+                        ? String(value)
+                        : value
+
+                    popular = Array.isArray(value)
+                        ? value.join(", ")
+                        : value;
+                }
+            }
+
+            questions.push({
+                id: question.id,
+                type: question.type,
+                text: question.text,
+                correct: Array.isArray(question.correct)
+                    ? question.correct.join(", ")
+                    : question.correct,
+                popular: popular ? popular : null,
+                isCorrect:
+                    popularValue === undefined ?
+                        false :
+                        scoreQuestion(
+                            question,
+                            popularValue
+                        ) >= 0.95,
+            });
+        }
+
+        const correctCount = questions.filter(q => q.isCorrect).length;
+        const ratio =
+            questions.length === 0
+                ? 0
+                : correctCount / questions.length;
+
+        result.push({
+            id: category.id,
+            label: category.category,
+            questions,
+            isCorrect:
+                ratio >= 0.85
+                    ? 'correct'
+                    : ratio >= 0.5
+                        ? 'medium'
+                        : 'incorrect',
+        });
+    }
+
+    return result;
 }

@@ -2,7 +2,7 @@ import { Category, QuestionData } from "../Question/types";
 import { SlideMeta } from "../Slide/types";
 
 export interface LoadedQuestions {
-    questions: QuestionData[] | Category[];
+    questions: Category[];
     forms: number[][];
 }
 

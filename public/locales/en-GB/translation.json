@@ -162,11 +162,37 @@
                 "medium": "On the right track,\nkeep going!",
                 "high": "Great job!\nYou got it."
             }
+        },
+        "ending": {
+            "noAnswers": "No answers",
+            "close": "Close",
+            "profileTitle": "Mystery profile",
+            "profileSubtitle": "@mysteryprofile",
+            "noCategory": "Choose a category which answers you'd like to see.",
+            "calculating": "Analyzing answers...",
+            "revealButton": "Reveal correct profile",
+            "popularTitle": "If the class had made the profile...",
+            "correctTitle": "Correct",
+            "correctProfile": "Correct profile",
+            "influentialClues": {
+                "title": "Most influential clues",
+                "reasoning": "{{count}} people changed their answers.", 
+                "reasoningSingle": "{{count}} person changed their answer.",
+                "correctCount": "{{value}} Correct", 
+                "best": "Best",
+                "second": "Second best",
+                "third": "Third best",
+                "worst": "Most confusing"
+            },
+            "revealTimeline": "Reveal timeline",
+            "timelineTitle": "How did each clue affect your answers?",
+            "collageTitle": "Make any last-minute changes to\n the person's profile."
         }
     },
     "student": {
         "mysteryPerson": "Mystery Person",
-        "solve": "Mystery"
+        "solve": "Mystery",
+        "revealButton": "Reveal correct profile"
     },
     "app": {
         "selectProfile": "Select a profile"

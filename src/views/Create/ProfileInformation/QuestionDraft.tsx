@@ -72,6 +72,20 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
         }
     }
 
+    const selectQuestionType = (selectedLabel: string) => {
+        const selectedKey = (Object.keys(questionTypeOptions) as QuestionType[])
+            .find((key) => questionTypeOptions[key] === selectedLabel);
+
+        if (!selectedKey) return;
+
+        handleChanges(category.category, "type", selectedKey);
+
+        if (selectedKey === "slider") {
+            handleChanges(category.category, "min", 0);
+            handleChanges(category.category, "max", 100);
+        }
+    }
+
     return (
         <div className={style.draftContainer}>
             <TextArea
@@ -85,14 +99,7 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
                 label={t('create.profileInformation.questionType')}
                 value={draft?.type ? questionTypeOptions[draft.type] : ''}
                 options={Object.values(questionTypeOptions)}
-                onChange={(selectedLabel) => {
-                    const selectedKey = (Object.keys(questionTypeOptions) as QuestionType[])
-                        .find((key) => questionTypeOptions[key] === selectedLabel);
-
-                    if (selectedKey) {
-                        handleChanges(category.category, "type", selectedKey);
-                    }
-                }}
+                onChange={(selectedLabel) => selectQuestionType(selectedLabel)}
                 placeholder={t('create.profileInformation.questionTypePlaceholder')}
             />
             {draft?.type === 'slider' &&
@@ -165,7 +172,7 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
             }
             <div className={style.buttonContainer}>
                 <Button
-                    startIcon={<Clear/>}
+                    startIcon={<Clear />}
                     variant="outlined"
                     onClick={onSubmit}
                 >

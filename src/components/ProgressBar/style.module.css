@@ -17,12 +17,20 @@
     min-width: 18px;        
 }
 
+.segment.dark {
+     background: var(--light-element);
+}
+
 .segment.selected {
     border-color: var(--purple);
 }
 
 .segment.past {
     background: var(--purple);
+}
+
+.segment.pastDark {
+    background: var(--primary-dark);
 }
 
 .separator {
