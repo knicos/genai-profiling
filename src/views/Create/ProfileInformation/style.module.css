@@ -67,6 +67,21 @@
     border-top: 2px solid var(--background);
 }
 
+.questionsContainer {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid var(--background);
+    gap: 0.5rem;
+}
+
+.questionsContainer h4 {
+    margin: 0;
+    font-size: larger;
+    color: var(--text-dark);
+    font-weight: bold;
+    padding-top: 0.5rem;
+}
+
 .fieldSubLabel {
     font-size: medium;
     font-weight: bold;

@@ -2,7 +2,6 @@ import { popularCategory } from "@genaipg/views/Teacher/userState";
 import style from './style.module.css'
 import { Box, List } from "@mui/material";
 import { IconButton } from "@genaipg/components/Button/IconButton";
-import ImageIcon from '@mui/icons-material/Image';
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
@@ -10,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LoadingBar from "@genaipg/components/ProgressBar/LoadingBar";
 import QuestionResult from "../../Question/QuestionResult";
+import Icon from "@genaipg/components/Icons/Icon";
 
 
 interface Props {
@@ -46,7 +46,7 @@ export default function CategoryCard({ category, currentIndex, revealedCategorie
                             style={{ margin: '0.75rem' }}
                         >
                             <span className={style.categoryIcon}>
-                                <ImageIcon fontSize="inherit" />
+                                <Icon icon={category.icon} />
                             </span>
                             <h2>
                                 {category.label}

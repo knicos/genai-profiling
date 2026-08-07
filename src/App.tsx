@@ -8,7 +8,7 @@ import Loading from './components/Loading/Loading';
 import ConfigurationForm from './views/ConfigurationForm/ConfigurationForm';
 import About from './views/About/About';
 import Create from './views/Create/Create';
-import { QuestionForm } from './views/Create/ProfileInformation/QuestionForm';
+import { ProfileInformation } from './views/Create/ProfileInformation/ProfileInformation';
 import { ClueCreation } from './views/Create/Clues/ClueCreation';
 import ConfirmationView from './views/Create/Confirmation/ConfirmationView';
 import Session from './views/Teacher/Session';
@@ -64,7 +64,7 @@ const routes = createRoutesFromElements(
             <Route index element={<Navigate replace to="/create/profile" />} />
             <Route
                 path="profile"
-                element={<QuestionForm />}
+                element={<ProfileInformation />}
             />
             <Route
                 path="clues"

@@ -3,9 +3,10 @@ import { SlideMeta } from '../Slide/types';
 import ContentLoader from '@genai-fi/base/components/ContentLoader';
 import { ZipData } from '@genai-fi/base/util/zip';
 import { addImage } from '@genaipg/services/images/images';
-import { LoadedQuestions, Manifest } from './types';
+import { Manifest } from './types';
 import { useAtom, useSetAtom } from 'jotai';
 import { profileAtom, profileURLAtom } from '@genaipg/state/profileState';
+import { Category } from '../Question/types';
 
 interface Props {
     lang: string;
@@ -56,7 +57,7 @@ export default function ProfileLoader({ lang, profile, onError }: Props) {
 
             if ('slides' in data) {
                 setLocalProfile(prev => ({
-                    ...(prev ?? { slides: [], images: {}, questions: { questions: [], forms: [] } }),
+                    ...(prev ?? { slides: [], images: {}, categories: [], forms: [] }),
                     slides: data.slides as SlideMeta[],
                 }));
             }
@@ -65,7 +66,7 @@ export default function ProfileLoader({ lang, profile, onError }: Props) {
                 data.images.forEach((content, name) => {
                     addImage(name, content);
                     setLocalProfile(prev => ({
-                        ...(prev ?? { slides: [], images: {}, questions: { questions: [], forms: [] } }),
+                        ...(prev ?? { slides: [], images: {}, categories: [], forms: [] }),
                         images: {
                             ...(prev?.images ?? {}),
                             [name]: content,
@@ -74,13 +75,24 @@ export default function ProfileLoader({ lang, profile, onError }: Props) {
                 });
             }
 
-            if ('questions' in data) {
+            if ("questions" in data) {
+                const questionsData = data.questions as {
+                    questions: Category[];
+                    forms: number[][];
+                };
 
                 setLocalProfile(prev => ({
-                    ...(prev ?? { slides: [], images: {}, questions: { questions: [], forms: [] } }),
-                    questions: data.questions as LoadedQuestions
+                    ...(prev ?? {
+                        slides: [],
+                        images: {},
+                        categories: [],
+                        forms: [],
+                    }),
+                    categories: questionsData.questions,
+                    forms: questionsData.forms,
                 }));
             }
+            
         }, [setLocalProfile]);
 
     return profileURL ? (

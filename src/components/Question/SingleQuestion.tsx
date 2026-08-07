@@ -5,9 +5,10 @@ interface Props {
     question: QuestionChoice;
     value: string;
     onChange: (field: number, value: string) => void;
+    disabled?: boolean;
 }
 
-export default function SingleQuestion({ question, value, onChange }: Props) {
+export default function SingleQuestion({ question, value, onChange, disabled }: Props) {
     return (
         <SelectField 
             label={question.text}
@@ -15,6 +16,7 @@ export default function SingleQuestion({ question, value, onChange }: Props) {
             value={value}
             onChange={v => onChange(question.id, v)}
             placeholder={question.default}
+            disabled={disabled}
         />
     );
 }

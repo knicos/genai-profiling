@@ -1,4 +1,5 @@
-import { LocalProfile } from '@genaipg/components/ContentLoaders/types';
+import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
+import { IconType } from '@genaipg/components/Icons/type';
 import { Category, QuestionData, QuestionType } from '@genaipg/components/Question/types';
 import { SlideCollage, SlideDemo, SlideMeta } from '@genaipg/components/Slide/types';
 import { ResponseData } from '@genaipg/protocol/protocol';
@@ -336,7 +337,7 @@ function getSnapshotAtForm(userId: string, form: number) {
     }
 }
 
-export function scoreUserAtForm(userId: string, form: number, profile: LocalProfile | undefined) {
+export function scoreUserAtForm(userId: string, form: number, profile: ProfileMeta | undefined) {
     const user = state.get(userId);
     if (!user || !profile) return 0;
 
@@ -344,9 +345,9 @@ export function scoreUserAtForm(userId: string, form: number, profile: LocalProf
     if (!snapshot || !profile) return 0;
 
     let total = 0;
-    const count = profile.questions.questions.length;
+    const count = profile.categories.length;
 
-    for (const category of profile.questions.questions) {
+    for (const category of profile.categories) {
         const responses = snapshot.responses.get(category.id);
         if (!responses) continue;
 
@@ -370,7 +371,7 @@ export type InfluentialClue = {
     netChange: number;
 };
 
-export function getTopInfluentialClues(profile: LocalProfile | undefined) {
+export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
     if (!profile) return [];
 
     const clues = profile.slides.filter(slide => slide.type === "demo" || slide.type === "collage");
@@ -390,7 +391,7 @@ export function getTopInfluentialClues(profile: LocalProfile | undefined) {
         snapshots.forEach(({ before, after }) => {
             let studentDelta = 0;
 
-            for (const category of profile.questions.questions) {
+            for (const category of profile.categories) {
                 const beforeScore = scoreCategoryFromSnapshot(before, category);
                 const afterScore = scoreCategoryFromSnapshot(after, category);
 
@@ -448,6 +449,7 @@ export type popularQuestion = {
 export type popularCategory = {
     id: number;
     label: string;
+    icon: IconType;
     questions: popularQuestion[];
     isCorrect: 'correct' | 'medium' | 'incorrect';
 }
@@ -517,7 +519,7 @@ export function getCorrectAnswers(categories: Category[]): popularCategory[] {
                         scoreQuestion(
                             question,
                             popularValue
-                        ) >= 0.95,
+                        ) >= 1,
             });
         }
 
@@ -530,6 +532,7 @@ export function getCorrectAnswers(categories: Category[]): popularCategory[] {
         result.push({
             id: category.id,
             label: category.category,
+            icon: category.icon,
             questions,
             isCorrect:
                 ratio >= 0.85

@@ -9,6 +9,7 @@ interface Props {
     value: string;
     onChange: (value: string) => void;
     placeholder?: string;
+    disabled?: boolean;
 }
 
 const MenuProps = {
@@ -36,7 +37,7 @@ const CustomSelectIcon = forwardRef<SVGSVGElement>((props, ref) => (
     />
 ));
 
-export default function SelectField({ label, options, value = '', onChange, placeholder }: Props) {
+export default function SelectField({ label, options, value = '', onChange, placeholder, disabled }: Props) {
     return (
         <fieldset style={{ border: 0, padding: 0, margin: 0, width: '100%' }}>
             <legend className={style.fieldLabel}>
@@ -47,6 +48,7 @@ export default function SelectField({ label, options, value = '', onChange, plac
                 displayEmpty
                 value={value}
                 onChange={e => onChange(e.target.value)}
+                disabled={disabled}
                 renderValue={selected => selected || placeholder}
                 IconComponent={CustomSelectIcon}
                 sx={{

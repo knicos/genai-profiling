@@ -13,6 +13,7 @@ import StudentPreview from "./StudentPreview";
 import style from './style.module.css'
 import { useTranslation } from "react-i18next";
 import { MenuItem, Select } from "@mui/material";
+import { INTERMISSION_FORM_ID } from "@genaipg/constants/formIds";
 
 export default function ConfirmationView() {
     const { t } = useTranslation();
@@ -34,7 +35,7 @@ export default function ConfirmationView() {
         const result: SlideMeta[] = [...base];
 
         for (let i = 0; i < forms.forms.length; i++) {
-            if (forms.forms[i]?.includes(100)) {
+            if (forms.forms[i]?.includes(INTERMISSION_FORM_ID)) {
                 result.splice(i, 0, { type: 'checkpoint' });
             }
         }

@@ -1,4 +1,4 @@
-import { deleteCategory, questionsAtom } from "@genaipg/state/createState";
+import { deleteCategory, questionsAtom, updateCategoryAtom } from "@genaipg/state/createState";
 import { useAtom, useSetAtom } from "jotai";
 import style from './style.module.css'
 import AccordionSection from "@genaipg/components/Accordion/Accordion";
@@ -11,9 +11,12 @@ import { Category, QuestionData } from "@genaipg/components/Question/types";
 import QuestionDraft from "./QuestionDraft";
 import MysteryProfileIcon from "@genaipg/components/Icons/MysteryProfileIcon";
 import { QuestionsList } from "./QuestionsList";
+import IconPicker from "@genaipg/components/FormFields/IconPicker";
+import { IconType } from "@genaipg/components/Icons/type";
 
-export function QuestionForm() {
+export function ProfileInformation() {
     const handleCategoryDelete = useSetAtom(deleteCategory);
+    const updateCategory = useSetAtom(updateCategoryAtom);
     const [categories, setCategories] = useAtom(questionsAtom);
     const [drafts, setDrafts] = useState<Record<string, Partial<QuestionData>>>({});
     const [addingCategory, setAddingCategory] = useState(false);
@@ -44,6 +47,15 @@ export function QuestionForm() {
         }))
     }
 
+    const updateCategoryIcon = (categoryId: number, icon: IconType ) => {
+        updateCategory({
+            categoryId,
+            updates: {
+                icon
+            },
+        })
+    }
+
     const addNewCategory = () => {
         const name = newCategoryName?.trim();
         if (!name) return;
@@ -54,7 +66,7 @@ export function QuestionForm() {
 
         if (isDuplicate) return;
 
-        const newCat: Category = { id: categories.length + 1, category: name, questions: [] }
+        const newCat: Category = { id: categories.length + 1, category: name, questions: [], icon: 'default' }
         setCategories(prev => [...prev, newCat]);
         setAddingCategory(false);
         setNewCategoryName('');
@@ -71,26 +83,32 @@ export function QuestionForm() {
                         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{t('create.profileInformation.title')}</Typography>
                         <Typography variant="body1">{t('create.profileInformation.description')}</Typography>
                     </div>
-
                 </div>
-
-                <Typography variant="h6"  sx={{ fontWeight: 'normal', color: '#444' }}>  Profile information </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'normal', color: '#444' }}>  Profile information </Typography>
                 {categories.map((cat) => (
                     <AccordionSection key={cat.id} label={cat.category} onDelete={() => handleCategoryDelete({ category: cat.category })}>
-                        {cat.questions.length > 0 ? (
-                            <QuestionsList category={cat}  handleEdit={handleEdit}/>
-                        ) : (
-                            <Typography
-                                sx={{
-                                    fontStyle: 'italic',
-                                    padding: '1rem'
-                                }}
-                                variant="body2"
-                                color="text.secondary"
-                            >
-                                {t('create.profileInformation.noQuestions')}
-                            </Typography>
-                        )}
+                        <IconPicker 
+                            label={t("create.profileInformation.iconLabel")} 
+                            icon={cat.icon}
+                            updateIcon={(icon) => updateCategoryIcon(cat.id, icon)}
+                        />
+                        <div className={style.questionsContainer}>
+                            <h4>{t('create.profileInformation.questions')}</h4>
+                            {cat.questions.length > 0 ? (
+                                <QuestionsList category={cat} handleEdit={handleEdit} />
+                            ) : (
+                                <Typography
+                                    sx={{
+                                        fontStyle: 'italic',
+                                        padding: '1rem'
+                                    }}
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    {t('create.profileInformation.noQuestions')}
+                                </Typography>
+                            )}
+                        </div>
                         <QuestionDraft
                             category={cat}
                             editing={editingQuestion}

@@ -9,6 +9,7 @@ import { cluesAtom, formOrderAtom, questionsAtom } from "@genaipg/state/createSt
 import { buildInitialQuestions } from "@genaipg/util/buildInitialQuestions";
 import style from './style.module.css';
 import { SlideMeta } from "@genaipg/components/Slide/types";
+import { INTERMISSION_FORM_ID, REVEAL_PROFILE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
 
 export default function Create() {
     const { t } = useTranslation()
@@ -46,38 +47,51 @@ export default function Create() {
                     }
                 });
             }
-
         }
 
-        if (Array.isArray(forms?.forms)) {
-            /*Before implementing the add your own breaks  */
-            for (let i = 0; i < forms.forms.length; i++) {
-                const isLastForm = i === forms.forms.length - 1;
+        const exportedForms = forms?.forms ? [...forms.forms] : [];
 
-                if (forms.forms[i]?.includes(100)) {
-                    slideData.splice(i, 0, { type: 'checkpoint' })
+        if (Array.isArray(exportedForms) && exportedForms.length > 0) {
+            /*Before implementing the add your own breaks  */
+            for (let i = 0; i < exportedForms.length; i++) {
+                const isLastForm = i === exportedForms.length - 1;
+
+                if (exportedForms[i]?.includes(INTERMISSION_FORM_ID)) {
+                    slideData.splice(i, 0, { type: "checkpoint" });
                 }
 
-                // If last available form push the collage
                 if (isLastForm) {
                     slideData.push({
                         type: "collage",
                         form: i,
-                        id: i
+                        id: i,
                     });
                 } else {
                     slideData[i].form = i;
                 }
             }
 
-            // Lastly push ending slide
+            exportedForms.push([REVEAL_PROFILE_FORM_ID]); 
+            exportedForms.push([TIMELINE_FORM_ID]); 
+
             slideData.push({
                 type: "ending",
+                form: exportedForms.length - 2, 
+                steps: [
+                    {
+                        id: "revealProfile",
+                        form: exportedForms.length - 2,
+                    },
+                    {
+                        id: "timeline",
+                        form: exportedForms.length - 1,
+                    },
+                ],
             });
         }
 
         zip.file("slides.json", JSON.stringify(slideData, null, 2));
-        zip.file("questions.json", JSON.stringify({ questions, forms: forms?.forms }, null, 2));
+        zip.file("questions.json", JSON.stringify({ questions, forms: exportedForms }, null, 2));
 
         const blob = await zip.generateAsync({ type: "blob" });
 

@@ -4,7 +4,7 @@ import ContentLoader from '@genai-fi/base/components/ContentLoader';
 import { ZipData } from '@genai-fi/base/util/zip';
 import { Manifest } from './types';
 import { useAtom, useSetAtom } from 'jotai';
-import { formAtom, profileURLAtom } from '@genaipg/state/profileState';
+import { profileAtom, profileURLAtom } from '@genaipg/state/profileState';
 
 interface Props {
     lang: string;
@@ -20,7 +20,7 @@ const LOCAL_PROFILE_KEY = 'custom';
 export default function QuestionLoader({ lang, profile, onForms, onQuestions, onError }: Props) {
     const [manifest, setManifest] = useState<Manifest>();
     const [profileURL, setProfileURL] = useAtom(profileURLAtom);
-    const setForm = useSetAtom(formAtom)
+    const setProfile = useSetAtom(profileAtom);
 
     useEffect(() => {
 
@@ -55,31 +55,26 @@ export default function QuestionLoader({ lang, profile, onForms, onQuestions, on
 
     const doLoad = useCallback(
         async (data: ZipData) => {
-            if (onForms && onQuestions && 'questions' in data) {
-                const d = data.questions as {
-                    questions: Category[] | QuestionData[];
-                    forms: number[][];
-                };
-
-                setForm(prev => ({
-                    ...(prev ?? { questions: [], forms: [] }),
-                    questions: d.questions,
-                }));
+            if (!("questions" in data)) {
+                return;
             }
 
-            if ('questions' in data) {
-                 const d = data.questions as {
-                    questions: Category[];
-                    forms: number[][];
-                };
+            const d = data.questions as {
+                categories: Category[];
+                forms: number[][];
+            };
 
-                setForm(prev => ({
-                    ...(prev ?? { questions: [], forms: [] }),
-                    questions: d.questions,
-                }));
-            }
+            setProfile(prev => ({
+                ...(prev ?? {
+                    slides: [],
+                    categories: [],
+                    forms: [],
+                }),
+                ...(onQuestions && { categories: d.categories }),
+                ...(onForms && { forms: d.forms }),
+            }));
         },
-        [onForms, onQuestions, setForm]
+        [onForms, onQuestions, setProfile]
     );
 
     return profileURL ? (

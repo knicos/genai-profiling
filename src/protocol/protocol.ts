@@ -1,6 +1,7 @@
 import { QuestionData } from '@genaipg/components/Question/types';
 import { PeerEvent, BuiltinEvent } from '@genai-fi/base';
 import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
+import { UserTimelineData } from '@genaipg/components/Slide/Ending/types';
 
 export interface UserRegistrationEvent extends PeerEvent {
     event: 'pg:reguser';
@@ -84,6 +85,11 @@ export interface ResponsesEvent extends PeerEvent {
     responses: CategoryEntry[];
 }
 
+export interface TimelineDataEvent extends PeerEvent {
+    event: 'pg:timeline';
+    data: UserTimelineData[];
+}
+
 export type EventProtocol =
     | BuiltinEvent
     | UserRegistrationEvent
@@ -94,4 +100,5 @@ export type EventProtocol =
     | ConfigEvent
     | UserListEvent
     | ProfileZipEvent
-    | IntermissionResponseEvent;
+    | IntermissionResponseEvent
+    | TimelineDataEvent;

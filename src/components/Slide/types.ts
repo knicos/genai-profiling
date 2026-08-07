@@ -36,8 +36,16 @@ export interface SlideCheckpoint extends SlideBase {
     type: 'checkpoint';
 }
 
+export type EndingStepId = 'revealProfile' | 'timeline';
+
+export interface EndingStep {
+    id: "revealProfile" | "timeline";
+    form: number;
+}
+
 export interface SlideEnding extends SlideBase {
     type: 'ending';
+    steps: EndingStep[];
 }
 
 export interface SlideCollage extends SlideBase {

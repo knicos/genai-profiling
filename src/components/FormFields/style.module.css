@@ -3,6 +3,7 @@
     font-weight: bold;
     color: #444444;
     padding: 0.5rem 0;
+    margin-bottom: 0.25rem;
 }
 
 .formGroup {
@@ -49,4 +50,30 @@
     width: 0;
     height: 0;
     pointer-events: none;
+}
+
+.iconPicker {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    max-width: 300px;
+    justify-content: start;
+    gap: 1rem;
+}
+
+.pickerContainer {
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icon {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    background-color: var(--light-element);
+    border-radius: 8px;
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    padding: 5px;
 }

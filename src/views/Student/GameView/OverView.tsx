@@ -1,37 +1,46 @@
 import { Category } from '@genaipg/components/Question/types';
 import style from './style.module.css';
-import MysteryProfileIcon from '@genaipg/components/Icons/MysteryProfileIcon';
 import { useTranslation } from 'react-i18next';
-import { List, Typography } from '@mui/material';
-import ActionItem from '@genaipg/components/List/ActionItem';
+import { List } from '@mui/material';
+import CategoryItem from './CategoryItem';
+import MockProfile from '@genaipg/components/Visuals/MockProfile';
+import { Help } from '@genai-fi/base';
+
+
 
 interface Props {
     categories: Category[];
     onSelectCategory?: (category: Category) => void;
+    activeCategoriesIds?: number[];
 }
 
-export default function Overview({ categories, onSelectCategory }: Props) {
+export default function Overview({ categories, onSelectCategory, activeCategoriesIds }: Props) {
     const { t } = useTranslation();
 
     return (
         <div className={style.container}>
             <div className={style.header}>
-                <span className={style.icon}>
-                    <MysteryProfileIcon />
-                </span>
-                <Typography variant='h6'>
-                    {t('student.mysteryPerson')}
-                </Typography>
-                <Typography variant='body2'>
-                    {t('student.solve')}
-                </Typography>
+                <MockProfile />
             </div>
-            <List>
+            <div className={style.infoSection}>
+                <h2>
+                    {t("workflow.profile")}
+                </h2>
+                <span>
+                    <Help 
+                        inplace 
+                        style={{ marginLeft: '1px' }}
+                        message={t("student.help")}
+                    />
+                </span>
+            </div>
+            <List className={style.list}>
                 {categories.map((c, ix) => (
-                    <ActionItem
+                    <CategoryItem
                         key={ix}
-                        label={c.category}
-                        onSelect={() => onSelectCategory && onSelectCategory(c)}
+                        category={c}
+                        onSelectCategory={() => onSelectCategory && onSelectCategory(c)}
+                        highlighted={activeCategoriesIds?.includes(c.id)}
                     />
                 ))}
             </List>

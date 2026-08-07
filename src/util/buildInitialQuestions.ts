@@ -8,6 +8,7 @@ export function buildInitialQuestions(t: TFunction): Category[] {
             category: t(
                 'create.profileInformation.age.category'
             ),
+            icon: 'birthday',
             questions: [
                 {
                     id: 1,
@@ -24,6 +25,7 @@ export function buildInitialQuestions(t: TFunction): Category[] {
             category: t(
                 'create.profileInformation.interests.category'
             ),
+            icon: 'love',
             questions: [
                 {
                     id: 1,
@@ -51,6 +53,7 @@ export function buildInitialQuestions(t: TFunction): Category[] {
             category: t(
                 'create.profileInformation.location.category'
             ),
+            icon: 'location',
             questions: [
                 {
                     id: 1,
@@ -68,6 +71,7 @@ export function buildInitialQuestions(t: TFunction): Category[] {
         },
         {
             id: 4,
+            icon: 'sports',
             category: t(
                 'create.profileInformation.hobbies.category'
             ),

@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import { ClueData } from "@genaipg/views/Create/types";
 import { Category, QuestionData } from "@genaipg/components/Question/types";
+import { INTERMISSION_FORM_ID } from "@genaipg/constants/formIds";
 
 // THIS WILL CHANGE
 const MAX_SLIDES_PER_SECTION = 3;
@@ -106,6 +107,29 @@ export const deleteCategory = atom(
     }
 )
 
+export const updateCategoryAtom = atom(
+    null,
+    (
+        get,
+        set,
+        payload: {
+            categoryId: number;
+            updates: Partial<Category>;
+        }
+    ) => {
+        const categories = get(questionsAtom);
+
+        set(
+            questionsAtom,
+            categories.map(category =>
+                category.id === payload.categoryId
+                    ? { ...category, ...payload.updates }
+                    : category
+            )
+        );
+    }
+);
+
 export const updateQuestionAtom = atom(
     null,
     (
@@ -200,7 +224,7 @@ export const createFormOrder = atom(
 
 
         // Number for break
-        const BREAK = 100;
+        const BREAK = INTERMISSION_FORM_ID;
 
         // Easy mode: every clue opens the category it belongs to 
         const forms: number[][] = [];

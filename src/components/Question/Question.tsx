@@ -10,9 +10,10 @@ interface Props {
     question: QuestionData;
     value: string | string[];
     onChange: (field: number, value: string | string[]) => void;
+    disabled?: boolean;
 }
 
-export default function Question({ question, value, onChange }: Props) {
+export default function Question({ question, value, onChange, disabled }: Props) {
     switch (question.type) {
         case 'text':
             return (
@@ -20,6 +21,7 @@ export default function Question({ question, value, onChange }: Props) {
                     question={question}
                     value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
+                    disabled={disabled}
                 />
             );
         case 'largetext':
@@ -28,6 +30,7 @@ export default function Question({ question, value, onChange }: Props) {
                     question={question}
                     value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
+                    disabled={disabled}
                 />
             );
         case 'slider':
@@ -36,6 +39,7 @@ export default function Question({ question, value, onChange }: Props) {
                     question={question}
                     value={Array.isArray(value) ? value[0] ?? '' : value}
                     onChange={onChange}
+                    disabled={disabled}
                 />
             );
         case 'multichoice':
@@ -44,6 +48,7 @@ export default function Question({ question, value, onChange }: Props) {
                     question={question}
                     value={Array.isArray(value) ? value : value ? value.split(',') : []}
                     onChange={onChange}
+                    disabled={disabled}
                 />
             );
 
@@ -53,6 +58,7 @@ export default function Question({ question, value, onChange }: Props) {
                     question={question}
                     value={Array.isArray(value) ? value[0] : value}
                     onChange={onChange}
+                    disabled={disabled}
                 />
             );
         case 'message':

@@ -10,6 +10,7 @@ interface Props {
     range?: boolean;
     value: string;
     onChange: (value: string) => void;
+    disabled?: boolean;
 }
 
 function parseRange(value: string, min: number): number | number[] {
@@ -24,7 +25,7 @@ function joinRange(value: number | number[]): string {
     return Array.isArray(value) ? value.join(':') : `${value}`;
 }
 
-export default function SliderField({ label, min, max, step = 1, range, value, onChange }: Props) {
+export default function SliderField({ label, min, max, step = 1, range, value, onChange, disabled }: Props) {
     const [v, setV] = useState<number | number[]>(range ? [min, max] : min);
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function SliderField({ label, min, max, step = 1, range, value, o
                 max={max}
                 step={step}
                 valueLabelDisplay="on"
+                disabled={disabled}
             />
         </fieldset>
     );

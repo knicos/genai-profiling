@@ -1,8 +1,11 @@
+import { IconType } from "../Icons/type";
+
 export type QuestionType = 'text' | 'slider' | 'multichoice' | 'singlechoice' | 'largetext' | 'message';
 
 export interface Category {
     id: number;
     category: string;
+    icon: IconType;
     questions: QuestionData[];
 }
 

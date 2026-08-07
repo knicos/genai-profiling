@@ -19,6 +19,7 @@
     "pleaseWait": "Please wait",
     "loading": "Loading",
     "done": "Done",
+    "undone": "Undone",
     "workflow": {
         "profile": "Profile information",
         "clues": "Clues",
@@ -32,7 +33,10 @@
             "add": "Add",
             "cancel": "Cancel",
             "delete": "Delete",
-            "save": "Save"
+            "save": "Save",
+            "select": "Select",
+            "close": "Close",
+            "back": "Back"
         },
         "confirmation": {
             "collage": "Collage",
@@ -48,11 +52,15 @@
             "title": "Mystery profile",
             "description": "Fill in the categories below. Players will guess based on these clues. Pre-filled categories have default questions; hobbies is empty.",
             "addCategory": "Add category",
+            "questions": "Questions:",
             "categoryPlaceholder": "Write the category here...",
             "correctAnswer": "Correct",
             "chooseCorrect": "Correct answer",
             "markCorrect": "Mark correct",
             "questionText": "Question text",
+            "iconLabel": "Category icon",
+            "chooseIcon": "Choose an icon",
+            "changeIcon": "Change the icon",
             "questionTextPlaceholder": "e.g. Does this person play sports?...",
             "age": {
                 "category": "Age",
@@ -190,9 +198,19 @@
         }
     },
     "student": {
+        "waitForTitle": "Hang tight!",
+        "waitForStart": "Waiting for the teacher to start the game",
+        "timeline": {
+            "title": "Timeline",
+            "subtitle": "How did each clue affect your answers?"
+        },
+        "intermission": {
+            "title": "Intermission"
+        },
         "mysteryPerson": "Mystery Person",
         "solve": "Mystery",
-        "revealButton": "Reveal correct profile"
+        "revealButton": "Reveal correct profile",
+        "help": "This is a mystery profile. Use the clues provided to answer the questions about the mystery person. You can answer the questions in any order. Press Done when you've finished the current clue to let your teacher know you're ready to continue."
     },
     "app": {
         "selectProfile": "Select a profile"

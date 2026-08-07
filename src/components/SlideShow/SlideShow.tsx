@@ -7,6 +7,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import DownloadIcon from '@mui/icons-material/Download';
 import { ReactElement } from 'react';
+import { UserTimelineData } from '../Slide/Ending/types';
 
 interface Props {
     index: number;
@@ -18,6 +19,8 @@ interface Props {
     onDownload?: () => void;
     onQRCode?: () => void;
     doneCount?: number;
+    changeForm?: (formIndex: number) => void;
+    setTimelineData?: (data: UserTimelineData[]) => void; 
 }
 
 export default function SlideShow({
@@ -30,6 +33,8 @@ export default function SlideShow({
     defaultSlide,
     onDownload,
     onQRCode,
+    changeForm,
+    setTimelineData,
 }: Props) {
 
     return (
@@ -40,6 +45,8 @@ export default function SlideShow({
                         slides={slides}
                         meta={slides[index]}
                         doneCount={doneCount}
+                        changeForm={changeForm}
+                        setTimelineData={setTimelineData}
                     />
 
             ) : (

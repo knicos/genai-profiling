@@ -9,16 +9,19 @@ import { ProgressBar } from '../ProgressBar/ProgressBar';
 import { CheckpointSlide } from './CheckpointSlide';
 import EndingSlide from './EndingSlide';
 import CollageSlide from './CollageSlide';
+import { UserTimelineData } from './Ending/types';
 
 interface Props {
     index: number;
     slides: SlideMeta[];
     meta: SlideMeta;
     doneCount?: number;
+    changeForm?: (formIndex: number) => void;
+    setTimelineData?: (data: UserTimelineData[]) => void;
 }
 
-export default function Slide({ meta, slides, doneCount, index }: Props) {
-
+export default function Slide({ meta, slides, doneCount, index, changeForm, setTimelineData }: Props) {
+    
     return (
         <SlideContainer>
             <ProgressBar index={index} slides={slides}/>
@@ -27,7 +30,7 @@ export default function Slide({ meta, slides, doneCount, index }: Props) {
             {meta.type === 'checkpoint' && meta.form && <CheckpointSlide form={meta.form} done={doneCount === 0}/>}
             {meta.type === 'image' && <ImageSlide meta={meta} />}
             {meta.type === 'board' && <BoardSlide meta={meta} />}
-            {meta.type === 'ending' && <EndingSlide />}
+            {meta.type === 'ending' && setTimelineData && <EndingSlide steps={meta.steps} onChange={(formIndex: number) => changeForm && changeForm(formIndex)} setTimelineData={setTimelineData} />}
             {meta.type === 'collage' && <CollageSlide />}
             {meta.form !== undefined && meta.form >= 0 && <Done count={doneCount || 0} />}
         </SlideContainer>

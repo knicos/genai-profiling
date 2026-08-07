@@ -1,7 +1,6 @@
 import { motion, Point } from "framer-motion";
 
 function createLinePath(points: Point[]) {
-    console.log("recreated m,any times?")
     if (points.length === 0) return "";
     return points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
 }

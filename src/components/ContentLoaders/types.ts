@@ -1,19 +1,10 @@
-import { Category, QuestionData } from "../Question/types";
+import { Category } from "../Question/types";
 import { SlideMeta } from "../Slide/types";
 
-export interface LoadedQuestions {
-    questions: Category[];
-    forms: number[][];
-}
-
-export interface LocalProfile {
+export interface ProfileMeta {
     images?: Record<string, string>,
     slides: SlideMeta[];
-    questions: LoadedQuestions;
-}
-
-export interface ProfileMeta {
-    questions: Category[] | QuestionData[];
+    categories: Category[];
     forms: number[][];
 }
 

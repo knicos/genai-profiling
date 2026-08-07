@@ -21,6 +21,7 @@ import gitInfo from '../../generatedGitInfo.json';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import { useAtomValue } from 'jotai';
 import { profileAtom } from '@genaipg/state/profileState';
+import { UserTimelineData } from '@genaipg/components/Slide/Ending/types';
 
 export function Component() {
     const { t } = useTranslation();
@@ -33,9 +34,11 @@ export function Component() {
     const saver = usePersistentData(MYCODE);
     const [done, setDone] = useState(new Set<string>());
     const [ready, setReady] = useState(false);
+    const [timelineData, setTimelineData] = useState<UserTimelineData[] | undefined>(undefined);
     const profile = useAtomValue(profileAtom);
 
     const npage = page ? parseInt(page) : -1;
+    const [currentForm, setCurrentForm] = useState<number>(-1);
 
     useEffect(() => {
         if (profile?.slides) {
@@ -44,6 +47,17 @@ export function Component() {
             saver();
         }
     }, [npage, profile, params, saver]);
+
+    useEffect(() => {
+        const slide = profile?.slides?.[npage];
+        if (slide?.form !== undefined) {
+            setCurrentForm(slide.form);
+        }
+    }, [npage, profile]);
+
+    const updateTimelineData = useCallback((data: UserTimelineData[]) => {
+        setTimelineData(data);
+    }, []);
 
     const doDone = useCallback((d: boolean, id: string) => {
         setDone((old) => {
@@ -58,8 +72,8 @@ export function Component() {
     }, []);
 
     const doResponse = useCallback((id: string, data: ResponseData) => {
-            addUserResponse(params.get('name') || 'NoName', id, data, profile?.slides[npage]);
-        },[params, profile, npage]);
+        addUserResponse(params.get('name') || 'NoName', id, data, profile?.slides[npage]);
+    }, [params, profile, npage]);
 
     return (
         <>
@@ -80,6 +94,8 @@ export function Component() {
                             hasNext={npage < (profile?.slides.length || 0)}
                             onDownload={() => saveFile()}
                             onQRCode={() => setShowQR(true)}
+                            changeForm={(formIndex: number) => setCurrentForm(formIndex)}
+                            setTimelineData={updateTimelineData}
                             onChange={(index: number) =>
                                 navigate({
                                     pathname:
@@ -148,10 +164,11 @@ export function Component() {
                     onReady={setReady}
                     onUsers={setUsers}
                     onDone={doDone}
-                    form={npage}
+                    form={npage >= 0 ? currentForm : undefined}
                     onResponse={doResponse}
                     material={material}
                     lang={lang}
+                    timelineData={timelineData}
                 />
             </Peer>
         </>

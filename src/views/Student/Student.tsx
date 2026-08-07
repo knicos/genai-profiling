@@ -1,3 +1,4 @@
+import style from './style.module.css';
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import { useParams } from 'react-router-dom';
@@ -10,9 +11,10 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { availableUsers } from '@genaipg/state/sessionState';
 import StudentProtocol from './StudentProtocol';
 import { useRandom } from '@genai-fi/base';
-import { formAtom } from '@genaipg/state/profileState';
+
 import Gameview from './GameView/GameView';
 import QuestionLoader from '@genaipg/components/ContentLoaders/QuestionLoader';
+import { profileAtom } from '@genaipg/state/profileState';
 
 const USERNAME_KEY = 'genai_pg_username';
 
@@ -51,7 +53,7 @@ export function Component() {
     const [, increment] = useReducer((old) => ++old, 0);
     const [done, setDone] = useState(false);
     const [ready, setReady] = useState(false);
-    const form = useAtomValue(formAtom)
+    const profile = useAtomValue(profileAtom)
 
     const doReady = useCallback((r: boolean) => {
         if (r) setReady(true);
@@ -73,7 +75,7 @@ export function Component() {
     }, []);
 
     return (
-        <>
+        <div className={style.studentView}>
             <Peer
                 host={import.meta.env.VITE_APP_PEER_SERVER}
                 secure={import.meta.env.VITE_APP_PEER_SECURE === '1'}
@@ -82,14 +84,14 @@ export function Component() {
                 code={`pg-${MYCODE}`}
                 server={`pg-${code}`}
             >
-                <Loading loading={!form?.questions}>
+                <Loading loading={!profile?.categories}>
                     {!username && (
                         <EnterUsername
                             onUsername={setUsername}
                             onChangeId={changeId}
                         />
                     )}
-                    {username && form?.forms && form?.questions && (
+                    {username && profile?.forms && profile.categories && (
                         /*TODO: Delete later */
                         material && material === 'default' ? ( 
                             <Form
@@ -102,7 +104,7 @@ export function Component() {
                         )
                     )}
                 </Loading>
-                {ready && material && lang && !form && (
+                {ready && material && lang && !profile && (
                     <QuestionLoader
                         lang={lang || 'fi'}
                         profile={material || 'default'}
@@ -121,6 +123,6 @@ export function Component() {
                     onConfig={doConfig}
                 />
             </Peer>
-        </>
+        </div>
     );
 }

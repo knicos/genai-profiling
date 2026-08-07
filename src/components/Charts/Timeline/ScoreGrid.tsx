@@ -5,10 +5,11 @@ interface Props {
     width: number;
     start_y: number;
     correct_y: number;
-    total: number
+    total: number;
+    labels: boolean;
 }
 
-export default function ScoreGrid({ width, start_y, correct_y, total } : Props) {
+export default function ScoreGrid({ width, start_y, correct_y, total, labels }: Props) {
     const { t } = useTranslation();
 
     return (
@@ -22,15 +23,17 @@ export default function ScoreGrid({ width, start_y, correct_y, total } : Props) 
 
                 return (
                     <g key={step}>
-                        <line x1={100} y1={y} x2={width} y2={y} stroke={lineColor} strokeDasharray="10" strokeWidth={2} />
-                        {isFinal && (
+                        <line x1={labels ? 100 : 0} y1={y} x2={width} y2={y} stroke={lineColor} strokeDasharray="10" strokeWidth={2} />
+                        {isFinal && labels && (
                             <foreignObject x={38} y={y - 55} width={40} height={40}>
                                 <EmojiEventsIcon sx={{ color: "#f5b301", fontSize: 30 }} />
                             </foreignObject>
                         )}
-                        <text x={90} y={y + 2} fontSize={12} textAnchor="end" fill={lineColor}>
-                            {isFinal ? t("game.ending.correctProfile") : `${step} ${t("game.ending.correctTitle")}`}
-                        </text>
+                        {labels && (
+                            <text x={90} y={y + 2} fontSize={12} textAnchor="end" fill={lineColor}>
+                                {isFinal ? t("game.ending.correctProfile") : `${step} ${t("game.ending.correctTitle")}`}
+                            </text>
+                        )}
                     </g>
                 );
             })}

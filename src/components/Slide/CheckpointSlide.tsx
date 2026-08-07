@@ -24,7 +24,7 @@ export function CheckpointSlide({ form, done }: Props) {
     const profile = useAtomValue(profileAtom);
     // Change
     const confidence = getIntermissionAverage(form);
-    const correctness = getIntermissionCorrect(profile?.questions.questions as Category[]);
+    const correctness = getIntermissionCorrect(profile?.categories as Category[]);
 
     const [displayCorrectness, setDisplayCorrectness] = useState<boolean>(false)
     const [displayValue, setDisplayValue] = useState(0);

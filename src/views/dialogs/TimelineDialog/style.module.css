@@ -1,0 +1,41 @@
+.content {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.subtitle {
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.subtitle h2 {
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-element);
+    border-radius: 8px;
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    padding: 5px;
+}
+
+
+.chartContainer {
+  position: relative;
+  background-color: var(--dark-element);
+  padding: 0.5rem;
+  border-radius: 8px;
+}

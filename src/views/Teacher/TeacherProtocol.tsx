@@ -8,6 +8,7 @@ import { ConnectionStatus } from '@genai-fi/base';
 import { useAtomValue } from 'jotai';
 import { profileAtom } from '@genaipg/state/profileState';
 import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
+import { UserTimelineData } from '@genaipg/components/Slide/Ending/types';
 
 const LOCAL_PROFILE_KEY = 'custom';
 
@@ -27,9 +28,10 @@ interface Props {
     onUsers: (users: UserInfo[]) => void;
     onResponse: (id: string, data: ResponseData) => void;
     onReady: (ready: boolean) => void;
+    timelineData?: UserTimelineData[];
 }
 
-export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onReady, material, lang }: Props) {
+export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onReady, material, lang, timelineData }: Props) {
     const [users, setUsers] = useState<UserInfo[]>([]);
     const localProfile = useAtomValue(profileAtom);
 
@@ -64,10 +66,10 @@ export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onR
             conn.send({ event: 'pg:users', users: getOfflineUsers(users.map((u) => u.id)) });
             if (material && lang) {
                 if (material === LOCAL_PROFILE_KEY && localProfile) {
-                    // extract images from data being send to user 
                     const data: ProfileMeta = {
-                        questions: localProfile.questions.questions,
-                        forms: localProfile.questions.forms
+                        categories: localProfile.categories,
+                        slides: localProfile.slides,
+                        forms: localProfile.forms
                     }
 
                     conn.send({
@@ -100,6 +102,15 @@ export default function TeacherProtocol({ form, onDone, onUsers, onResponse, onR
             send({ event: 'pg:changeform', form: form === undefined ? -1 : form });
         }
     }, [form, send]);
+
+    useEffect(() => {
+        if (timelineData) {
+            send({ 
+                event: 'pg:timeline', 
+                data: timelineData 
+        });
+        }
+    }, [timelineData, send]);
 
     useEffect(() => {
         onUsers(users);

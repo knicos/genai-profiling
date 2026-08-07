@@ -23,6 +23,14 @@ export default function StudentPreview({ formIndex }: Props) {
             : categories.filter(c =>
                 formOrder?.forms[formIndex]?.includes(c.id)
             );
+    
+    const currentIndex = selectedCategory
+        ? visibleCategories.findIndex(c => c.id === selectedCategory.id)
+        : -1
+
+    const changeCategory = (index: number) => {
+        setSelectedCategory(visibleCategories[index])
+    }
 
     return (
         <div className={style.previewContainer}>
@@ -31,6 +39,10 @@ export default function StudentPreview({ formIndex }: Props) {
                     <QuestionView
                         category={selectedCategory}
                         goBack={() => setSelectedCategory(null)}
+                        goNext={changeCategory}
+                        goPrevious={changeCategory}
+                        totalCategories={visibleCategories.length}
+                        currentIndex={currentIndex}
                     />
                 ) : (
                     <Overview

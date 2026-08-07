@@ -5,9 +5,10 @@ interface Props {
     question: QuestionSlider;
     value: string;
     onChange: (field: number, value: string) => void;
+    disabled?: boolean;
 }
 
-export default function SliderQuestion({ question, value, onChange }: Props) {
+export default function SliderQuestion({ question, value, onChange, disabled }: Props) {
     return (
         <SliderField
             label={question.text}
@@ -17,6 +18,7 @@ export default function SliderQuestion({ question, value, onChange }: Props) {
             range={question.range}
             value={value}
             onChange={v => onChange(question.id, v)}
+            disabled={disabled}
         />
 
     );

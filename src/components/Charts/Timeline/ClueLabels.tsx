@@ -8,9 +8,10 @@ interface Props {
     spacing: number;
     chartStart: number;
     height: number;
+    labels: boolean;
 }
 
-export default function ClueLabels({ clues, currentIndex, spacing, chartStart, height } : Props) {
+export default function ClueLabels({ clues, currentIndex, spacing, chartStart, height, labels } : Props) {
     const { t } = useTranslation();
 
     return (
@@ -29,7 +30,8 @@ export default function ClueLabels({ clues, currentIndex, spacing, chartStart, h
                         ease: "easeInOut"
                     }}
                 >
-                    {t("create.clues.clue")} {clue && clue.type === 'demo' ? clue.clue.id : clue.id}
+                    {labels && t("create.clues.clue")}
+                    {clue && clue.type === 'demo' ? clue.clue.id : clue.id}
                 </motion.text>
             ))}
         </>

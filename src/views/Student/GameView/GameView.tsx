@@ -1,14 +1,17 @@
 import { Category } from "@genaipg/components/Question/types";
 import style from './style.module.css';
 import Overview from "@genaipg/views/Student/GameView/OverView";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import QuestionView from "@genaipg/views/Student/GameView/QuestionView";
 import { useAtomValue, useSetAtom } from "jotai";
-import { formAtom } from "@genaipg/state/profileState";
-import Intermission from "./Intermission";
 import { Button } from "@genai-fi/base";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useTranslation } from "react-i18next";
 import { updateResponseAtom } from "@genaipg/state/responseState";
+import IntermissionDialog from "@genaipg/views/dialogs/IntermissionDialog/IntermissionDialog";
+import TimelineDialog from "@genaipg/views/dialogs/TimelineDialog/TimelineDialog";
+import { profileAtom } from "@genaipg/state/profileState";
+import { INTERMISSION_FORM_ID, REVEAL_PROFILE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
 
 interface Props {
     formIndex: number;
@@ -20,10 +23,33 @@ export default function Gameview({ formIndex, onDone }: Props) {
     const updateResponse = useSetAtom(updateResponseAtom)
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [done, setDone] = useState(false);
-    const form = useAtomValue(formAtom);
+    const profile = useAtomValue(profileAtom);
+
+    const unlockedCategories = useMemo(() => {
+        if (!profile) return [];
+
+        const categoriesIds = new Set<number>();
+
+        for (let i = 0; i <= formIndex; i++) {
+            const current = profile.forms[i];
+
+            if (!current) continue;
+
+            if (current.includes(REVEAL_PROFILE_FORM_ID) || current.includes(TIMELINE_FORM_ID))
+                return profile.categories
+
+            current.forEach(id => {
+                if (id !== INTERMISSION_FORM_ID && id !== REVEAL_PROFILE_FORM_ID && id !== TIMELINE_FORM_ID)
+                    categoriesIds.add(id)
+            })
+        }
+
+        return profile.categories.filter(category => categoriesIds.has(category.id));
+    }, [profile, formIndex])
 
     useEffect(() => {
         setDone(false);
+        setSelectedCategory(null);
     }, [formIndex])
 
     useEffect(() => {
@@ -31,49 +57,80 @@ export default function Gameview({ formIndex, onDone }: Props) {
     }, [done, onDone])
 
     const change = useCallback((categoryId: number, questionId: number, value: string | string[]) => {
-        updateResponse({categoryId,questionId, value});
+        updateResponse({ categoryId, questionId, value });
         onDone(false);
     }, [updateResponse, onDone]);
 
-    const visibleCategories =
-        formIndex === undefined
-            ? form?.questions as Category[]
-            : form?.questions.filter(c =>
-                form.forms[formIndex]?.includes(c.id)
-            ) as Category[];
+    const currentForm = profile?.forms[formIndex];
+
+    const isEnding = currentForm?.includes(REVEAL_PROFILE_FORM_ID) || currentForm?.includes(TIMELINE_FORM_ID);
+
+    const currentIndex = selectedCategory
+        ? unlockedCategories.findIndex(c => c.id === selectedCategory.id)
+        : -1;
+
+    const changeCategory = (index: number) => {
+        if (index < 0 || index >= unlockedCategories.length) return;
+
+        setSelectedCategory(unlockedCategories[index]);
+    };
 
     return (
-        <div className={style.outerContainer}>
-            {selectedCategory ? (
-                <QuestionView
-                    category={selectedCategory}
-                    goBack={() => setSelectedCategory(null)}
-                    change={change}
-                />
-            ) : (
-                <>
-                    {form?.forms?.[formIndex]?.includes(100) ? (
-                        <Intermission onDone={setDone} formIndex={formIndex} />
-                    ) : (
+        <div className={style.gameContainer}>
+            <div className={style.outerContainer}>
+                <div className={`${style.waitOverlay} ${formIndex === -1 ? style.visible : ''}`}>
+                    <span className={`${style.iconRing} ${formIndex === -1 ? style.iconAnimation : ''}`}>
+                        <AccessTimeIcon fontSize="inherit" />
+                    </span>
+                    <div className={style.titleGroup}>
+                        <h1>
+                            {t("student.waitForTitle")}
+                        </h1>
+                        <h2>
+                            {t("student.waitForStart")}
+                        </h2>
+                    </div>
+                </div>
+                {selectedCategory ? (
+                    <QuestionView
+                        category={selectedCategory}
+                        goBack={() => setSelectedCategory(null)}
+                        change={change}
+                        currentIndex={currentIndex}
+                        totalCategories={unlockedCategories.length}
+                        goNext={changeCategory}
+                        goPrevious={changeCategory}
+                        disabled={isEnding}
+
+                    />
+                ) : (
+                    <>
                         <>
                             <Overview
-                                categories={visibleCategories}
+                                categories={unlockedCategories}
                                 onSelectCategory={setSelectedCategory}
+                                activeCategoriesIds={profile?.forms[formIndex] ?? []}
                             />
-                            <Button
-                                variant="contained"
-                                onClick={() => setDone(true)}
-                                disabled={done}
-                                sx={{ margin: '0 1rem' }}
-                            >
-                                {t('done')}
-                            </Button>
+                            <div className={style.navigationFooter}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => setDone(prev => !prev)}
+                                    fullWidth
+                                    sx={{
+                                        margin: '0 1rem',
+                                        background: done ? 'var(--bg-dark)' : 'var(--primary)'
+                                    }}
+                                >
+                                    {done ? t('undone') : t('done')}
+                                </Button>
+                            </div>
+                            <IntermissionDialog isOpen={profile?.forms[formIndex]?.includes(INTERMISSION_FORM_ID) ? true : false} onDone={setDone} formIndex={formIndex} />
+                            <TimelineDialog isOpen={profile?.forms[formIndex]?.includes(TIMELINE_FORM_ID) ? true : false} />
                         </>
-                    )}
+                    </>
 
-                </>
-
-            )}
+                )}
+            </div>
         </div>
     );
 }

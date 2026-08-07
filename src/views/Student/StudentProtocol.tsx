@@ -5,10 +5,11 @@ import { EventProtocol, UserEntry } from '@genaipg/protocol/protocol';
 import { updateAllResponses } from '@genaipg/services/questionLogger/logger';
 import { useCallback, useEffect } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { formAtom } from '@genaipg/state/profileState';
+import { profileAtom } from '@genaipg/state/profileState';
 import { intermissionAtom } from '@genaipg/state/intermissionState';
 import { updateAllResponseAtom } from '@genaipg/state/responseState';
 import { useResponseLogger } from '@genaipg/services/responseLogger/hook';
+import { timelineAtom, timelinePlayingAtom } from '@genaipg/state/timelineState';
 
 const USERNAME_KEY = 'genai_pg_username';
 
@@ -33,8 +34,10 @@ export default function StudentProtocol({
     onReady,
     onConfig,
 }: Props) {
-    const setForm = useSetAtom(formAtom);
-    const updateAll = useSetAtom(updateAllResponseAtom)
+    const updateAll = useSetAtom(updateAllResponseAtom);
+    const setTimelineData = useSetAtom(timelineAtom);
+    const setStartTimeline = useSetAtom(timelinePlayingAtom);
+    const setProfile = useSetAtom(profileAtom);
     const intermissions = useAtomValue(intermissionAtom);
 
 
@@ -55,15 +58,17 @@ export default function StudentProtocol({
             onConfig(data.material, data.lang);
         } else if (data.event === 'pg:profile') {
             try {
-                setForm(
-                    {
-                        questions: data.data.questions,
-                        forms: data.data.forms
-                    }
-                )
+                setProfile({
+                    categories: data.data.categories,
+                    forms: data.data.forms,
+                    slides: data.data.slides
+                });
             } catch (err) {
                 console.error('failed to load profile', err)
             }
+        } else if (data.event === 'pg:timeline') {
+            setTimelineData(data.data.filter(t => t.userId === userID));
+            setStartTimeline(true);
         }
     });
 
@@ -127,7 +132,7 @@ export default function StudentProtocol({
             api={import.meta.env.VITE_APP_APIURL}
             appName="classroom"
             checkURL={`${import.meta.env.VITE_APP_APIURL}/health`}
-            visibility={3}
+            visibility={0}
             noCheck={false}
         />
     );

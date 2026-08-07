@@ -6,9 +6,10 @@ interface Props {
     question: QuestionText;
     value: string;
     onChange: (field: number, value: string) => void;
+    disabled?: boolean;
 }
 
-export default function TextQuestion({ question, value, onChange }: Props) {
+export default function TextQuestion({ question, value, onChange, disabled }: Props) {
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export default function TextQuestion({ question, value, onChange }: Props) {
                 margin="normal"
                 defaultValue={value}
                 onBlur={(e) => onChange(question.id, e.target.value)}
+                disabled={disabled}
             />
         </div>
     );

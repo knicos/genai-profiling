@@ -1,0 +1,24 @@
+.iconContent {
+    padding: 0 1rem;
+}
+
+.toggleGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.button {
+    border: 1px solid var(--border-grey) !important;
+    border-radius: 8px !important;
+    margin: 0 !important;
+    font-size: xx-large;
+    color: var(--bg-dark2);
+}
+
+.button .Mui-selected {
+    border-color: var(--primary) !important;
+}

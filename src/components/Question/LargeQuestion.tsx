@@ -6,9 +6,10 @@ interface Props {
     question: QuestionLargeText;
     value: string;
     onChange: (field: number, value: string) => void;
+    disabled?: boolean;
 }
 
-export default function LargeQuestion({ question, value, onChange }: Props) {
+export default function LargeQuestion({ question, value, onChange, disabled }: Props) {
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -38,6 +39,7 @@ export default function LargeQuestion({ question, value, onChange }: Props) {
                 multiline
                 minRows={3}
                 maxRows={10}
+                disabled={disabled}
             />
         </div>
     );

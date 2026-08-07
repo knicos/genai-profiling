@@ -10,17 +10,17 @@ export default function MockProfile() {
         <div className={style.profileTitle}>
             <div className={style.profileTop} />
 
-            <span className={style.profileIcon}>
-                <MysteryProfileIcon />
-            </span>
             <div className={style.profileInfo}>
+                <span className={style.profileIcon}>
+                    <MysteryProfileIcon />
+                </span>
                 <div className={style.profileText}>
                     <span className={style.nameTag}>
                         {t("game.ending.profileTitle")}
                     </span>
                     <Typography variant="body2">
                         {t("game.ending.profileSubtitle")
-                    }</Typography>
+                        }</Typography>
                 </div>
             </div>
 

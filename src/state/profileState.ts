@@ -1,16 +1,15 @@
-import { LocalProfile, ProfileMeta } from "@genaipg/components/ContentLoaders/types";
+import { ProfileMeta } from "@genaipg/components/ContentLoaders/types";
 import { getCorrectAnswers } from "@genaipg/views/Teacher/userState";
 import { atom } from "jotai";
 
 export const profileURLAtom = atom<string>();
-export const profileAtom = atom<LocalProfile | undefined>(undefined);
-export const formAtom = atom<ProfileMeta>()
+export const profileAtom = atom<ProfileMeta | undefined>(undefined);
 
 export const chunkCategoriesAtom = atom((get) => {
     const profile = get(profileAtom);
     if (!profile) return [];
 
-    const categories = getCorrectAnswers(profile.questions.questions);
+    const categories = getCorrectAnswers(profile.categories);
     const chunkSize = 1;
     const chunks = [];
 

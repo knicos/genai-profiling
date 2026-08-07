@@ -23,7 +23,15 @@ const ChipLabel = styled(FormControlLabel)({
         textAlign: 'center',
         display: 'inline-flex',
         alignItems: 'center',
-    }
+    },
+    '&.Mui-disabled .MuiFormControlLabel-label': {
+        color: 'rgba(0, 0, 0, 0.65)',
+    },
+    '&.Mui-disabled': {
+        cursor: 'default',
+        pointerEvents: 'none',
+        filter: 'grayscale(1)'
+    },
 })
 
 interface Props {
@@ -32,10 +40,15 @@ interface Props {
     value?: string[];
     onChange: (value: string[]) => void;
     markedOptions?: Set<string>;
+    disabled?: boolean;
 }
 
-export default function MultiChoice({ label, options, value = [], onChange, markedOptions }: Props) {
+export default function MultiChoice({ label, options, value = [], onChange, markedOptions, disabled }: Props) {
+
     const handleToggle = (option: string) => {
+
+        if (disabled) return;
+
         const updated = value.includes(option)
             ? value.filter(o => o !== option)
             : [...value, option];
@@ -47,7 +60,9 @@ export default function MultiChoice({ label, options, value = [], onChange, mark
             <legend className={style.fieldLabel}>
                 {label}
             </legend>
-            <FormGroup className={style.formGroup}>
+            <FormGroup
+                className={style.formGroup}
+            >
                 {options.map(option => {
                     const selected = value.includes(option);
                     const marked = markedOptions?.has(option);
@@ -60,16 +75,18 @@ export default function MultiChoice({ label, options, value = [], onChange, mark
                                 e.preventDefault();
                                 handleToggle(option);
                             }}
+                            disabled={disabled}
                             control={
                                 <Checkbox
                                     checked={selected}
                                     className={style.hiddenCheckbox}
                                     sx={{ position: 'absolute' }}
+                                    disabled={disabled}
                                 />
                             }
                             label={
                                 <>
-                                    {marked && <Check fontSize="small" color="inherit"/>}
+                                    {marked && <Check fontSize="small" color="inherit" />}
                                     {option}
                                 </>
                             }

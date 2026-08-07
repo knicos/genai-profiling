@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import style from "./style.module.css"
+import style from "./style.module.css";
 import SliderField from "@genaipg/components/FormFields/SliderField";
 import { Button } from "@genai-fi/base";
 import { updateIntermissionAtom } from "@genaipg/state/intermissionState";
@@ -26,7 +26,7 @@ export default function Intermission({ onDone, formIndex }: Props) {
     }, [formIndex, updateIntermission, value, onDone, submitting]);
 
     return (
-        <div className={style.sliderContainer}>
+        <div className={style.container}>
             <SliderField
                 label={t("game.checkpoint.studentQuestion")}
                 value={value}
@@ -38,6 +38,7 @@ export default function Intermission({ onDone, formIndex }: Props) {
                 variant="contained"
                 onClick={submitResponse}
                 disabled={submitting}
+                fullWidth
             >
                 {t('done')}
             </Button>
