@@ -1,17 +1,18 @@
 import { TFunction } from "i18next";
 import { Category } from "@genaipg/components/Question/types";
+import { randomId } from "@genai-fi/base";
 
 export function buildInitialQuestions(t: TFunction): Category[] {  
     return [
         {
-            id: 1,
+            id: randomId(),
             category: t(
                 'create.profileInformation.age.category'
             ),
             icon: 'birthday',
             questions: [
                 {
-                    id: 1,
+                    id: randomId(),
                     type: 'slider',
                     min: 0,
                     max: 100,   
@@ -21,14 +22,14 @@ export function buildInitialQuestions(t: TFunction): Category[] {
             ]
         },
         {
-            id: 2,
+            id: randomId(),
             category: t(
                 'create.profileInformation.interests.category'
             ),
             icon: 'love',
             questions: [
                 {
-                    id: 1,
+                    id: randomId(),
                     type: 'multichoice',
                     text: t(
                         'create.profileInformation.interests.templateQuestion'
@@ -49,14 +50,14 @@ export function buildInitialQuestions(t: TFunction): Category[] {
             ]
         },
         {
-            id: 3,
+            id: randomId(),
             category: t(
                 'create.profileInformation.location.category'
             ),
             icon: 'location',
             questions: [
                 {
-                    id: 1,
+                    id: randomId(),
                     type: 'singlechoice',
                     text: t(
                         'create.profileInformation.location.templateQuestion'
@@ -70,7 +71,7 @@ export function buildInitialQuestions(t: TFunction): Category[] {
             ]
         },
         {
-            id: 4,
+            id: randomId(),
             icon: 'sports',
             category: t(
                 'create.profileInformation.hobbies.category'

@@ -13,6 +13,7 @@ import MysteryProfileIcon from "@genaipg/components/Icons/MysteryProfileIcon";
 import { QuestionsList } from "./QuestionsList";
 import IconPicker from "@genaipg/components/FormFields/IconPicker";
 import { IconType } from "@genaipg/components/Icons/type";
+import randomId from '@genai-fi/base/util/randomId';
 
 export function ProfileInformation() {
     const handleCategoryDelete = useSetAtom(deleteCategory);
@@ -21,7 +22,7 @@ export function ProfileInformation() {
     const [drafts, setDrafts] = useState<Record<string, Partial<QuestionData>>>({});
     const [addingCategory, setAddingCategory] = useState(false);
     const [newCategoryName, setNewCategoryName] = useState<string>('');
-    const [editingQuestion, setEditingQuestion] = useState<number | null>(null)
+    const [editingQuestion, setEditingQuestion] = useState<string | null>(null)
     const { t } = useTranslation();
 
     const handleDraftChange = (key: string, field: string, value: string | string[] | number) => {
@@ -47,7 +48,7 @@ export function ProfileInformation() {
         }))
     }
 
-    const updateCategoryIcon = (categoryId: number, icon: IconType ) => {
+    const updateCategoryIcon = (categoryId: string, icon: IconType ) => {
         updateCategory({
             categoryId,
             updates: {
@@ -66,7 +67,7 @@ export function ProfileInformation() {
 
         if (isDuplicate) return;
 
-        const newCat: Category = { id: categories.length + 1, category: name, questions: [], icon: 'default' }
+        const newCat: Category = { id: randomId(), category: name, questions: [], icon: 'default' }
         setCategories(prev => [...prev, newCat]);
         setAddingCategory(false);
         setNewCategoryName('');

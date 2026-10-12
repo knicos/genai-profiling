@@ -3,14 +3,14 @@ import { IconType } from "../Icons/type";
 export type QuestionType = 'text' | 'slider' | 'multichoice' | 'singlechoice' | 'largetext' | 'message';
 
 export interface Category {
-    id: number;
+    id: string;
     category: string;
     icon: IconType;
     questions: QuestionData[];
 }
 
 interface QuestionBase {
-    id: number;
+    id: string;
     text: string;
     type: QuestionType;
 }

@@ -34,7 +34,7 @@ export default function useWorkFlowItems(): WorkFlow {
             items: [
                 { id: 'profile', status: basicInfoComplete ? 'complete' : 'available' },
                 { id: 'clues', status: cluesComplete ? 'complete' : 'available' },
-                { id: 'preview', status: basicInfoComplete && cluesComplete ? 'available' : 'blocked' }
+                { id: 'preview', status: basicInfoComplete && cluesComplete ? 'complete' : 'available' }
             ],
             usedCategories,
         }

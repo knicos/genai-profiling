@@ -20,17 +20,17 @@ export function BottomMenu({onExport} : Props) {
 
     const handleNext = () => {
         if (pathname.includes('profile')) {
-            navigate('/create/clues');
+            navigate('/create/editor/clues');
         } else if (pathname.includes('clues')) {
-            navigate('/create/preview');
+            navigate('/create/editor/preview');
         }
     }
 
     const handlePrevious = () => {
         if (pathname.includes('preview')) {
-            navigate('/create/clues');
+            navigate('/create/editor/clues');
         } else if (pathname.includes('clues')) {
-            navigate('/create/profile');
+            navigate('/create/editor/profile');
         }
     } 
 
@@ -46,7 +46,7 @@ export function BottomMenu({onExport} : Props) {
             <Button
                 variant="contained"
                 sx = {pathname.includes('preview') ? {background: 'var(--secondary)'} : {}}
-                disabled={pathname.includes('clues') && items[2].status === 'blocked'}
+                disabled={pathname.includes('preview') && items[2].status === 'available'}
                 onClick={ !pathname.includes('preview') ? handleNext : onExport}
             >
                 {!pathname.includes('preview') ? (

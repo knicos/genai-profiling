@@ -62,7 +62,7 @@ export default function ClueCard({ type, clue, setClue, reveal, delay }: Props) 
                 <Box className={style.cardTitle}>
                     <Box className={style.titleGroup}>
                         <h3>
-                            {t("create.clues.clue")} {clue.clue.type === 'demo' ? clue.clue.clue.id : clue.clue.id}
+                            {t("create.clues.clue")} {clue.index}
                         </h3>
                         <p>
                             {t(

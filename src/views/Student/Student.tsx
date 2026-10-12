@@ -23,13 +23,16 @@ function loadUser() {
     return name || undefined;
 }
 
-function filterQuestions(questions: QuestionData[], form: number[]) {
-    const set = new Map<number, QuestionData>();
+function filterQuestions(questions: QuestionData[], form: (string | number)[]) {
+    const set = new Map<string, QuestionData>();
     questions.forEach((q) => {
         set.set(q.id, q);
     });
     const result: QuestionData[] = [];
     form.forEach((f) => {
+        if (typeof f === 'number') {
+            return;
+        }
         const q = set.get(f);
         if (q) {
             result.push(q);

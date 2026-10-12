@@ -3,11 +3,11 @@ import { CategoryEntry } from "@genaipg/protocol/protocol";
 import { emitResponseEvent } from "@genaipg/services/responseLogger/events";
 import { Category } from "@genaipg/components/Question/types";
 
-export const responseAtom = atom<Record<number, Record<number, string | string[]>>>({});
+export const responseAtom = atom<Record<string, Record<string, string | string[]>>>({});
 
 export const updateResponseAtom = atom(
     null,
-    (get, set, { categoryId, questionId, value }: { categoryId: number, questionId: number, value: string | string[] }) => {
+    (get, set, { categoryId, questionId, value }: { categoryId: string, questionId: string, value: string | string[] }) => {
         set(responseAtom, {
             ...get(responseAtom),
             [categoryId]: {
@@ -49,7 +49,7 @@ const isAnswered = (value: string | string[] | undefined) =>
     !(Array.isArray(value) && value.length === 0);
 
 export const getCategoryStatus = (
-    responses: Record<number, Record<number, string | string[]>>,
+    responses: Record<string, Record<string, string | string[]>>,
     category: Category
 ): 0 | 4 | 6 => {
     const categoryResponses = responses[category.id];

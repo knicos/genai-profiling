@@ -4,7 +4,7 @@ import MultiChoice from '../FormFields/MultiChoice';
 interface Props {
     question: QuestionMulti;
     value: string[];
-    onChange: (field: number, value: string[]) => void;
+    onChange: (field: string, value: string[]) => void;
     disabled?: boolean;
 }
 

@@ -15,7 +15,7 @@ export interface SlideQuestion extends SlideBase {
 
 export interface SlideBoard extends SlideBase {
     type: 'board';
-    questions: number[];
+    questions: string[];
 }
 
 export interface SlideImage extends SlideBase {

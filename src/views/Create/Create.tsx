@@ -5,21 +5,24 @@ import { Outlet } from "react-router";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtom, useAtomValue } from "jotai";
-import { cluesAtom, formOrderAtom, questionsAtom } from "@genaipg/state/createState";
+import { editorItemsAtom, cluesAtom, formOrderAtom, questionsAtom } from "@genaipg/state/createState";
 import { buildInitialQuestions } from "@genaipg/util/buildInitialQuestions";
 import style from './style.module.css';
 import { SlideMeta } from "@genaipg/components/Slide/types";
-import { INTERMISSION_FORM_ID, REVEAL_PROFILE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
+import { REVEAL_PROFILE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
+import { getImage } from "@genaipg/services/images/images";
 
-export default function Create() {
+export function Component() {
     const { t } = useTranslation()
     const [questions, setQuestions] = useAtom(questionsAtom);
     const clues = useAtomValue(cluesAtom)
     const forms = useAtomValue(formOrderAtom);
+    const editorItems = useAtomValue(editorItemsAtom);
 
     useEffect(() => {
-        setQuestions(buildInitialQuestions(t))
-    }, [t, setQuestions])
+        if (questions.length <= 0)
+            setQuestions(buildInitialQuestions(t))
+    }, [t, setQuestions, questions.length]);
 
     const exportZip = async () => {
         const zip = new JSZip();
@@ -27,68 +30,84 @@ export default function Create() {
 
         const slideData: SlideMeta[] = [];
 
-        for (const clue of clues) {
+        for (const item of editorItems) {
             let fileName;
 
-            if (clue.visual) {
-                if ('url' in clue.visual && clue.visual.url) {
-                    const blob = await (await fetch(clue.visual.url)).blob();
-                    fileName = `clue-${clue.id}`;
-                    images?.file(`${fileName}.png`, blob);
-                }
-
+            if (item.type === 'checkpoint') {
                 slideData.push({
-                    type: 'demo',
-                    clue: {
-                        ...clue,
-                        visual: fileName && clue.visual && 'url' in clue.visual
-                            ? { ...clue.visual, url: `${fileName}` }
-                            : clue.visual,
-                    }
+                    type: 'checkpoint',
                 });
+            } else if (item.type === 'clue') {
+                const clue = clues.find(c => c.id === item.id);
+
+                if (clue && clue.visual) {
+                    if ("url" in clue.visual && clue.visual.url) { 
+                        const imageUrl = getImage(clue.visual.url); 
+                        if (imageUrl) { 
+                            const blob = await (await fetch(imageUrl)).blob(); 
+                            fileName = `clue-${clue.id}`; images?.file(`${fileName}.png`, blob); 
+                        } 
+                    }
+
+                    slideData.push({
+                        type: 'demo',
+                        clue: {
+                            ...clue,
+                            visual: fileName && clue.visual && 'url' in clue.visual
+                                ? { ...clue.visual, url: `${fileName}` }
+                                : clue.visual,
+                        }
+                    });
+                }
             }
         }
 
         const exportedForms = forms?.forms ? [...forms.forms] : [];
 
-        if (Array.isArray(exportedForms) && exportedForms.length > 0) {
-            /*Before implementing the add your own breaks  */
+
+        if (exportedForms.length > 0) {
+            const lastFormIndex = exportedForms.length - 1;
+
             for (let i = 0; i < exportedForms.length; i++) {
-                const isLastForm = i === exportedForms.length - 1;
-
-                if (exportedForms[i]?.includes(INTERMISSION_FORM_ID)) {
-                    slideData.splice(i, 0, { type: "checkpoint" });
-                }
-
-                if (isLastForm) {
+                if (i === lastFormIndex) {
                     slideData.push({
                         type: "collage",
                         form: i,
                         id: i,
                     });
-                } else {
+
+                    continue;
+                }
+
+                if (slideData[i]) {
                     slideData[i].form = i;
                 }
             }
 
-            exportedForms.push([REVEAL_PROFILE_FORM_ID]); 
-            exportedForms.push([TIMELINE_FORM_ID]); 
+            exportedForms.push(
+                [REVEAL_PROFILE_FORM_ID],
+                [TIMELINE_FORM_ID]
+            );
+
+            const revealProfileForm = exportedForms.length - 2;
+            const timelineForm = exportedForms.length - 1;
 
             slideData.push({
                 type: "ending",
-                form: exportedForms.length - 2, 
+                form: revealProfileForm,
                 steps: [
                     {
                         id: "revealProfile",
-                        form: exportedForms.length - 2,
+                        form: revealProfileForm,
                     },
                     {
                         id: "timeline",
-                        form: exportedForms.length - 1,
+                        form: timelineForm,
                     },
                 ],
             });
         }
+
 
         zip.file("slides.json", JSON.stringify(slideData, null, 2));
         zip.file("questions.json", JSON.stringify({ questions, forms: exportedForms }, null, 2));

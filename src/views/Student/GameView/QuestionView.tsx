@@ -18,14 +18,14 @@ interface Props {
     goBack: () => void;
     goPrevious: (index: number) => void;
     goNext: (index: number) => void;
-    change?: (categoryId: number, questionId: number, values: string | string[]) => void;
+    change?: (categoryId: string, questionId: string, values: string | string[]) => void;
     disabled?: boolean;
 }
 
 export default function QuestionView({ category, currentIndex, totalCategories, goBack, goNext, goPrevious, change, disabled }: Props) {
     const { t } = useTranslation();
     const responses = useAtomValue(responseAtom)[category.id] ?? {};
-
+    
     return (
         <div className={style.container}>
             <div className={style.innerContainer}>

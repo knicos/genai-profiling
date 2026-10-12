@@ -28,7 +28,7 @@ export default function Gameview({ formIndex, onDone }: Props) {
     const unlockedCategories = useMemo(() => {
         if (!profile) return [];
 
-        const categoriesIds = new Set<number>();
+        const categoriesIds = new Set<string>();
 
         for (let i = 0; i <= formIndex; i++) {
             const current = profile.forms[i];
@@ -39,7 +39,7 @@ export default function Gameview({ formIndex, onDone }: Props) {
                 return profile.categories
 
             current.forEach(id => {
-                if (id !== INTERMISSION_FORM_ID && id !== REVEAL_PROFILE_FORM_ID && id !== TIMELINE_FORM_ID)
+                if (id !== INTERMISSION_FORM_ID && id !== REVEAL_PROFILE_FORM_ID && id !== TIMELINE_FORM_ID && typeof id === 'string')
                     categoriesIds.add(id)
             })
         }
@@ -56,7 +56,7 @@ export default function Gameview({ formIndex, onDone }: Props) {
         onDone(done);
     }, [done, onDone])
 
-    const change = useCallback((categoryId: number, questionId: number, value: string | string[]) => {
+    const change = useCallback((categoryId: string, questionId: string, value: string | string[]) => {
         updateResponse({ categoryId, questionId, value });
         onDone(false);
     }, [updateResponse, onDone]);
@@ -109,7 +109,11 @@ export default function Gameview({ formIndex, onDone }: Props) {
                             <Overview
                                 categories={unlockedCategories}
                                 onSelectCategory={setSelectedCategory}
-                                activeCategoriesIds={profile?.forms[formIndex] ?? []}
+                                activeCategoriesIds={
+                                    typeof profile?.forms[formIndex] === 'string'
+                                        ? profile.forms[formIndex]
+                                        : []
+                                }
                             />
                             <div className={style.navigationFooter}>
                                 <Button

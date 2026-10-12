@@ -4,7 +4,7 @@ import SliderField from '../FormFields/SliderField';
 interface Props {
     question: QuestionSlider;
     value: string;
-    onChange: (field: number, value: string) => void;
+    onChange: (field: string, value: string) => void;
     disabled?: boolean;
 }
 

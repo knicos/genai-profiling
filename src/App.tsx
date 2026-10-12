@@ -7,11 +7,11 @@ import { theme } from '@genai-fi/base';
 import Loading from './components/Loading/Loading';
 import ConfigurationForm from './views/ConfigurationForm/ConfigurationForm';
 import About from './views/About/About';
-import Create from './views/Create/Create';
 import { ProfileInformation } from './views/Create/ProfileInformation/ProfileInformation';
 import { ClueCreation } from './views/Create/Clues/ClueCreation';
 import ConfirmationView from './views/Create/Confirmation/ConfirmationView';
 import Session from './views/Teacher/Session';
+import CreateStart from './views/Create/CreateStart';
 
 const routes = createRoutesFromElements(
     <Route path="/">
@@ -59,21 +59,27 @@ const routes = createRoutesFromElements(
         </Route>
         <Route
             path="create"
-            element={<Create />}
         >
-            <Route index element={<Navigate replace to="/create/profile" />} />
+            <Route index element={<CreateStart />} />
             <Route
-                path="profile"
-                element={<ProfileInformation />}
-            />
-            <Route
-                path="clues"
-                element={<ClueCreation />}
-            />
-            <Route
-                path="preview"
-                element={<ConfirmationView />}
-            />
+                path="editor"
+                lazy={() => import('./views/Create/Create')}
+            >
+                <Route index element={<Navigate replace to="/create/editor/profile" />} />
+                <Route
+                    path="profile"
+                    element={<ProfileInformation />}
+                />
+                <Route
+                    path="clues"
+                    element={<ClueCreation />}
+                />
+                <Route
+                    path="preview"
+                    element={<ConfirmationView />}
+                />
+            </Route>
+
         </Route>
     </Route>
 )

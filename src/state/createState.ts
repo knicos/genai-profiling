@@ -1,13 +1,11 @@
 import { atom } from "jotai";
-import { ClueData } from "@genaipg/views/Create/types";
+import { atomWithReset } from "jotai/utils";
+import { ClueData, EditorItem } from "@genaipg/views/Create/types";
 import { Category, QuestionData } from "@genaipg/components/Question/types";
 import { INTERMISSION_FORM_ID } from "@genaipg/constants/formIds";
+import { randomId } from "@genai-fi/base";
 
-// THIS WILL CHANGE
-const MAX_SLIDES_PER_SECTION = 3;
-
-
-export const questionsAtom = atom<Category[]>([]);
+export const questionsAtom = atomWithReset<Category[]>([]);
 
 export const questionCategoriesAtom = atom<string[]>((get) => {
     const questions = get(questionsAtom);
@@ -25,7 +23,7 @@ export const addQuestionAtom = atom(
         get,
         set,
         payload: {
-            categoryId: number;
+            categoryId: string;
             question: Omit<QuestionData, "id">;
         }
     ) => {
@@ -36,16 +34,9 @@ export const addQuestionAtom = atom(
                 return category;
             }
 
-            const nextId =
-                category.questions.length > 0
-                    ? Math.max(
-                        ...category.questions.map(q => q.id)
-                    ) + 1
-                    : 1;
-
             const newQuestion: QuestionData = {
                 ...payload.question,
-                id: nextId
+                id: randomId()
             } as QuestionData;
 
             return {
@@ -68,7 +59,7 @@ export const deleteQuestion = atom(
         set,
         payload: {
             categoryId: string;
-            questionId: number;
+            questionId: string;
         }
     ) => {
         const categories = get(questionsAtom);
@@ -113,7 +104,7 @@ export const updateCategoryAtom = atom(
         get,
         set,
         payload: {
-            categoryId: number;
+            categoryId: string;
             updates: Partial<Category>;
         }
     ) => {
@@ -136,8 +127,8 @@ export const updateQuestionAtom = atom(
         get,
         set,
         payload: {
-            categoryId: number;
-            questionId: number;
+            categoryId: string;
+            questionId: string;
             updates: Partial<QuestionData>;
         }
     ) => {
@@ -170,13 +161,147 @@ export const updateQuestionAtom = atom(
 );
 
 
-export const cluesAtom = atom<ClueData[]>(
-    Array.from({ length: 10 }, (_, i) => ({
-        id: i,
+const initialClues: ClueData[] = Array.from(
+    { length: 4 },
+    () => ({
+        id: randomId(),
         visual: undefined,
         clue: '',
-        category: [] as string[]
-    }))
+        category: [] as string[],
+    })
+);
+
+export const cluesAtom = atomWithReset<ClueData[]>(initialClues);
+
+export const addCheckpointAtom = atom(
+    null,
+    (
+        _,
+        set,
+        payload: {
+            clueId?: string;
+        }
+    ) => {
+        set(editorItemsAtom, prev => {
+            const newItem: EditorItem = {
+                type: 'checkpoint',
+            };
+
+            if (!payload.clueId) {
+                return [
+                    ...prev,
+                    newItem,
+                ];
+            }
+
+            const clueIndex = prev.findIndex(
+                item =>
+                    item.type === 'clue' &&
+                    item.id === payload.clueId
+            );
+
+            if (clueIndex === -1) {
+                return [
+                    ...prev,
+                    newItem,
+                ];
+            }
+
+            const updated = [...prev];
+
+            updated.splice(
+                clueIndex + 1,
+                0,
+                newItem
+            );
+
+            return updated;
+        });
+    }
+);
+
+export const deleteCheckpointAtom = atom(
+    null,
+    (
+        _,
+        set,
+        payload: {
+            index: number;
+        }
+    ) => {
+        set(editorItemsAtom, prev =>
+            prev.filter(
+                (item, index) =>
+                    index !== payload.index ||
+                    item.type !== 'checkpoint'
+            )
+        );
+    }
+);
+
+const initialEditorItems: EditorItem[] = initialClues.map(
+    clue => ({
+        type: 'clue',
+        id: clue.id,
+    })
+);
+
+export const editorItemsAtom = atomWithReset<EditorItem[]>(initialEditorItems);
+
+export const addClueAtom = atom(
+    null,
+    (_, set) => {
+        const newClue: ClueData = {
+            id: randomId(),
+            visual: undefined,
+            clue: '',
+            category: [],
+        };
+
+        set(cluesAtom, prev => [
+            ...prev,
+            newClue,
+        ]);
+
+        set(editorItemsAtom, prev => [
+            ...prev,
+            {
+                type: 'clue',
+                id: newClue.id,
+            },
+        ]);
+    }
+);
+
+export const deleteClueAtom = atom(
+    null,
+    (
+        _,
+        set,
+        payload: {
+            clueId: string;
+        }
+    ) => {
+        set(
+            cluesAtom,
+            prev =>
+                prev.filter(
+                    clue => clue.id !== payload.clueId
+                )
+        );
+
+        set(
+            editorItemsAtom,
+            prev =>
+                prev.filter(
+                    item =>
+                        !(
+                            item.type === 'clue' &&
+                            item.id === payload.clueId
+                        )
+                )
+        );
+    }
 );
 
 export const updateClueAtom = atom(
@@ -185,7 +310,7 @@ export const updateClueAtom = atom(
         get,
         set,
         payload: {
-            clueId: number;
+            clueId: string;
             updates: Partial<ClueData>;
         }
     ) => {
@@ -206,9 +331,50 @@ export const updateClueAtom = atom(
     }
 );
 
-type FormOrderState = { level: 1 | 2 | 3; forms: number[][]; };
+export const reorderEditorItemsAtom = atom(
+    null,
+    (
+        get,
+        set,
+        {
+            sourceIndex,
+            destinationIndex,
+        }: {
+            sourceIndex: number;
+            destinationIndex: number;
+        }
+    ) => {
+        const items = [...get(editorItemsAtom)];
 
-export const formOrderAtom = atom<FormOrderState>();
+        const [movedItem] = items.splice(sourceIndex, 1);
+
+        items.splice(
+            destinationIndex,
+            0,
+            movedItem
+        );
+
+        set(editorItemsAtom, items);
+    }
+);
+
+export const orderedCluesAtom = atom((get) => {
+    const items = get(editorItemsAtom);
+    const clues = get(cluesAtom);
+
+    const cluesById = new Map(clues.map(clue => [clue.id, clue]));
+
+    return items
+        .filter((item): item is Extract<EditorItem, { type: 'clue' }> =>
+            item.type === 'clue'
+        )
+        .map(item => cluesById.get(item.id))
+        .filter((clue): clue is ClueData => clue !== undefined);
+});
+
+type FormOrderState = { level: 1 | 2 | 3; forms: (number | string)[][]; };
+
+export const formOrderAtom = atomWithReset<FormOrderState>({ level: 1, forms: [] });
 
 export const createFormOrder = atom(
     null,
@@ -221,75 +387,120 @@ export const createFormOrder = atom(
     ) => {
         const categories = get(questionsAtom);
         const clues = get(cluesAtom);
+        const editorItems = get(editorItemsAtom);
 
-
-        // Number for break
         const BREAK = INTERMISSION_FORM_ID;
 
-        // Easy mode: every clue opens the category it belongs to 
-        const forms: number[][] = [];
+        const clueForms = new Map<string, (string | number)[]>();
 
         if (payload.level === 1) {
             clues.forEach(clue => {
-                const form: number[] = []
+                const form: (number | string)[] = [];
 
                 clue.category.forEach(cat => {
-                    const category = categories.find(c => c.category === cat);
-                    if (category)
+                    const category = categories.find(
+                        c => c.category === cat
+                    );
+
+                    if (category) {
                         form.push(category.id);
-                })
+                    }
+                });
 
-                forms.push(form);
-            })
+                clueForms.set(clue.id, form);
+            });
         }
-        // Medium mode: Group of questions unlock per section. 
+
         else if (payload.level === 2) {
+            const sections: ClueData[][] = [];
+            let currentSection: ClueData[] = [];
 
-            for (let start = 0; start < clues.length; start += MAX_SLIDES_PER_SECTION) {
-                const section = clues.slice(start, start + MAX_SLIDES_PER_SECTION);
+            editorItems.forEach(item => {
 
-                const sectionCategories: number[] = [];
+                if (item.type === 'checkpoint') {
+                    if (currentSection.length > 0) {
+                        sections.push(currentSection);
+                        currentSection = [];
+                    }
+
+                    return;
+                }
+
+                const clue = clues.find(
+                    clue => clue.id === item.id
+                );
+
+                if (clue) {
+                    currentSection.push(clue);
+                }
+            });
+
+            if (currentSection.length > 0) {
+                sections.push(currentSection);
+            }
+
+            sections.forEach(section => {
+                const sectionCategories: string[] = [];
 
                 section.forEach(clue => {
                     clue.category.forEach(cat => {
-                        const category = categories.find(c => c.category === cat);
+                        const category = categories.find(
+                            c => c.category === cat
+                        );
 
-                        if (category)
-                            sectionCategories.push(category.id);
+                        if (category) {
+                            sectionCategories.push(
+                                category.id
+                            );
+                        }
                     });
                 });
 
-                const uniqueCategories = [...new Set(sectionCategories)];
+                const uniqueCategories = [
+                    ...new Set(sectionCategories)
+                ];
 
-                section.forEach(() => {
-                    forms.push(uniqueCategories);
+                section.forEach(clue => {
+                    clueForms.set(
+                        clue.id,
+                        [...uniqueCategories]
+                    );
                 });
-            }
+            });
         }
-        //Hard mode: Every category is open 
+
         else if (payload.level === 3) {
-            const allCategories: number[] = categories.map(c => c.id);
+            const allCategories: string[] =
+                categories.map(c => c.id);
 
-            clues.forEach(() => {
-                forms.push([...allCategories]);
-            })
+            clues.forEach(clue => {
+                clueForms.set(
+                    clue.id,
+                    [...allCategories]
+                );
+            });
         }
 
-        // Create the breaks
-        const withBreaks: number[][] = [];
+        const withBreaks: (number | string)[][] = [];
 
-        for (let i = 0; i < forms.length; i++) {
-            withBreaks.push(forms[i]);
+        editorItems.forEach(item => {
 
-            const isEndOfSection = (i + 1) % MAX_SLIDES_PER_SECTION === 0;
-            const isLast = i === forms.length - 1;
-
-            if (isEndOfSection && !isLast)
+            if (item.type === 'checkpoint') {
                 withBreaks.push([BREAK]);
-        }
+                return;
+            }
 
-        // Collage slide where every clue is available and every category.
-        const collageForm: number[] = categories.map(c => c.id);
+            const form = clueForms.get(item.id);
+
+            if (form) {
+                withBreaks.push(form);
+            }
+        });
+
+
+        const collageForm: (number | string)[] =
+            categories.map(c => c.id);
+
         withBreaks.push(collageForm);
 
         set(formOrderAtom, {
@@ -297,4 +508,4 @@ export const createFormOrder = atom(
             forms: withBreaks,
         });
     }
-)
+);

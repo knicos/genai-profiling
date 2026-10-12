@@ -1,7 +1,12 @@
 {
+    "app": {
+        "appTitle": "Profiling game",
+        "appSubtitle": "Explore how different data traces can reveal a mystery profile.",
+        "selectProfile": "Select a profile"
+    },
     "Enter Code": "Enter Code",
     "Go": "Go",
-    "Create New": "Create New",
+    "Create New": "Create new profile",
     "Start a session": "Start a session",
     "Enter Class Name": "Enter Class Name",
     "Enter Session Detail": "Enter Session Detail",
@@ -25,7 +30,16 @@
         "clues": "Clues",
         "preview": "Preview"
     },
+    "start": {
+        "labels": {
+            "or": "Or"
+        }
+    }, 
     "create": {
+        "createOrEdit": "Create or edit a profile",
+        "createOrEditSubtitle": "What would you like to do?",
+        "upload": "Upload and edit",
+        "createNew": "Create new",
         "buttons": {
             "next": "Next",
             "previous": "Previous",
@@ -36,7 +50,9 @@
             "save": "Save",
             "select": "Select",
             "close": "Close",
-            "back": "Back"
+            "back": "Back",
+            "addClue": "Add clue",
+            "addCheckpoint": "Add checkpoint"
         },
         "confirmation": {
             "collage": "Collage",
@@ -124,10 +140,13 @@
             "fillTemplate": "Fill in template",
             "fillTemplateSubtitle": "Fill in the template and save",
             "uploadImage": "Upload an image",
-            "imageInstructions": "Upload an image for your clue",
-            "describeClue": "Describe the clue",
+            "imageInstructions": "1. Upload an image for your clue",
+            "describeClue": "2. Describe the clue",
+            "describeClueSubtitle": "Briefly explain what this clue shows",
             "describeCluePlaceholder": "e.g. The user made these searches recently...",
-            "categoryQuestion": "What does this clue tell about the mystery person?",
+            "categoryQuestion": "3. What can players learn from this clue?",
+            "categoryQuestionSubtitle": "Select every category this clue relates to",
+            "noImageYet": "No image yet",
             "templates": {
                 "streaming": {
                     "label": "Streaming a song / podcast",
@@ -211,9 +230,6 @@
         "solve": "Mystery",
         "revealButton": "Reveal correct profile",
         "help": "This is a mystery profile. Use the clues provided to answer the questions about the mystery person. You can answer the questions in any order. Press Done when you've finished the current clue to let your teacher know you're ready to continue."
-    },
-    "app": {
-        "selectProfile": "Select a profile"
     },
     "loader": {
         "messages": {

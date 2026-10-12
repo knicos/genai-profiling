@@ -1,9 +1,9 @@
 import { ResponseEntry } from '@genaipg/protocol/protocol';
 import { emitResponseEvent } from './events';
 
-const state = new Map<number, string>();
+const state = new Map<string, string>();
 
-export function updateResponse(id: number, value: string) {
+export function updateResponse(id: string, value: string) {
     state.set(id, value);
     emitResponseEvent(id, value);
 }
@@ -14,6 +14,6 @@ export function updateAllResponses(responses: ResponseEntry[]) {
     });
 }
 
-export function getResponse(id: number): string {
+export function getResponse(id: string): string {
     return state.get(id) || '';
 }

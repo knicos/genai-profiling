@@ -11,7 +11,7 @@ import { Help } from '@genai-fi/base';
 interface Props {
     categories: Category[];
     onSelectCategory?: (category: Category) => void;
-    activeCategoriesIds?: number[];
+    activeCategoriesIds?: string[];
 }
 
 export default function Overview({ categories, onSelectCategory, activeCategoriesIds }: Props) {

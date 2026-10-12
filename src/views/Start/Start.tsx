@@ -1,9 +1,12 @@
 import style from './style.module.css';
 import ErrorDialog from '../dialogs/ErrorDialog/ErrorDialog';
 import { useTranslation } from 'react-i18next';
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { HomeBanner, LangSelect } from '@genai-fi/base';
+import { Button } from '@genai-fi/base/components/Button';
+
 
 export function Component() {
     const { t } = useTranslation();
@@ -26,15 +29,27 @@ export function Component() {
         }
     }, [navigate]);
 
+
     return (
         <div className={style.container}>
+            <div className={style.language}>
+                <LangSelect />
+            </div>
+            <HomeBanner
+                title={
+                    <span className={style.headerText}>
+                        {t('app.appTitle')}
+                    </span>
+                }
+                subtitle={
+                    <span className={style.headerText}>
+                        {t('app.appSubtitle')}
+                    </span>
+                }
+                logoUrl="/logo192.png"
+
+            />
             <div className={style.innerContainer}>
-                <img
-                    src="/logo192_bw.png"
-                    alt="GenAI logo"
-                    width={192}
-                    height={192}
-                />
                 <TextField
                     label={t("Enter Code")}
                     onKeyDown={doKeyDown}
@@ -46,23 +61,24 @@ export function Component() {
                     variant="contained"
                     fullWidth
                     size="large"
-                    component="a"
                     onClick={doGo}
                 >
                     {t("Go")}
                 </Button>
-                <div className={style.spacer} />
+                <div className={style.or}>{t('start.labels.or')}</div>
                 <Button
                     variant="outlined"
                     href="/game/configure"
                     className={style.createButton}
+                    fullWidth
                 >
                     {t("Start a session")}
                 </Button>
                 <Button
                     variant="outlined"
-                    href="/create/profile"
+                    href="/create"
                     className={style.createButton}
+                    fullWidth
                 >
                     {t("Create New")}
                 </Button>

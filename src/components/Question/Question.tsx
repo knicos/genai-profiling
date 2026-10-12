@@ -9,7 +9,7 @@ import MessageQuestion from './MessageQuestion';
 interface Props {
     question: QuestionData;
     value: string | string[];
-    onChange: (field: number, value: string | string[]) => void;
+    onChange: (field: string, value: string | string[]) => void;
     disabled?: boolean;
 }
 

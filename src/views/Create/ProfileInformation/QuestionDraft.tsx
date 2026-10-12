@@ -16,7 +16,7 @@ interface Props {
     draft: Partial<QuestionData | undefined>;
     handleChanges: (key: string, field: string, value: string | string[] | number) => void;
     onSubmit: () => void;
-    editing: number | null;
+    editing: string | null;
 }
 
 // TODO: This should probably be changed into switch case. Just like Templates, Questions etc..

@@ -3,7 +3,7 @@ import PhoneFrame from "@genaipg/components/Templates/PhoneFrame";
 import GridOnOutlined from '@mui/icons-material/GridOnOutlined';
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye';
 import { useAtomValue, useSetAtom } from "jotai";
-import { cluesAtom, createFormOrder, formOrderAtom } from "@genaipg/state/createState";
+import { orderedCluesAtom, createFormOrder, editorItemsAtom, formOrderAtom } from "@genaipg/state/createState";
 import Visuals from "@genaipg/components/Slide/Visuals";
 import { SegmentedControl, SegmentedControlButton } from "@genaipg/components/SegmentedControl/SegmentedControl";
 import { useEffect, useState } from "react";
@@ -13,35 +13,34 @@ import StudentPreview from "./StudentPreview";
 import style from './style.module.css'
 import { useTranslation } from "react-i18next";
 import { MenuItem, Select } from "@mui/material";
-import { INTERMISSION_FORM_ID } from "@genaipg/constants/formIds";
 
 export default function ConfirmationView() {
     const { t } = useTranslation();
-    const clues = useAtomValue(cluesAtom);
+    const clues = useAtomValue(orderedCluesAtom);
     const [preview, setPreview] = useState<boolean>(false);
     const [slidePages, setSlidePages] = useState<number>(0)
     const forms = useAtomValue(formOrderAtom);
     const setForms = useSetAtom(createFormOrder);
-
+    const editorItems = useAtomValue(editorItemsAtom)
 
     const slides = useMemo(() => {
-        const base = clues.map(clue => ({
-            type: 'demo',
-            clue,
-        })) as SlideMeta[];
-
-        if (!Array.isArray(forms?.forms)) return base;
-
-        const result: SlideMeta[] = [...base];
-
-        for (let i = 0; i < forms.forms.length; i++) {
-            if (forms.forms[i]?.includes(INTERMISSION_FORM_ID)) {
-                result.splice(i, 0, { type: 'checkpoint' });
+        return editorItems.flatMap((item): SlideMeta[] => {
+            if (item.type === "checkpoint") {
+                return [{ type: "checkpoint" }];
             }
-        }
 
-        return result;
-    }, [clues, forms]);
+            const clue = clues.find((clue) => clue.id === item.id);
+
+            if (!clue) {
+                return [];
+            }
+
+            return [{
+                type: "demo",
+                clue,
+            }];
+        });
+    }, [editorItems, clues]);
 
     useEffect(() => {
         if (!forms?.forms)

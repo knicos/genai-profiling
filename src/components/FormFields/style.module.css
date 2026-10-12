@@ -6,6 +6,16 @@
     margin-bottom: 0.25rem;
 }
 
+.fieldLabel span {
+    color: var(--lighter-red);
+}
+
+.sublabel {
+    font-size: 1rem;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
 .formGroup {
     flex-direction: row;
     flex-wrap: wrap;

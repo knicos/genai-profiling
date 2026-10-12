@@ -4,7 +4,7 @@ import SelectField from '../FormFields/SelectField';
 interface Props {
     question: QuestionChoice;
     value: string;
-    onChange: (field: number, value: string) => void;
+    onChange: (field: string, value: string) => void;
     disabled?: boolean;
 }
 

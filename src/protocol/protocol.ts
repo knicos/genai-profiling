@@ -44,8 +44,8 @@ export interface ChangeFormEvent extends PeerEvent {
 export interface ResponseData {
     timestamp: number;
     date: string;
-    category: number;
-    question: QuestionData | number;
+    category: string;
+    question: QuestionData | string;
     value: string | string[];
     form: number;
 }
@@ -70,12 +70,12 @@ export interface IntermissionResponseEvent extends PeerEvent, IntermissionRespon
 }
 
 export interface ResponseEntry {
-    id: number;
+    id: string;
     value: string | string[];
 }
 
 export interface CategoryEntry {
-    id: number;
+    id: string;
     questions: ResponseEntry[];
 }
 

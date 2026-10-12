@@ -8,20 +8,20 @@ import { useCallback, useEffect } from 'react';
 
 interface ResponseSnapshot {
     form: number;
-    responses: Map<number, Map<number, string | string[]>>;
+    responses: Map<string, Map<string, string | string[]>>;
 }
 
 export interface UserState {
     name: string;
     form: number;
     history: ResponseSnapshot[];
-    responses: Map<number, Map<number, string | string[]>>;
+    responses: Map<string, Map<string, string | string[]>>;
     intermission: Map<number, string>;
 }
 
 const state = new Map<string, UserState>();
 
-const questionRecord = new Map<number, QuestionData>();
+const questionRecord = new Map<string, QuestionData>();
 
 interface LogBase {
     type: 'user' | 'teacher';
@@ -53,7 +53,7 @@ export function addUserResponse(className: string, id: string, data: ResponseDat
         name: '',
         form: 0,
         history: [],
-        responses: new Map<number, Map<number, string | string[]>>(),
+        responses: new Map<string, Map<string, string | string[]>>(),
         intermission: new Map<number, string>(),
     };
 
@@ -74,7 +74,8 @@ export function addUserResponse(className: string, id: string, data: ResponseDat
     if (!userState.responses.has(data.category))
         userState.responses.set(data.category, new Map());
 
-    const questionId = typeof data.question === 'number' ? data.question : data.question.id;
+    const questionId = typeof data.question === 'string' ? data.question : data.question.id;
+
     userState.responses.get(data.category)!.set(questionId, data.value);
     userState.history.push({
         form: data.form,
@@ -86,7 +87,7 @@ export function addUserResponse(className: string, id: string, data: ResponseDat
         ),
     });
 
-    if (typeof data.question !== 'number')
+    if (typeof data.question !== 'string')
         questionRecord.set(questionId, data.question);
 
     state.set(id, userState);
@@ -97,7 +98,7 @@ export function addUserIntermission(id: string, checkpointId: number, value: str
         name: '',
         form: 0,
         history: [],
-        responses: new Map<number, Map<number, string | string[]>>(),
+        responses: new Map<string, Map<string, string | string[]>>(),
         intermission: new Map<number, string>(),
     };
     userState.intermission.set(checkpointId, value);
@@ -121,7 +122,7 @@ export function addUserName(id: string, name: string) {
         name,
         form: 0,
         history: [],
-        responses: new Map<number, Map<number, string | string[]>>(),
+        responses: new Map<string, Map<string, string | string[]>>(),
         intermission: new Map<number, string>(),
         log: [],
     };
@@ -160,14 +161,14 @@ export function usePersistentData(code: string) {
                     name: '',
                     form: 0,
                     history: [],
-                    responses: new Map<number, Map<number, string | string[]>>(),
+                    responses: new Map<string, Map<string, string | string[]>>(),
                     intermission: new Map<number, string>(),
                     log: [],
                 };
 
                 u.responses.forEach((r) => {
-                    userState.responses.set(typeof r.question === 'number' ? r.question : r.question.id, r.value);
-                    if (typeof r.question !== 'number') {
+                    userState.responses.set(typeof r.question === 'string' ? r.question : r.question.id, r.value);
+                    if (typeof r.question !== 'string') {
                         questionRecord.set(r.question.id, r.question);
                     }
                 });
@@ -187,8 +188,8 @@ export function usePersistentData(code: string) {
     }, [code]);
 }
 
-export function getQuestionData(id: number): QuestionData {
-    return questionRecord.get(id) || { type: 'message', text: '', id: -1 };
+export function getQuestionData(id: string): QuestionData {
+    return questionRecord.get(id) || { type: 'message', text: '', id: '-1' };
 }
 
 export function getUserData() {
@@ -198,7 +199,7 @@ export function getUserData() {
 export function getFakeUserData(size: number) {
     const fake: UserState[] = [];
     for (let i = 0; i < size; ++i) {
-        fake.push({ name: `Name${i}`, form: 0, history: [], responses: new Map<number, Map<number, string | string[]>>(), intermission: new Map<number, string>() });
+        fake.push({ name: `Name${i}`, form: 0, history: [], responses: new Map<string, Map<string, string | string[]>>(), intermission: new Map<number, string>() });
     }
     return fake;
 }
@@ -274,7 +275,7 @@ function scoreQuestion(question: QuestionData, response: string | string[]) {
     }
 }
 
-function scoreCategory(category: Category, responses: Map<number, string | string[]>) {
+function scoreCategory(category: Category, responses: Map<string, string | string[]>) {
     if (!category.questions.length) return 0;
 
     let total = 0;
@@ -369,6 +370,7 @@ export type InfluentialClue = {
     studentsImproved: number;
     studentsWorsened: number;
     netChange: number;
+    index: number;
 };
 
 export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
@@ -377,9 +379,11 @@ export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
     const clues = profile.slides.filter(slide => slide.type === "demo" || slide.type === "collage");
     const users = getAllUsers();
 
+    let clueIndex: number = 0;
 
     const results = clues.map(clue => {
         const change = new Map<number, number>();
+        clueIndex ++;
 
         const form = clue.form ?? 0;
 
@@ -413,6 +417,7 @@ export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
                 studentsImproved: 0,
                 studentsWorsened: 0,
                 netChange: 0,
+                index: clueIndex
             } satisfies InfluentialClue;
         }
 
@@ -425,6 +430,7 @@ export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
             studentsImproved: key >= 0 ? value : 0,
             studentsWorsened: key < 0 ? value : 0,
             netChange: key,
+            index: clueIndex
         } satisfies InfluentialClue;
     });
 
@@ -438,7 +444,7 @@ export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
 }
 
 export type popularQuestion = {
-    id: number;
+    id: string;
     type?: QuestionType;
     text: string;
     correct: string | string[] | number;
@@ -447,7 +453,7 @@ export type popularQuestion = {
 }
 
 export type popularCategory = {
-    id: number;
+    id: string;
     label: string;
     icon: IconType;
     questions: popularQuestion[];

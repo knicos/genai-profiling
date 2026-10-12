@@ -16,7 +16,7 @@ export default function ClueLabels({ clues, currentIndex, spacing, chartStart, h
 
     return (
         <>
-            {clues.map((clue, ix) => (
+            {clues.map((_, ix) => (
                 <motion.text
                     key={ix}
                     x={chartStart + ix * spacing}
@@ -30,8 +30,7 @@ export default function ClueLabels({ clues, currentIndex, spacing, chartStart, h
                         ease: "easeInOut"
                     }}
                 >
-                    {labels && t("create.clues.clue")}
-                    {clue && clue.type === 'demo' ? clue.clue.id : clue.id}
+                    {labels && t("create.clues.clue")}  {ix + 1}
                 </motion.text>
             ))}
         </>

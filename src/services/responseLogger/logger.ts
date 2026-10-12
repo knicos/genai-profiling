@@ -1,9 +1,9 @@
 import { CategoryEntry } from "@genaipg/protocol/protocol";
 import { emitResponseEvent } from "./events";
 
-const state = new Map<number, Map<number, string | string[]>>();
+const state = new Map<string, Map<string, string | string[]>>();
 
-export function updateResponse(categoryId: number, questionId: number, values: string | string[]) {
+export function updateResponse(categoryId: string, questionId: string, values: string | string[]) {
     if (!state.has(categoryId))
         state.set(categoryId, new Map());
 
@@ -22,6 +22,6 @@ export function updateAllResponses(categories: CategoryEntry[]) {
     });
 }
 
-export function getResponse(categoryId: number, questionId: number): string | string[] {
+export function getResponse(categoryId: string, questionId: string): string | string[] {
     return state.get(categoryId)?.get(questionId) ?? '';
 }

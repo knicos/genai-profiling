@@ -76,7 +76,7 @@ export default function StudentProtocol({
     const ready = usePeerStatus();
 
     const logResponses = useCallback(
-        (categoryId: number, questionId: number, value: string | string[]) => {
+        (categoryId: string, questionId: string, value: string | string[]) => {
             if (send && username) {
                 send({
                     event: 'pg:response',

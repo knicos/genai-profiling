@@ -3,7 +3,7 @@ import { addResponseListener, removeResponseListener } from './events';
 import { getResponse } from './logger';
 import { Category, QuestionData } from '@genaipg/components/Question/types';
 
-export function useQuestionLogger(callback: (id: number, value: string) => void) {
+export function useQuestionLogger(callback: (id: string, value: string) => void) {
     useEffect(() => {
         const handler = callback;
         addResponseListener(handler);

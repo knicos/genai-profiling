@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 interface Props {
     question: QuestionLargeText;
     value: string;
-    onChange: (field: number, value: string) => void;
+    onChange: (field: string, value: string) => void;
     disabled?: boolean;
 }
 

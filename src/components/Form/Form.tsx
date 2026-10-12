@@ -18,7 +18,7 @@ export default function Form({ questions, onDone }: Props) {
     const responses = useQuestionResponses(questions);
 
     //Temporary fix
-    const change = useCallback((field: number, value: string | string[]) => {
+    const change = useCallback((field: string, value: string | string[]) => {
         updateResponse(field, Array.isArray(value) ? value.join(',') : value);
         setDone(false);
     }, []);

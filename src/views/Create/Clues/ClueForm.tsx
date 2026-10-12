@@ -1,6 +1,5 @@
 import PhoneFrame from "@genaipg/components/Templates/PhoneFrame";
 import style from "./style.module.css";
-import UploadIcon from '@mui/icons-material/Upload';
 import TextArea from "@genaipg/components/FormFields/TextArea";
 import MultiChoice from "@genaipg/components/FormFields/MultiChoice";
 import { ClueData } from "../types";
@@ -9,10 +8,11 @@ import { questionCategoriesAtom } from "@genaipg/state/createState";
 import { useTranslation } from "react-i18next";
 import Visuals from "@genaipg/components/Slide/Visuals";
 import useWorkFlowItems from "@genaipg/hooks/useWorkFlowItems";
-import { Typography } from "@mui/material";
+import ImageIcon from '@mui/icons-material/Image';
 import { Button } from "@genai-fi/base";
 import { useState } from "react";
 import InputVisualDialog from "@genaipg/views/dialogs/InputVisualDialog/InputVisualDialog";
+import { Typography } from "@mui/material";
 
 
 interface Props {
@@ -42,6 +42,10 @@ export function ClueForm({ data, onChange }: Props) {
                     className={style.formSection}
                     style={{ maxWidth: '225px' }}
                 >
+                    <legend className={style.fieldLabel}>
+                        <span aria-hidden="true">* </span>
+                        {t('create.clues.imageInstructions')}
+                    </legend>
                     <div
                         className={style.phoneFrame}
                     >
@@ -50,8 +54,8 @@ export function ClueForm({ data, onChange }: Props) {
                                 <Visuals visual={draft.visual} />
                             ) : (
                                 <div className={style.uploadImage}>
-                                    <UploadIcon sx={{ fontSize: 60, color: 'white', margin: 0 }} />
-                                    <Typography variant="h6" style={{ color: 'white', textAlign: 'center', margin: '0 7px' }}>{t('create.clues.imageInstructions')}</Typography>
+                                    <ImageIcon style={{ fontSize: '8rem' }}/>
+                                    <Typography variant="h6" style={{ textAlign: 'center', margin: '0 7px' }}>{t("create.clues.noImageYet")}</Typography>
                                 </div>
                             )}
                         </PhoneFrame>
@@ -74,6 +78,8 @@ export function ClueForm({ data, onChange }: Props) {
                         placeholder={t('create.clues.describeCluePlaceholder')}
                         value={draft.clue}
                         onChange={(clue) => setDraft(prev => ({ ...prev, clue }))}
+                        required={true}
+                        subtitle={t('create.clues.describeClueSubtitle')}
                         multiline
                         rows={4}
                     />
@@ -83,6 +89,8 @@ export function ClueForm({ data, onChange }: Props) {
                         value={draft.category}
                         onChange={(category) => setDraft(prev => ({ ...prev, category }))}
                         markedOptions={usedCategories}
+                        required={true}
+                        sublabel={t('create.clues.categoryQuestionSubtitle')}
                     />
                 </div>
             </div>
