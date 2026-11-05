@@ -28,7 +28,7 @@ export default function DraggableCheckpoint({ ix, deleteCheckpoint }: Props) {
                 >
                     <WhereToVoteIcon />
                     <h1>
-                        Checkpoint
+                        {t("game.checkpoint.checkpoint")}
                     </h1>
 
                     <span

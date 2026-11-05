@@ -34,7 +34,7 @@
         "labels": {
             "or": "Or"
         }
-    }, 
+    },
     "create": {
         "createOrEdit": "Create or edit a profile",
         "createOrEditSubtitle": "What would you like to do?",
@@ -52,7 +52,8 @@
             "close": "Close",
             "back": "Back",
             "addClue": "Add clue",
-            "addCheckpoint": "Add checkpoint"
+            "addCheckpoint": "Add checkpoint",
+            "addStickyNote": "Add or edit board view"
         },
         "confirmation": {
             "collage": "Collage",
@@ -140,6 +141,7 @@
             "fillTemplate": "Fill in template",
             "fillTemplateSubtitle": "Fill in the template and save",
             "uploadImage": "Upload an image",
+            "uploadImageInstructions": "Upload an image for your clue",
             "imageInstructions": "1. Upload an image for your clue",
             "describeClue": "2. Describe the clue",
             "describeClueSubtitle": "Briefly explain what this clue shows",
@@ -147,14 +149,37 @@
             "categoryQuestion": "3. What can players learn from this clue?",
             "categoryQuestionSubtitle": "Select every category this clue relates to",
             "noImageYet": "No image yet",
+            "templatePreview": "Preview",
+            "noTemplateSelected": "No template selected",
+            "templateGroups": {
+                "volunteeredData": {
+                    "label": "Volunteered data",
+                    "description": "Data that the person has willingly shared."
+                },
+                "observedData": {
+                    "label": "Observed data",
+                    "description": "Data that has been observed or collected about the person."
+                }
+            },
+            "stickyNotes": {
+                "choose": "Available",
+                "label": "Board view",
+                "title": "Add or edit board views",
+                "subtitle": "Choose which open-ended question responses to display at the end"
+            },
             "templates": {
+                "username": "Username",
+                "caption": "Example caption",
+                "originalAudio": "Original audio",
+                "exampleSong": "Example song",
+                "exampleArtist": "Example artist",
                 "streaming": {
                     "label": "Streaming a song / podcast",
                     "url": "Choose a cover image for the song/podcast:",
                     "title": "Write a Song/Podcast Title: ",
                     "artist": "Write an Artist/Host: ",
-                    "titlePlaceholder": "e.g. Shape of You",
-                    "artistPlaceholder": "e.g. Ed Sheeran"
+                    "titlePlaceholder": "e.g. Night lullaby",
+                    "artistPlaceholder": "e.g. Sarah the Singer"
                 },
                 "image": {
                     "label": "Upload your own image as a clue",
@@ -165,6 +190,92 @@
                     "searchesPlaceholder": "e.g Video game store near me",
                     "searches": "Recent searches:"
                 },
+                "memoryMap": {
+                    "label": "Memory map",
+                    "url": "Choose a map to showcase the memories in:",
+                    "profilePicUrl": "Choose a profile picture:",
+                    "addMemory": "Add a memory",
+                    "memory": "Memory",
+                    "memories": "Memories on this map:",
+                    "memoriesLabel": "Memories",
+                    "memoriesList": "Memories:",
+                    "memoriesSublabel": "Choose an image and drag it to the correct location on the map"
+                },
+                "post": {
+                    "label": "Post",
+                    "url": "Choose an image for the post:",
+                    "profilePicUrl": "Choose a profile picture:",
+                    "checked": "Has the user liked the post:",
+                    "checked.text": "Liked",
+                    "username": "Username of the user who posted:",
+                    "usernamePlaceholder": "e.g. username1",
+                    "caption": "Create a caption for the post:",
+                    "captionPlaceholder": "e.g. I had so much fun during the weekend!"
+                },
+                "shortVideo": {
+                    "label": "Short video / reel",
+                    "profilePicUrl": "Choose a profile picture:",
+                    "url": "Choose an image for the video:",
+                    "checked": "Has the user liked the video:",
+                    "checked.text": "Liked",
+                    "caption": "Create a caption for the video:",
+                    "captionPlaceholder": "e.g. Highlights of my gameplay!",
+                    "username": "Username of the user who posted:",
+                    "usernamePlaceholder": "e.g. username1"
+                },
+                "story": {
+                    "label": "Story-post",
+                    "profilePicUrl": "Choose a profile picture:",
+                    "url": "Choose an image for the story:",
+                    "username": "Username of the user who posted:",
+                    "usernamePlaceholder": "e.g. username1"
+                },
+                "comments": {
+                    "label": "Comment section",
+                    "profilePicUrl": "Choose a profile picture:",
+                    "url": "Choose an image for the post:",
+                    "comment": "Create a comment:",
+                    "time": "2h",
+                    "commentPlaceholder": "e.g. This looks amazing!",
+                    "comments": "Comments",
+                    "comment1": {
+                        "username": "username1",
+                        "comment": "So cool!"
+                    },
+                    "comment2": {
+                        "username": "username123",
+                        "comment": "🔥🔥🔥"
+                    },
+                    "comment0": {
+                        "username": "username__",
+                        "comment": "Love it ❤️"
+                    },
+                    "comment3": {
+                        "username": "username3",
+                        "comment": "❤️❤️❤️"
+                    }
+                },
+                "watchHistory": {
+                    "label": "Watch history",
+                    "watchHistory": "Watch History",
+                    "profilePicUrl": "Choose a profile picture:",
+                    "checked": "Are the timestamps available?",
+                    "checked.text": "Available",
+                    "time1": "What day/time did the user watch this?",
+                    "time2": "What day/time did the user watch this?",
+                    "time1Placeholder": "e.g. Today",
+                    "time2Placeholder": "e.g. Friday",
+                    "videos": "Add videos to watch history:",
+                    "videoTitle": "Title of the video:",
+                    "videoTitlePlaceholder": "e.g. Testing freeze dried candy",
+                    "videoCreator": "Creator:",
+                    "videoCreatorPlaceholder": "e.g. videoMaker_1",
+                    "addVideo": "Add a video",
+                    "videosList": "Videos:",
+                    "addThumbnail": "Choose a thumbnail:",
+                    "exampleTitle": "Example video title",
+                    "exampleCreator": "creator_example1"
+                },
                 "reactions": "Reacted to a post",
                 "forYou": "Recommended content",
                 "locations": "Traveled to, etc."
@@ -173,6 +284,7 @@
     },
     "game": {
         "checkpoint": {
+            "checkpoint": "Checkpoint",
             "studentQuestion": "How confident are you in your prediction?",
             "asClass": "As a class:",
             "next": "Reveal correctness",
@@ -203,9 +315,9 @@
             "correctProfile": "Correct profile",
             "influentialClues": {
                 "title": "Most influential clues",
-                "reasoning": "{{count}} people changed their answers.", 
+                "reasoning": "{{count}} people changed their answers.",
                 "reasoningSingle": "{{count}} person changed their answer.",
-                "correctCount": "{{value}} Correct", 
+                "correctCount": "{{value}} Correct",
                 "best": "Best",
                 "second": "Second best",
                 "third": "Third best",

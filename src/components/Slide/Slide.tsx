@@ -16,23 +16,24 @@ interface Props {
     slides: SlideMeta[];
     meta: SlideMeta;
     doneCount?: number;
+    userCount?: number;
     changeForm?: (formIndex: number) => void;
     setTimelineData?: (data: UserTimelineData[]) => void;
 }
 
-export default function Slide({ meta, slides, doneCount, index, changeForm, setTimelineData }: Props) {
+export default function Slide({ meta, slides, doneCount, userCount, index, changeForm, setTimelineData }: Props) {
     
     return (
         <SlideContainer>
             <ProgressBar index={index} slides={slides}/>
             {meta.type === 'demo' && <DemoSlide meta={meta} />}
             {meta.type === 'question' && <QuestionSlide meta={meta} />}
-            {meta.type === 'checkpoint' && meta.form && <CheckpointSlide form={meta.form} done={doneCount === 0}/>}
+            {meta.type === 'checkpoint' && meta.form && <CheckpointSlide form={meta.form}/>}
             {meta.type === 'image' && <ImageSlide meta={meta} />}
             {meta.type === 'board' && <BoardSlide meta={meta} />}
             {meta.type === 'ending' && setTimelineData && <EndingSlide steps={meta.steps} onChange={(formIndex: number) => changeForm && changeForm(formIndex)} setTimelineData={setTimelineData} />}
             {meta.type === 'collage' && <CollageSlide />}
-            {meta.form !== undefined && meta.form >= 0 && <Done count={doneCount || 0} />}
+            {meta.form !== undefined && meta.form >= 0 && <Done count={doneCount || 0} userCount={userCount || 0}/>}
         </SlideContainer>
     );
 }

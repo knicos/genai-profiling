@@ -93,6 +93,7 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
                 placeholder={t('create.profileInformation.questionTextPlaceholder')}
                 onChange={(value) => handleChanges(category.category, "text", value)}
                 value={draft?.text || ''}
+                fullWidth
             />
 
             <SelectField

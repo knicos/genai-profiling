@@ -10,11 +10,29 @@ interface Props {
 
 export default function Visuals({ visual }: Props) {
     if (!visual) return null;
-    
+
     switch (visual.type) {
         case 'image':
-            return <img className={style.imageContainer} src={getImage(visual.url)} alt={visual.label || ''} />;
-        default: 
+            return (
+                <div
+                    className={style.imageContainer}
+                    style={{
+                        background: visual.url ? 'none' : 'var(--bg-dark3)'
+                    }}
+                >
+                    {visual.url &&
+                        <img
+                            style={{
+                                background: visual.url ? '' : 'black'
+                            }}
+                            className={style.imageContainer}
+                            src={getImage(visual.url)}
+                            alt={visual.label || ''}
+                        />}
+                </div>
+
+            );
+        default:
             return <Template template={visual} />;
     }
 }

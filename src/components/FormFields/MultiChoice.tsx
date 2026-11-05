@@ -43,9 +43,10 @@ interface Props {
     sublabel?: string;
     disabled?: boolean;
     required?: boolean;
+    normal?: boolean;
 }
 
-export default function MultiChoice({ label, options, value = [], onChange, markedOptions, sublabel, disabled, required }: Props) {
+export default function MultiChoice({ label, options, value = [], onChange, markedOptions, sublabel, disabled, required, normal }: Props) {
 
     const handleToggle = (option: string) => {
 
@@ -59,7 +60,12 @@ export default function MultiChoice({ label, options, value = [], onChange, mark
 
     return (
         <fieldset style={{ containerType: "inline-size", border: 0, padding: 0, margin: 0, width: '100%' }}>
-            <legend className={style.fieldLabel}>
+            <legend 
+                className={style.fieldLabel}
+                style={{ 
+                    fontWeight: normal ? 'normal' : 'bold' 
+                }}
+            >
                 <div>
                     {required && <span aria-hidden="true">* </span>}
                     {label}

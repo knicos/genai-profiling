@@ -16,10 +16,9 @@ import { getIntermissionAverage, getIntermissionCorrect } from "@genaipg/views/T
 
 interface Props {
     form: number;
-    done: boolean;
 }
 
-export function CheckpointSlide({ form, done }: Props) {
+export function CheckpointSlide({ form }: Props) {
     const { t } = useTranslation();
     const profile = useAtomValue(profileAtom);
     // Change
@@ -180,7 +179,6 @@ export function CheckpointSlide({ form, done }: Props) {
             </Box>
             <Button
                 variant="contained"
-                disabled={!done}
                 onClick={triggerReveal}
                 className={style.revealButton}
                 startIcon={<VisibilityIcon />}

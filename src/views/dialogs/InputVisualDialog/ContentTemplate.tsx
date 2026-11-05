@@ -17,7 +17,9 @@ export function ContentTemplate({ label, subtitle, step, children } : Props){
                     {step}
                 </span>
                 <div>
-                    <Typography variant="h5">{label}</Typography>
+                    <Typography variant="h5" fontWeight="bold">
+                        {label}
+                    </Typography>
                     <Typography variant="subtitle2">{subtitle}</Typography>
                 </div>
             </div>

@@ -18,8 +18,8 @@ export default function PhoneFrame({ children }: Props) {
                     borderBottomLeftRadius: '8%',
                     borderBottomRightRadius: '8%'
                 }}>
-            {children}
-        </div >
+                {children}
+            </div >
             <svg
                 aria-hidden="true"
                 role="presentation"

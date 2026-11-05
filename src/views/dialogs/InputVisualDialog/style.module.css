@@ -3,6 +3,8 @@
     flex-direction: column;
     gap: 1rem;
     padding: 0 2rem;
+    box-sizing: border-box;
+    margin-top: 1rem;
 }
 
 .dialogActions {
@@ -14,6 +16,7 @@
     display: flex;
     gap: 1.5rem;
     align-items: flex-start;
+    min-width: 0;
 }
 
 .stepHeader {
@@ -33,19 +36,212 @@
     border-radius: 8px;
 }
 
-.formFields{
-    flex: 1;
+.formFields {
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin: auto;
-    min-width: 250px;
+    margin: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.formField {
+    flex: 0 0 auto;
+    max-width: 250px;
+    box-sizing: border-box;
+}
+
+
+.templateGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.templateGroup h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    margin: 0;
+    margin-top: 15px;
+}
+
+.templateGroup p {
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    margin: 0;
+    margin-top: 5px;
+}
+
+.templateGroupItems {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.sourceGroup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 1rem;
+}
+
+.templateLabel {
+    padding: 6px;
+    text-align: center;
+    font-size: 13px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.seperator {
+    border-bottom: 2px solid var(--background);
+    padding-bottom: 1.5rem;
 }
 
 .phoneFrame {
     position: relative;
-    width: 200px;
-    aspect-ratio: 1/2;
+    width: 155px;
+    height: 350px;
     flex-shrink: 0;
-    margin: auto 0;
+    flex-grow: 1;
+    max-height: calc(100% * 0.66);
+}
+
+@media (min-height: 800px) {
+    .phoneFrame {
+        width: 200px;
+        height: 400px;
+        max-height: calc(100% * 0.72);
+    }
+}
+
+@media (min-width: 1014px) {
+    .formFields {
+        flex-wrap: wrap;
+        max-height: 650px;
+        align-content: flex-start;
+    }
+
+    .videoFieldWrapper {
+        margin-left: 2rem;
+    }
+
+}
+
+.phoneFrameWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 1rem;
+    border-radius: 8px;
+    gap: 5px;
+    background: var(--paleBlue-dark);
+    align-items: center;
+    text-align: center;
+}
+
+.phoneFrameWrapper h3 {
+    margin: 0;
+}
+
+.phoneFrameWrapper p {
+    max-width: 130px;
+
+}
+
+.listFieldWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.videoFieldWrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    box-sizing: border-box;
+}
+
+
+.videoFieldLabel {
+    font-size: 16px;
+    color: var(--text-dark);
+    padding: 0.5rem 0;
+    margin-bottom: 0.25rem;
+}
+
+.videoFieldLabel span {
+    color: var(--error);
+}
+
+.videoInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.videoTextInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.listConfiguration {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+}
+
+.listField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--text-light);
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    max-height: 150px;
+    font-weight: bold;
+    min-height: 150px;
+}
+
+.listItem {
+    background: white;
+    border-radius: 8px;
+    border: 2px solid var(--border-grey);
+    padding: 15px;
+    font-weight: normal;
+}
+
+.listItem span {
+    margin-right: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.templateIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    min-height: 0;
+    font-size: 3rem;
+}
+
+.noImage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: var(--border-grey);
+    font-size: 8rem;
+    justify-content: center;
+    align-items: center;
 }

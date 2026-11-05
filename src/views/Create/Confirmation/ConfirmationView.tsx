@@ -43,9 +43,10 @@ export default function ConfirmationView() {
     }, [editorItems, clues]);
 
     useEffect(() => {
-        if (!forms?.forms)
-            setForms({ level: 1 })
-    }, [forms?.forms, setForms])
+        if (!forms?.forms?.length) {
+            setForms({ level: forms?.level ?? 1 });
+        }
+    }, [forms?.forms, forms?.level, setForms]);
 
     return (
         <div className={style.outerContainer}>

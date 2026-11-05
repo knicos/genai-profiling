@@ -5,11 +5,11 @@ import { Outlet } from "react-router";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtom, useAtomValue } from "jotai";
-import { editorItemsAtom, cluesAtom, formOrderAtom, questionsAtom } from "@genaipg/state/createState";
+import { editorItemsAtom, cluesAtom, formOrderAtom, questionsAtom, selectedStickyNoteQuestionsAtom } from "@genaipg/state/createState";
 import { buildInitialQuestions } from "@genaipg/util/buildInitialQuestions";
 import style from './style.module.css';
 import { SlideMeta } from "@genaipg/components/Slide/types";
-import { REVEAL_PROFILE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
+import { REVEAL_PROFILE_FORM_ID, STICKY_NOTE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
 import { getImage } from "@genaipg/services/images/images";
 
 export function Component() {
@@ -18,6 +18,7 @@ export function Component() {
     const clues = useAtomValue(cluesAtom)
     const forms = useAtomValue(formOrderAtom);
     const editorItems = useAtomValue(editorItemsAtom);
+    const stickyBoard = useAtomValue(selectedStickyNoteQuestionsAtom);
 
     useEffect(() => {
         if (questions.length <= 0)
@@ -32,6 +33,9 @@ export function Component() {
 
         for (const item of editorItems) {
             let fileName;
+            let profilePicName;
+            let videos;
+            let memories;
 
             if (item.type === 'checkpoint') {
                 slideData.push({
@@ -41,22 +45,106 @@ export function Component() {
                 const clue = clues.find(c => c.id === item.id);
 
                 if (clue && clue.visual) {
-                    if ("url" in clue.visual && clue.visual.url) { 
-                        const imageUrl = getImage(clue.visual.url); 
-                        if (imageUrl) { 
-                            const blob = await (await fetch(imageUrl)).blob(); 
-                            fileName = `clue-${clue.id}`; images?.file(`${fileName}.png`, blob); 
-                        } 
+                    if ("url" in clue.visual && clue.visual.url) {
+                        const imageUrl = getImage(clue.visual.url);
+                        if (imageUrl) {
+                            const blob = await (await fetch(imageUrl)).blob();
+                            fileName = `clue-${clue.id}`;
+                            images?.file(`${fileName}.png`, blob);
+                        }
+                    }
+
+                    if ("profilePicUrl" in clue.visual && clue.visual.profilePicUrl) {
+                        const imageUrl = getImage(clue.visual.profilePicUrl);
+                        if (imageUrl) {
+                            const blob = await (await fetch(imageUrl)).blob();
+                            profilePicName = `profilePicUrl-${clue.id}`;
+                            images?.file(`${profilePicName}.png`, blob);
+                        }
+                    }
+
+                    if (clue.visual.type === 'watchHistory') {
+                        videos = await Promise.all(
+                            (clue.visual.videos ?? []).map(async (video, ix) => {
+                                const imageUrl = getImage(video.url);
+                                let videoName;
+
+                                if (imageUrl) {
+                                    const response = await fetch(imageUrl);
+
+                                    if (!response.ok) {
+                                        throw new Error(`Failed to fetch video image: ${response.status}`);
+                                    }
+
+                                    const blob = await response.blob();
+                                    videoName = `video-${clue.id}-${ix}`;
+
+                                    images?.file(`${videoName}.png`, blob);
+                                }
+
+                                return {
+                                    ...video,
+                                    url: videoName ?? video.url,
+                                };
+                            })
+                        );
+                    }
+
+                    if (clue.visual.type === 'memoryMap') {
+                        memories = await Promise.all(
+                            (clue.visual.memories ?? []).map(async (memory, ix) => {
+                                const imageUrl = getImage(memory.url);
+                                let memoryName;
+
+                                if (imageUrl) {
+                                    const response = await fetch(imageUrl);
+
+                                    if (!response.ok) {
+                                        throw new Error(`Failed to fetch video image: ${response.status}`);
+                                    }
+
+                                    const blob = await response.blob();
+                                    memoryName = `memory-${clue.id}-${ix}`;
+
+                                    images?.file(`${memoryName}.png`, blob);
+                                }
+
+                                return {
+                                    ...memory,
+                                    url: memoryName ?? memory.url,
+                                };
+                            })
+                        );
                     }
 
                     slideData.push({
-                        type: 'demo',
+                        type: "demo",
                         clue: {
                             ...clue,
-                            visual: fileName && clue.visual && 'url' in clue.visual
-                                ? { ...clue.visual, url: `${fileName}` }
-                                : clue.visual,
-                        }
+                            visual: {
+                                ...clue.visual,
+                                ...(
+                                    fileName
+                                        ? { url: fileName }
+                                        : {}
+                                ),
+                                ...(
+                                    profilePicName
+                                        ? { profilePicUrl: profilePicName }
+                                        : {}
+                                ),
+                                ...(
+                                    videos
+                                        ? { videos: videos }
+                                        : {}
+                                ),
+                                ...(
+                                    memories
+                                        ? { memories: memories }
+                                        : {}
+                                ),
+                            },
+                        },
                     });
                 }
             }
@@ -75,6 +163,16 @@ export function Component() {
                         form: i,
                         id: i,
                     });
+
+                    if (stickyBoard.length > 0) {
+                        slideData.push({
+                            type: "board",
+                            form: STICKY_NOTE_FORM_ID,
+                            steps: stickyBoard
+                        })
+
+                        exportedForms.push([STICKY_NOTE_FORM_ID]);
+                    }
 
                     continue;
                 }

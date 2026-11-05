@@ -61,6 +61,7 @@ export function ClueForm({ data, onChange }: Props) {
                         </PhoneFrame>
                     </div>
                     <InputVisualDialog
+                        initialVisual={draft.visual}
                         onSave={(visual) =>
                             setDraft(prev => ({
                                 ...prev,
@@ -81,6 +82,7 @@ export function ClueForm({ data, onChange }: Props) {
                         required={true}
                         subtitle={t('create.clues.describeClueSubtitle')}
                         multiline
+                        fullWidth
                         rows={4}
                     />
                     <MultiChoice

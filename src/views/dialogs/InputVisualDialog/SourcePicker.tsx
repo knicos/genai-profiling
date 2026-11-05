@@ -5,6 +5,7 @@ import { RadioGroup, Radio } from "@mui/material";
 import { useTranslation } from "react-i18next"
 import { ContentTemplate } from "./ContentTemplate";
 import { Source } from "./types";
+import style from './style.module.css';
 
 interface Props {
     source: Source | null;
@@ -21,31 +22,31 @@ export default function SourcePicker({ source, onChange }: Props) {
             step={1}
         >
             <RadioGroup
-                sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}
+                name="source"
+                value={source ?? ''}
+                onChange={(_, value) => onChange(value as Source)}
+                className={style.sourceGroup}
             >
                 <BigRadioButton
                     value="template"
-                    checked={source === 'template'}
                     control={<Radio />}
                     label={
                         <>
-                            <GridView fontSize="large" />
+                            <GridView fontSize="large" aria-hidden="true" />
                             {t('create.clues.useTemplate')}
                         </>
                     }
-                    onClick={() => onChange('template')}
                 />
+
                 <BigRadioButton
                     value="upload"
-                    checked={source === 'upload'}
                     control={<Radio />}
                     label={
                         <>
-                            <Upload fontSize="large" />
+                            <Upload fontSize="large" aria-hidden="true" />
                             {t('create.clues.uploadImage')}
                         </>
                     }
-                    onClick={() => onChange('upload')}
                 />
             </RadioGroup>
         </ContentTemplate>

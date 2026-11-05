@@ -11,7 +11,7 @@ import { updateResponseAtom } from "@genaipg/state/responseState";
 import IntermissionDialog from "@genaipg/views/dialogs/IntermissionDialog/IntermissionDialog";
 import TimelineDialog from "@genaipg/views/dialogs/TimelineDialog/TimelineDialog";
 import { profileAtom } from "@genaipg/state/profileState";
-import { INTERMISSION_FORM_ID, REVEAL_PROFILE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
+import { INTERMISSION_FORM_ID, REVEAL_PROFILE_FORM_ID, STICKY_NOTE_FORM_ID, TIMELINE_FORM_ID } from "@genaipg/constants/formIds";
 
 interface Props {
     formIndex: number;
@@ -63,7 +63,7 @@ export default function Gameview({ formIndex, onDone }: Props) {
 
     const currentForm = profile?.forms[formIndex];
 
-    const isEnding = currentForm?.includes(REVEAL_PROFILE_FORM_ID) || currentForm?.includes(TIMELINE_FORM_ID);
+    const isDisabled = currentForm?.includes(REVEAL_PROFILE_FORM_ID) || currentForm?.includes(TIMELINE_FORM_ID) || currentForm?.includes(STICKY_NOTE_FORM_ID);
 
     const currentIndex = selectedCategory
         ? unlockedCategories.findIndex(c => c.id === selectedCategory.id)
@@ -100,7 +100,7 @@ export default function Gameview({ formIndex, onDone }: Props) {
                         totalCategories={unlockedCategories.length}
                         goNext={changeCategory}
                         goPrevious={changeCategory}
-                        disabled={isEnding}
+                        disabled={isDisabled}
 
                     />
                 ) : (

@@ -8,11 +8,12 @@ import cloudLayout from '@genaipg/util/cloud/cloudLayout';
 
 interface Props {
     data: UserState[];
-    questions: QuestionData[];
+    questions: QuestionData;
+    categoryId: string;
     zoom?: number;
 }
 
-export default function Board({ data, questions, zoom = 1 }: Props) {
+export default function Board({ data, questions, categoryId, zoom = 1 }: Props) {
     const divRef = useRef<HTMLDivElement>(null);
     const [offset, setOffset] = useState([0, 0]);
     const [size, setSize] = useState(150);
@@ -90,13 +91,14 @@ export default function Board({ data, questions, zoom = 1 }: Props) {
             onPointerUp={doEndDrag}
             onPointerLeave={doEndDrag}
         >
-            {questions.length === 1 && <h1>{questions[0].text}</h1>}
+            <h1>{questions.text}</h1>
             {order.map((d) => (
                 <Postit
                     key={d}
                     index={d}
                     data={data[d]}
                     questions={questions}
+                    categoryId={categoryId}
                     size={size}
                     onPointerDown={doMouseDown}
                     x={(positions[d]?.[0] || 0) + offset[0]}

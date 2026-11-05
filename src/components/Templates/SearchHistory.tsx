@@ -1,3 +1,5 @@
+import style from './style.module.css';
+
 interface Props {
     searches?: string[];
 }
@@ -13,7 +15,9 @@ const HISTORY_PATH = "M-126.716 318.436c-6.013-.33-12.907-1.711-18.424-3.692-3.1
 
 export default function SearchHistory({ searches = [] }: Props) {
     return (
-        <div style={{ width: "100%", height: "100%", padding: '0 10px', backgroundColor: 'white', boxSizing: 'border-box' }}>
+        <div 
+            className={`${style.templateWrapper} ${style.templateWrapperPadding}`}
+        >
             <svg
                 width='100%'
                 height='100%'
@@ -117,12 +121,7 @@ export default function SearchHistory({ searches = [] }: Props) {
                             style={{ alignContent: 'center' }}
                         >
                             <div
-                                style={{
-                                    fontSize: "5px",
-                                    lineHeight: 1,
-                                    wordBreak: "break-word",
-                                    alignSelf: 'center'
-                                }}
+                                className={style.searchRow}
                             >
                                 {searches[i]}
                             </div>

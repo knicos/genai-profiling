@@ -87,7 +87,8 @@ export function Component() {
                 <Loading loading={!ready || !profile?.slides}>
                     <div className={style.page}>
                         <SlideShow
-                            doneCount={users.length - done.size}
+                            doneCount={done.size}
+                            userCount={users.length}
                             index={npage}
                             slides={profile?.slides || []}
                             showControls

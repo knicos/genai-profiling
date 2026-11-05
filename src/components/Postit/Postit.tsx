@@ -3,10 +3,10 @@ import { QuestionData } from '../Question/types';
 import style from './style.module.css';
 import { PointerEvent, ReactElement } from 'react';
 
-function resultString(question: QuestionData, value?: string | string[] ): ReactElement {
+function resultString(value?: string | string[] ): ReactElement {
     if (!value) return <span />;
 
-    if (question.type === 'slider') {
+    /*if (question.type === 'slider') {
         const stringValue = Array.isArray(value) ? value.join(', ') : value;
 
         if (question.range) {
@@ -20,14 +20,14 @@ function resultString(question: QuestionData, value?: string | string[] ): React
     if (question.type === 'multichoice') {
         const values = Array.isArray(value) ? value : value.split(',');
         return <div>{values.join(', ')}</div>;
-    }
-
+    } */
     return <div>{Array.isArray(value) ? value.join(', ') : value}</div>;
 }
 
 interface Props {
     data: UserState;
-    questions: QuestionData[];
+    questions: QuestionData;
+    categoryId: string;
     size?: number;
     x?: number;
     y?: number;
@@ -36,7 +36,8 @@ interface Props {
     onPointerDown: (e: PointerEvent<HTMLDivElement>, index: number) => void;
 }
 
-export default function Postit({ data, questions, onPointerDown, x = 0, y = 0, size = 150, index }: Props) {
+export default function Postit({ data, questions, categoryId, onPointerDown, x = 0, y = 0, size = 150, index }: Props) {
+
     return (
         <div
             className={style.postit}
@@ -50,16 +51,7 @@ export default function Postit({ data, questions, onPointerDown, x = 0, y = 0, s
         >
             <div className={style.postitContent}>
                 <h3>{data.name}</h3>
-                <ul>
-                    {questions.map((q, ix) => (
-                        <li
-                            key={ix}
-                            style={{ height: questions.length === 1 ? '100%' : undefined }}
-                        >
-                            {resultString(q /*data.responses.get(q.i)*/)}
-                        </li>
-                    ))}
-                </ul>
+                {resultString(data.responses.get(categoryId)?.get(questions.id))}
             </div>
         </div>
     );

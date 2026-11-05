@@ -188,8 +188,16 @@ export function usePersistentData(code: string) {
     }, [code]);
 }
 
-export function getQuestionData(id: string): QuestionData {
-    return questionRecord.get(id) || { type: 'message', text: '', id: '-1' };
+export function getQuestionData( categoryId: string, questionId: string, categories: Category[] ): QuestionData {
+    const question = categories
+        .find((category) => category.id === categoryId)
+        ?.questions.find((q) => q.id === questionId);
+
+    return question ?? {
+        type: 'message',
+        text: '',
+        id: '-1',
+    };
 }
 
 export function getUserData() {

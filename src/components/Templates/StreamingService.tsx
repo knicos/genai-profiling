@@ -1,4 +1,6 @@
 import { getImage } from "@genaipg/services/images/images";
+import style from './style.module.css';
+import { useTranslation } from "react-i18next";
 
 interface Props {
     url?: string;
@@ -7,10 +9,15 @@ interface Props {
 }
 
 export default function StreamingService({ url, title, artist }: Props) {
+    const { t } = useTranslation();
 
-    
     return (
-        <div style={{ width: "100%", height: "100%", padding: '0 10px', backgroundColor: 'black', boxSizing: 'border-box' }}>
+        <div
+            className={`${style.templateWrapper} ${style.templateWrapperPadding}`}
+            style={{
+                background: 'black'
+            }}
+        >
             <svg
                 width="100%"
                 height="100%"
@@ -26,20 +33,21 @@ export default function StreamingService({ url, title, artist }: Props) {
                         width="73.441818"
                         height="75.497116"
                     >
-                        <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
-                            <img
-                                src={url ? getImage(url) : ""}
+                        <div
+                            className={style.imageWrapper}
+                            style={{
+                                background: url ? 'none' : 'var(--bg-dark3)'
+                            }}>
+                            {url && <img
+                                src={getImage(url)}
+                                className={style.image}
                                 style={{
-                                    width: "100%",
-                                    height: "100%",
                                     objectFit: "contain",
-                                    display: "block",
                                 }}
-                            />
+                            />}
                         </div>
                     </foreignObject>
-
-                    same for artist13.04Claude responded: Artist pushed to y="80" to sit below the expanded title area.tsx<foreignObject
+                    <foreignObject
                         x="-227.30147"
                         y="45"
                         width="54.751503"
@@ -56,7 +64,7 @@ export default function StreamingService({ url, title, artist }: Props) {
                             textAlign: 'center',
                             wordBreak: 'break-word',
                         }}>
-                            {title ?? ''}
+                            {title ?? t("create.clues.templates.exampleSong")}
                         </div>
                     </foreignObject>
 
@@ -78,7 +86,7 @@ export default function StreamingService({ url, title, artist }: Props) {
                             textAlign: 'center',
                             wordBreak: 'break-word',
                         }}>
-                            {artist ?? ''}
+                            {artist ?? t("create.clues.templates.exampleArtist")}
                         </div>
                     </foreignObject>
 

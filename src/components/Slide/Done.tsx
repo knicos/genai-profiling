@@ -1,17 +1,21 @@
 import style from './style.module.css';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 
 interface Props {
     count: number;
+    userCount: number;
 }
 
-export default function Done({ count }: Props) {
+export default function Done({ count, userCount }: Props) {
     return (
         <div className={style.doneContainer}>
-            <CheckCircleIcon
-                fontSize="large"
-                htmlColor={count === 0 ? '#03a916' : '#ddd'}
+            <CheckCircleOutlinedIcon
+                fontSize="inherit"
+                htmlColor={count === userCount ? 'var(--success)' : '#ddd'}
             />
+            <span>
+                { count } / { userCount }
+            </span>
         </div>
     );
 }

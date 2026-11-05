@@ -5,6 +5,7 @@ import Visuals from "@genaipg/components/Slide/Visuals";
 import { useTranslation } from "react-i18next";
 import { ContentTemplate } from "./ContentTemplate";
 import style from './style.module.css';
+import { FONT_SIZE } from "@genaipg/style/typography";
 
 interface Props {
     draft: SlideImage | null;
@@ -25,22 +26,28 @@ export default function UploadImage({ draft, setDraft }: Props) {
     return (
         <ContentTemplate
             label={t('create.clues.uploadImage')}
-            subtitle={t('create.clues.imageInstructions')}
+            subtitle={t('create.clues.uploadImageInstructions')}
             step={2}
         >
             <div className={style.formContainer}>
-                <div className={style.phoneFrame}>
-                    <PhoneFrame>
-                        <Visuals visual={draft || { type: 'image', url: '', label: '' }} />
-                    </PhoneFrame>
-                </div>
                 <ImageField
                     label={t(`create.clues.templates.image.label`)}
                     text={t('create.clues.imageButton')}
                     onChange={(value) => handleChange(value)}
-
+                    fontSize={FONT_SIZE.medium}
+                    required={true}
+                    normal={true}
                 />
+                <div className={style.phoneFrameWrapper}>
+                    <h3>{t('create.clues.templatePreview')}</h3>
+                    <div className={style.phoneFrame}>
+                        <PhoneFrame>
+                            <Visuals visual={draft || { type: 'image', url: '', label: '' }} />
+                        </PhoneFrame>
+                    </div>
+                </div>
             </div>
+
         </ContentTemplate>
     )
 }

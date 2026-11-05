@@ -10,6 +10,7 @@ interface Props {
     onChange: (value: string) => void;
     placeholder?: string;
     disabled?: boolean;
+    normal?: boolean;
 }
 
 const MenuProps = {
@@ -37,10 +38,15 @@ const CustomSelectIcon = forwardRef<SVGSVGElement>((props, ref) => (
     />
 ));
 
-export default function SelectField({ label, options, value = '', onChange, placeholder, disabled }: Props) {
+export default function SelectField({ label, options, value = '', onChange, placeholder, disabled, normal }: Props) {
     return (
         <fieldset style={{ border: 0, padding: 0, margin: 0, width: '100%' }}>
-            <legend className={style.fieldLabel}>
+            <legend 
+                className={style.fieldLabel}
+                style={{ 
+                    fontWeight: normal ? 'normal' : 'bold' 
+                }}
+            >
                 {label}
             </legend>
             <Select

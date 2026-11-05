@@ -22,7 +22,7 @@ export default function TextQuestion({ question, value, onChange, disabled }: Pr
     }, [onChange, question]);
 
     return (
-        <div>
+        <div style={{ width: '100%' }}>
             <Typography
                 variant="body1"
                 component="h2"
@@ -37,6 +37,8 @@ export default function TextQuestion({ question, value, onChange, disabled }: Pr
                 defaultValue={value}
                 onBlur={(e) => onChange(question.id, e.target.value)}
                 disabled={disabled}
+                multiline
+                minRows={2}
             />
         </div>
     );

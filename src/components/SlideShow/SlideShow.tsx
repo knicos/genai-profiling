@@ -19,6 +19,7 @@ interface Props {
     onDownload?: () => void;
     onQRCode?: () => void;
     doneCount?: number;
+    userCount?: number;
     changeForm?: (formIndex: number) => void;
     setTimelineData?: (data: UserTimelineData[]) => void; 
 }
@@ -28,6 +29,7 @@ export default function SlideShow({
     slides,
     showControls,
     doneCount,
+    userCount,
     onChange,
     hasNext,
     defaultSlide,
@@ -45,6 +47,7 @@ export default function SlideShow({
                         slides={slides}
                         meta={slides[index]}
                         doneCount={doneCount}
+                        userCount={userCount}
                         changeForm={changeForm}
                         setTimelineData={setTimelineData}
                     />

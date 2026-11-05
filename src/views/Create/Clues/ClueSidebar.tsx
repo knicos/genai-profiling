@@ -1,10 +1,10 @@
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import AddIcon from '@mui/icons-material/Add';
 import WhereToVoteIcon from '@mui/icons-material/WhereToVote';
-import { List } from '@mui/material';
+import { List, ListItem } from '@mui/material';
 import style from './style.module.css';
 import { useAtom, useSetAtom } from 'jotai';
-import { addCheckpointAtom, addClueAtom, deleteCheckpointAtom, deleteClueAtom, editorItemsAtom, reorderEditorItemsAtom } from '@genaipg/state/createState'
+import { addCheckpointAtom, addClueAtom, deleteCheckpointAtom, deleteClueAtom, editorItemsAtom, reorderEditorItemsAtom, selectedStickyNoteQuestionsAtom } from '@genaipg/state/createState'
 import { Button } from '@genai-fi/base';
 import { useMemo } from 'react';
 import ClueItem from './ClueItem';
@@ -12,6 +12,10 @@ import { ClueData } from '../types';
 import { useTranslation } from 'react-i18next';
 import DraggableClue from './DraggableClue';
 import DraggableCheckpoint from './DraggableCheckpoint';
+import StickyNoteDialog from '@genaipg/views/dialogs/StickyNoteDialog/StickyNoteDialog';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from "@genaipg/components/Button/IconButton";
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 interface Props {
     currentClue: string;
@@ -26,6 +30,7 @@ export default function ClueSideBar({ currentClue, setCurrentClue, clues }: Prop
 
     const deleteClue = useSetAtom(deleteClueAtom);
     const deleteCheckpoint = useSetAtom(deleteCheckpointAtom);
+    const [openEndedQuestions, setOpenEndedQuestions] = useAtom(selectedStickyNoteQuestionsAtom);
 
     const reorder = useSetAtom(reorderEditorItemsAtom);
 
@@ -173,9 +178,28 @@ export default function ClueSideBar({ currentClue, setCurrentClue, clues }: Prop
                                     );
                                 }
                             )}
-
                             {provided.placeholder}
-
+                            {openEndedQuestions.length > 0 && (
+                                <ListItem
+                                    secondaryAction={
+                                        <IconButton
+                                            aria-label={t('create.buttons.delete')}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setOpenEndedQuestions([]);
+                                            }}
+                                        >
+                                            <CloseIcon
+                                                fontSize="inherit"
+                                            />
+                                        </IconButton>
+                                    }
+                                    className={style.checkpoint}
+                                >
+                                    <StickyNote2Icon />
+                                    <h1>{t('create.clues.stickyNotes.label')}</h1>
+                                </ListItem>
+                            )}
                         </List>
                     )}
                 </Droppable>
@@ -200,7 +224,7 @@ export default function ClueSideBar({ currentClue, setCurrentClue, clues }: Prop
                 {t('create.buttons.addCheckpoint')}
             </Button>
 
-
+            <StickyNoteDialog />
         </div>
     );
 }

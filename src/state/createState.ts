@@ -160,6 +160,44 @@ export const updateQuestionAtom = atom(
     }
 );
 
+interface StickyNoteSelection {
+    categoryId: string;
+    questionId: string;
+}
+
+export const selectedStickyNoteQuestionsAtom =
+    atom<StickyNoteSelection[]>([]);
+
+export const getAllOpenEndedQuestionsAtom = atom((get) => {
+    const categories = get(questionsAtom);
+
+    return categories.flatMap(category =>
+        category.questions
+            .filter(
+                question =>
+                    question.type === "largetext" ||
+                    question.type === "text" ||
+                    question.type === "message"
+            )
+            .map(question => ({
+                ...question,
+                categoryId: category.id,
+            }))
+    );
+});
+
+export const hasOpenEndedQuestionsAtom = atom((get) => {
+    const categories = get(questionsAtom);
+
+    return categories.some(category =>
+        category.questions.some(
+            question =>
+                question.type === "largetext" ||
+                question.type === "text" ||
+                question.type === "message"
+        )
+    );
+});
 
 const initialClues: ClueData[] = Array.from(
     { length: 4 },

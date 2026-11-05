@@ -76,6 +76,16 @@
     right: 1rem;
     bottom: 0.5rem;
     transform: scale(1.2);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+    font-size: 24px;
+}
+
+.doneContainer span {
+    font-size: 18px;
 }
 
 .checkpoint {
@@ -232,6 +242,14 @@
     overflow-y: auto;
     max-width: 900px;
     height: 100%;
+}
+
+.buttonGroup {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
 }
 
 @media (max-width: 1024px) {

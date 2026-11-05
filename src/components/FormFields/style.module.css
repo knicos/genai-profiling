@@ -1,9 +1,18 @@
 .fieldLabel {
-    font-size: larger;
-    font-weight: bold;
+    font-size: 20px;
     color: #444444;
     padding: 0.5rem 0;
     margin-bottom: 0.25rem;
+}
+
+.disabled {
+    filter: opacity(0.5);
+}
+
+.sublabel {
+    font-size: 1rem;
+    margin-top: 5px;
+    font-weight: normal;
 }
 
 .fieldLabel span {

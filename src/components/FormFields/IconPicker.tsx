@@ -10,9 +10,10 @@ interface Props {
     label: string;
     icon: IconType;
     updateIcon: (icon: IconType) => void;
+    normal?: boolean;
 }
 
-export default function IconPicker({ label, icon, updateIcon }: Props) {
+export default function IconPicker({ label, icon, updateIcon, normal }: Props) {
     const { t } = useTranslation();
     const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -24,7 +25,12 @@ export default function IconPicker({ label, icon, updateIcon }: Props) {
 
     return (
         <fieldset style={{ border: 0, padding: 0, marginBottom: '1rem', width: '100%' }}>
-            <legend className={style.fieldLabel}>
+            <legend 
+                className={style.fieldLabel}
+                style={{ 
+                    fontWeight: normal ? 'normal' : 'bold' 
+                }}
+            >
                 {label}
             </legend>
             <div className={style.pickerContainer}>
