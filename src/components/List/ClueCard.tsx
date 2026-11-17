@@ -2,7 +2,7 @@ import { InfluentialClue } from "@genaipg/views/Teacher/userState";
 import { Box, ListItemButton } from "@mui/material"
 import style from './style.module.css';
 import { useTranslation } from "react-i18next";
-import { SlideCollage, SlideDemo } from "../Slide/types";
+import { SlideCollage, SlideDemo, SlideImage } from "../Slide/types";
 import { motion } from "framer-motion";
 import PlacementChip from "../Chips/PlacementChip";
 import PlacementIcon from "../Icons/PlacementIcon";
@@ -12,7 +12,7 @@ const MotionListButton = motion.create(ListItemButton);
 interface Props {
     type: 'best' | 'second' | 'third' | 'worst';
     clue: InfluentialClue;
-    setClue: (clue: SlideDemo | SlideCollage) => void;
+    setClue: (clue: SlideDemo | SlideCollage | SlideImage) => void;
     reveal: boolean;
     delay: number;
 }

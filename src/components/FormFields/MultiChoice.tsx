@@ -1,6 +1,7 @@
 import { Checkbox, FormGroup, FormControlLabel, styled } from "@mui/material";
 import style from './style.module.css';
 import Check from "@mui/icons-material/Check";
+import { FONT_SIZE } from "@genaipg/style/typography";
 
 const ChipLabel = styled(FormControlLabel)({
     display: 'inline-flex',
@@ -44,9 +45,10 @@ interface Props {
     disabled?: boolean;
     required?: boolean;
     normal?: boolean;
+    fontSize?: string
 }
 
-export default function MultiChoice({ label, options, value = [], onChange, markedOptions, sublabel, disabled, required, normal }: Props) {
+export default function MultiChoice({ label, options, value = [], onChange, markedOptions, sublabel, disabled, required, normal, fontSize = FONT_SIZE.large }: Props) {
 
     const handleToggle = (option: string) => {
 
@@ -63,6 +65,7 @@ export default function MultiChoice({ label, options, value = [], onChange, mark
             <legend 
                 className={style.fieldLabel}
                 style={{ 
+                    fontSize,
                     fontWeight: normal ? 'normal' : 'bold' 
                 }}
             >

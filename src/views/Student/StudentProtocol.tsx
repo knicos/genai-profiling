@@ -80,8 +80,8 @@ export default function StudentProtocol({
             if (send && username) {
                 send({
                     event: 'pg:response',
-                    category: categoryId,
-                    question: questionId,
+                    categoryId: categoryId,
+                    questionId: questionId,
                     value,
                     timestamp: Date.now(),
                     date: new Date().toISOString(),

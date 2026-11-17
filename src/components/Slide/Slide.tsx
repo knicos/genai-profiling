@@ -33,7 +33,7 @@ export default function Slide({ meta, slides, doneCount, userCount, index, chang
             {meta.type === 'board' && <BoardSlide meta={meta} />}
             {meta.type === 'ending' && setTimelineData && <EndingSlide steps={meta.steps} onChange={(formIndex: number) => changeForm && changeForm(formIndex)} setTimelineData={setTimelineData} />}
             {meta.type === 'collage' && <CollageSlide />}
-            {meta.form !== undefined && meta.form >= 0 && meta.type !== 'board' && <Done count={doneCount || 0} userCount={userCount || 0}/>}
+            {meta.form !== undefined && meta.form >= 0 && meta.type !== 'ending' && <Done count={doneCount || 0} userCount={userCount || 0}/>}
         </SlideContainer>
     );
 }

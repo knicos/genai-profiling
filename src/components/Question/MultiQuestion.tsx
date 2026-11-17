@@ -1,5 +1,6 @@
 import { QuestionMulti } from './types';
 import MultiChoice from '../FormFields/MultiChoice';
+import { FONT_SIZE } from '@genaipg/style/typography';
 
 interface Props {
     question: QuestionMulti;
@@ -17,6 +18,8 @@ export default function MultiQuestion({ question, value, onChange, disabled }: P
             onChange={v => onChange(question.id, v)}
             value={value}
             disabled={disabled}
+            normal={true}
+            fontSize={FONT_SIZE.medium}
         />
     );
 }

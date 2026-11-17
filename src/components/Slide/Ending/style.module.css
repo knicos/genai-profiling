@@ -127,6 +127,13 @@
     scrollbar-width: none;
 }
 
+.categoryList p {
+    margin: 0;
+    font-size: 0.9rem;
+    padding: 2rem;
+    font-weight: bold;
+}
+
 .categoryItem {
     font-size: large;
     font-weight: bold;

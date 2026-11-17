@@ -1,5 +1,6 @@
 import { QuestionChoice } from './types';
 import SelectField from '../FormFields/SelectField';
+import { FONT_SIZE } from '@genaipg/style/typography';
 
 interface Props {
     question: QuestionChoice;
@@ -17,6 +18,8 @@ export default function SingleQuestion({ question, value, onChange, disabled }: 
             onChange={v => onChange(question.id, v)}
             placeholder={question.default}
             disabled={disabled}
+            normal={true}
+            fontSize={FONT_SIZE.medium}
         />
     );
 }

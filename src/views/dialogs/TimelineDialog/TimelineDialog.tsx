@@ -16,7 +16,7 @@ interface Props {
 export default function TimelineDialog({ isOpen }: Props) {
     const { t } = useTranslation();
     const profile = useAtomValue(profileAtom);
-    const clues = profile?.slides.filter((slide) => slide.type === "demo" || slide.type === "collage") ?? [];
+    const clues = profile?.slides.filter((slide) => slide.type === "demo" || slide.type === "collage" || slide.type === "image") ?? [];
     const totalCategories = profile?.categories.length ?? 0;
 
     const timelineData = useAtomValue(timelineAtom);

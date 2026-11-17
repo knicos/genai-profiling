@@ -123,7 +123,13 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
                                 type="number"
                                 placeholder='0'
                                 value={draft?.min ?? ''}
-                                onChange={e => handleChanges(category.category, 'min', e.target.value)}
+                                onChange={e =>
+                                    handleChanges(
+                                        category.category,
+                                        'min',
+                                        e.target.value === '' ? '' : Number(e.target.value)
+                                    )
+                                }
                             />
                         </fieldset>
 
@@ -136,7 +142,13 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
                                 type="number"
                                 placeholder='100'
                                 value={draft?.max ?? ''}
-                                onChange={e => handleChanges(category.category, 'max', e.target.value)}
+                                onChange={e =>
+                                    handleChanges(
+                                        category.category,
+                                        'max',
+                                        e.target.value === '' ? '' : Number(e.target.value)
+                                    )
+                                }
                             />
                         </fieldset>
                     </div>
@@ -151,6 +163,12 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
                                 type="number"
                                 placeholder={t('create.profileInformation.questionSliderPlaceHolder')}
                                 value={draft?.correct ?? ''}
+                                slotProps={{
+                                    htmlInput: {
+                                        min: Number(draft?.min ?? 0),
+                                        max: Number(draft?.max ?? 100),
+                                    }
+                                }}
                                 onChange={e => handleChanges(category.category, 'correct', e.target.value)}
                             />
                         </fieldset>

@@ -1,6 +1,7 @@
 import { Slider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import style from './style.module.css';
+import { FONT_SIZE } from '@genaipg/style/typography';
 
 interface Props {
     label: string;
@@ -11,6 +12,8 @@ interface Props {
     value: string;
     onChange: (value: string) => void;
     disabled?: boolean;
+    normal?: boolean;
+    fontSize?: string;
 }
 
 function parseRange(value: string, min: number): number | number[] {
@@ -25,7 +28,7 @@ function joinRange(value: number | number[]): string {
     return Array.isArray(value) ? value.join(':') : `${value}`;
 }
 
-export default function SliderField({ label, min, max, step = 1, range, value, onChange, disabled }: Props) {
+export default function SliderField({ label, min, max, step = 1, range, value, onChange, disabled, normal, fontSize = FONT_SIZE.large }: Props) {
     const [v, setV] = useState<number | number[]>(range ? [min, max] : min);
 
     useEffect(() => {
@@ -34,7 +37,15 @@ export default function SliderField({ label, min, max, step = 1, range, value, o
 
     return (
         <fieldset style={{ border: 0, padding: 0, margin: 0, width: '100%' }}>
-            <legend className={style.fieldLabel}>{label}</legend>
+            <legend 
+                className={style.fieldLabel}
+                style={{
+                    fontSize,
+                    fontWeight: normal ? 'normal' : 'bold'
+                }}
+            >
+                {label}
+            </legend>
             <Slider
                 style={{ marginTop: '2rem', marginLeft: '1rem', marginRight: '1rem', width: 'calc(100% - 2rem)' }}
                 value={v}

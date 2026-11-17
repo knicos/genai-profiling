@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import ScoreGrid from "./ScoreGrid";
 import ClueLabels from "./ClueLabels";
 import ChartLines from "./ChartLines";
-import { SlideCollage, SlideDemo } from "@genaipg/components/Slide/types";
+import { SlideCollage, SlideDemo, SlideImage } from "@genaipg/components/Slide/types";
 import { UserTimelineData } from "@genaipg/components/Slide/Ending/types";
 
 const STEP_TRANSITION = { duration: 0.8, ease: "easeInOut" } as const;
@@ -18,7 +18,7 @@ type Point = { x: number; y: number };
 interface Props {
     timelineData: UserTimelineData[];
     totalCategories: number;
-    clues: (SlideDemo | SlideCollage)[];
+    clues: (SlideDemo | SlideCollage | SlideImage)[];
     playing?: boolean;
     onFinished?: () => void;
     labels?: boolean;

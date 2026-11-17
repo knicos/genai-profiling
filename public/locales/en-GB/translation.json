@@ -324,6 +324,7 @@
         },
         "ending": {
             "noAnswers": "No answers",
+            "noCloseQuestions": "No close-ended questions!",
             "close": "Close",
             "profileTitle": "Mystery profile",
             "profileSubtitle": "@mysteryprofile",

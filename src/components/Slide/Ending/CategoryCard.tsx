@@ -72,13 +72,19 @@ export default function CategoryCard({ category, currentIndex, revealedCategorie
                         </div>
                     </Box>
                     <List className={style.categoryList}>
-                        {category.questions.map((question, ix) => (
-                            <QuestionResult 
-                                key={ix} 
-                                question={question} 
-                                revealed={revealedCategories === totalCategories} 
-                            />
-                        ))}
+                        {category.questions.length > 0 ?
+                            category.questions.map((question, ix) => (
+                                <QuestionResult
+                                    key={ix}
+                                    question={question}
+                                    revealed={revealedCategories === totalCategories}
+                                />
+
+                            )) : (
+                                <p>
+                                    {t("game.ending.noCloseQuestions")}
+                                </p>
+                            )}
                     </List>
                 </Box>
             ) :

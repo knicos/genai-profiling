@@ -1,12 +1,13 @@
 import { Button } from "@genai-fi/base";
 import CollageSlide from "@genaipg/components/Slide/CollageSlide";
 import DemoSlide from "@genaipg/components/Slide/DemoSlide";
-import { SlideCollage, SlideDemo } from "@genaipg/components/Slide/types";
+import ImageSlide from "@genaipg/components/Slide/ImageSlide";
+import { SlideCollage, SlideDemo, SlideImage } from "@genaipg/components/Slide/types";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-    clue?: SlideDemo | SlideCollage;
+    clue?: SlideDemo | SlideCollage | SlideImage;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
     doClose: () => void;
@@ -38,6 +39,7 @@ export default function ClueDialog({ clue, isOpen, setIsOpen, doClose }: Props) 
                 <DialogContent>
                     {clue?.type === 'demo' && <DemoSlide meta={clue} />}
                     {clue?.type === 'collage' && <CollageSlide />}
+                    {clue?.type === 'image' && <ImageSlide meta={clue} />}
                 </DialogContent>
                 <DialogActions>
                     <Button

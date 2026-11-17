@@ -1,5 +1,6 @@
 import { QuestionSlider } from './types';
 import SliderField from '../FormFields/SliderField';
+import { FONT_SIZE } from '@genaipg/style/typography';
 
 interface Props {
     question: QuestionSlider;
@@ -19,6 +20,8 @@ export default function SliderQuestion({ question, value, onChange, disabled }: 
             value={value}
             onChange={v => onChange(question.id, v)}
             disabled={disabled}
+            normal={true}
+            fontSize={FONT_SIZE.medium}
         />
 
     );

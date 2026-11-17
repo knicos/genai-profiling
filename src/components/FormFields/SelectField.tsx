@@ -48,8 +48,8 @@ export default function SelectField({ label, options, value = '', onChange, plac
             <legend
                 className={style.fieldLabel}
                 style={{
-                    fontSize,
-                    fontWeight: normal ? 'normal' : 'bold'
+                    fontSize, 
+                    fontWeight: normal ? 'normal' : 'bold' 
                 }}
             >
                 {label}

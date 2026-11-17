@@ -1,7 +1,7 @@
 import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
 import { IconType } from '@genaipg/components/Icons/type';
 import { Category, QuestionData, QuestionType } from '@genaipg/components/Question/types';
-import { SlideCollage, SlideDemo, SlideMeta } from '@genaipg/components/Slide/types';
+import { SlideCollage, SlideDemo, SlideImage, SlideMeta } from '@genaipg/components/Slide/types';
 import { ResponseData } from '@genaipg/protocol/protocol';
 import { emitIntermissionEvent } from '@genaipg/services/intermissionLogger/events';
 import { useCallback, useEffect } from 'react';
@@ -48,6 +48,7 @@ type LogData = LogUserData | LogTeacherData;
 
 const logs: LogData[] = [];
 
+
 export function addUserResponse(className: string, id: string, data: ResponseData, slide?: SlideMeta) {
     const userState = state.get(id) || {
         name: '',
@@ -57,41 +58,61 @@ export function addUserResponse(className: string, id: string, data: ResponseDat
         intermission: new Map<number, string>(),
     };
 
-    logs.push({
-        type: 'user',
-        className,
-        username: userState.name,
-        userId: id,
-        category: data.category,
-        question: data.question,
-        value: data.value,
-        timestamp: data.timestamp,
-        date: data.date,
-        form: data.form,
-        slide,
-    });
+    if (!userState.responses.has(data.categoryId)) {
+        userState.responses.set(data.categoryId, new Map());
+    }
 
-    if (!userState.responses.has(data.category))
-        userState.responses.set(data.category, new Map());
+    const categoryResponses = userState.responses.get(data.categoryId)!;
 
-    const questionId = typeof data.question === 'string' ? data.question : data.question.id;
+    const previousValue = categoryResponses.get(data.questionId);
 
-    userState.responses.get(data.category)!.set(questionId, data.value);
-    userState.history.push({
+    const answerChanged =
+        JSON.stringify(previousValue) !== JSON.stringify(data.value);
+
+    categoryResponses.set(data.questionId, data.value);
+
+    const snapshot: ResponseSnapshot = {
         form: data.form,
         responses: new Map(
-            [...userState.responses.entries()].map(([categoryId, questions]) => [
-                categoryId,
-                new Map(questions),
-            ])
+            [...userState.responses.entries()].map(
+                ([categoryId, questions]) => [
+                    categoryId,
+                    new Map(questions),
+                ]
+            )
         ),
-    });
+    };
 
-    if (typeof data.question !== 'string')
-        questionRecord.set(questionId, data.question);
+    const existingIndex = userState.history.findIndex(
+        h => h.form === data.form
+    );
+
+    if (existingIndex !== -1) {
+        userState.history[existingIndex] = snapshot;
+    } else {
+        userState.history.push(snapshot);
+    }
+
+    userState.history.sort((a, b) => a.form - b.form);
 
     state.set(id, userState);
+
+    if (answerChanged)
+        logs.push({
+            type: 'user',
+            className,
+            username: userState.name,
+            userId: id,
+            categoryId: data.categoryId,
+            questionId: data.questionId,
+            value: data.value,
+            timestamp: data.timestamp,
+            date: data.date,
+            form: data.form,
+            slide,
+        })
 }
+
 
 export function addUserIntermission(id: string, checkpointId: number, value: string) {
     const userState = state.get(id) || {
@@ -130,65 +151,94 @@ export function addUserName(id: string, name: string) {
     state.set(id, userState);
 }
 
+
 export function dumpUserData() {
     const result = [];
+
     for (const [key, value] of state) {
         result.push({
             id: key,
             name: value.name,
-            responses: Array.from(value.responses).map((r) => ({
-                question: questionRecord.get(r[0]) || r[0],
-                value: r[1],
-            })),
+            responses: Array.from(value.responses.entries()).map(
+                ([categoryId, questions]) => ({
+                    categoryId,
+                    questions: Array.from(questions.entries()).map(
+                        ([questionId, answer]) => ({
+                            question: questionRecord.get(questionId) || questionId,
+                            value: answer,
+                        })
+                    ),
+                })
+            ),
         });
     }
+
     return {
         responses: result,
-        logs: logs,
+        logs,
     };
 }
+
 
 type SerializedState = ReturnType<typeof dumpUserData>;
 
 export function usePersistentData(code: string) {
     useEffect(() => {
         const data = window.sessionStorage.getItem(`genai-pg-data-${code}`);
-        if (data) {
-            const pdata = JSON.parse(data) as SerializedState;
-            pdata.responses.forEach((u) => {
-                addUserName(u.id, u.name);
-                const userState = state.get(u.id) || {
-                    name: '',
-                    form: 0,
-                    history: [],
-                    responses: new Map<string, Map<string, string | string[]>>(),
-                    intermission: new Map<number, string>(),
-                    log: [],
-                };
+        try {
+            if (data) {
+                const pdata = JSON.parse(data) as SerializedState;
+                pdata.responses.forEach((u) => {
+                    addUserName(u.id, u.name);
 
-                u.responses.forEach((r) => {
-                    userState.responses.set(typeof r.question === 'string' ? r.question : r.question.id, r.value);
-                    if (typeof r.question !== 'string') {
-                        questionRecord.set(r.question.id, r.question);
-                    }
+                    const userState = state.get(u.id)!
+
+                    u.responses.forEach((category) => {
+                        const questions = new Map<
+                            string,
+                            string | string[]
+                        >();
+
+                        category.questions.forEach((r) => {
+                            const questionId =
+                                typeof r.question === 'string'
+                                    ? r.question
+                                    : r.question.id;
+
+                            questions.set(questionId, r.value);
+                            if (typeof r.question !== 'string')
+                                questionRecord.set(
+                                    questionId,
+                                    r.question
+                                )
+                        });
+
+                        userState.responses.set(
+                            category.categoryId,
+                            questions
+                        )
+                    });
+
+                    state.set(u.id, userState);
                 });
-
-                state.set(u.id, userState);
-            });
-            logs.splice(0, logs.length);
-            pdata.logs.forEach((l) => logs.push(l));
+                logs.splice(0, logs.length);
+                pdata.logs.forEach((l) => logs.push(l));
+            }
+        } catch (error) {
+            console.error('Failed to restore user data:', error)
         }
 
         return () => {
             window.sessionStorage.setItem(`genai-pg-data-${code}`, JSON.stringify(dumpUserData()));
         };
     }, [code]);
+
     return useCallback(() => {
         window.sessionStorage.setItem(`genai-pg-data-${code}`, JSON.stringify(dumpUserData()));
     }, [code]);
 }
 
-export function getQuestionData( categoryId: string, questionId: string, categories: Category[] ): QuestionData {
+export function getQuestionData(categoryId: string, questionId: string, categories: Category[]): QuestionData {
     const question = categories
         .find((category) => category.id === categoryId)
         ?.questions.find((q) => q.id === questionId);
@@ -283,19 +333,32 @@ function scoreQuestion(question: QuestionData, response: string | string[]) {
     }
 }
 
+function isScoredQuestion(question: QuestionData): boolean {
+    switch (question.type) {
+        case 'slider':
+        case 'singlechoice':
+        case 'multichoice':
+            return true;
+        default:
+            return false;
+    }
+}
+
 function scoreCategory(category: Category, responses: Map<string, string | string[]>) {
-    if (!category.questions.length) return 0;
+    const questions = category.questions.filter(isScoredQuestion)
+
+    if (questions.length === 0) return 0;
 
     let total = 0;
 
-    for (const q of category.questions) {
+    for (const q of questions) {
         const response = responses.get(q.id);
         if (!response) continue;
 
         total += scoreQuestion(q, response);
     }
 
-    return total / category.questions.length;
+    return total / questions.length;
 }
 
 export function getIntermissionCorrect(categories: Category[] | undefined) {
@@ -303,12 +366,20 @@ export function getIntermissionCorrect(categories: Category[] | undefined) {
         return { correct: 0, total: 0 };
     }
 
+    const scoredCategories = categories.filter(category =>
+        category.questions.some(isScoredQuestion)
+    );
+
+    if (!scoredCategories.length) {
+        return { correct: 0, total: 0 };
+    }
+
     const users = Array.from(state.values()).filter(user =>
-        categories.some(c => user.responses.has(c.id))
+        scoredCategories.some(c => user.responses.has(c.id))
     );
 
     if (!users.length) {
-        return { correct: 0, total: categories.length };
+        return { correct: 0, total: scoredCategories.length };
     }
 
     let totalCorrect = 0;
@@ -316,11 +387,12 @@ export function getIntermissionCorrect(categories: Category[] | undefined) {
     for (const user of users) {
         let correct = 0;
 
-        for (const category of categories) {
+        for (const category of scoredCategories) {
             const responses = user.responses.get(category.id);
             if (!responses) continue;
 
             const score = scoreCategory(category, responses);
+
             if (score >= 0.85) correct++;
         }
 
@@ -329,7 +401,7 @@ export function getIntermissionCorrect(categories: Category[] | undefined) {
 
     return {
         correct: Math.round(totalCorrect / users.length),
-        total: categories.length,
+        total: scoredCategories.length,
     };
 }
 
@@ -353,17 +425,22 @@ export function scoreUserAtForm(userId: string, form: number, profile: ProfileMe
     const snapshot = getSnapshotAtForm(userId, form);
     if (!snapshot || !profile) return 0;
 
-    let total = 0;
-    const count = profile.categories.length;
+    const scoredCategories = profile.categories.filter(category =>
+        category.questions.some(isScoredQuestion)
+    );
 
-    for (const category of profile.categories) {
+    let total = 0;
+
+    for (const category of scoredCategories) {
         const responses = snapshot.responses.get(category.id);
         if (!responses) continue;
 
         total += scoreCategory(category, responses);
     }
 
-    return count === 0 ? 0 : total / count;
+    return scoredCategories.length === 0
+        ? 0
+        : total / scoredCategories.length;
 }
 
 function scoreCategoryFromSnapshot(snapshot: ResponseSnapshot | undefined, category: Category) {
@@ -374,7 +451,7 @@ function scoreCategoryFromSnapshot(snapshot: ResponseSnapshot | undefined, categ
 }
 
 export type InfluentialClue = {
-    clue: SlideDemo | SlideCollage;
+    clue: SlideDemo | SlideCollage | SlideImage;
     studentsImproved: number;
     studentsWorsened: number;
     netChange: number;
@@ -384,14 +461,14 @@ export type InfluentialClue = {
 export function getTopInfluentialClues(profile: ProfileMeta | undefined) {
     if (!profile) return [];
 
-    const clues = profile.slides.filter(slide => slide.type === "demo" || slide.type === "collage");
+    const clues = profile.slides.filter(slide => slide.type === "demo" || slide.type === "collage" || slide.type === "image");
     const users = getAllUsers();
 
     let clueIndex: number = 0;
 
     const results = clues.map(clue => {
         const change = new Map<number, number>();
-        clueIndex ++;
+        clueIndex++;
 
         const form = clue.form ?? 0;
 

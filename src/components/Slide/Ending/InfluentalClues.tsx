@@ -3,13 +3,13 @@ import { Box, List } from "@mui/material";
 import ClueCard from "../../List/ClueCard";
 import style from './style.module.css';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import { SlideCollage, SlideDemo } from "../types";
+import { SlideCollage, SlideDemo, SlideImage } from "../types";
 import { useTranslation } from "react-i18next";
 
 
 interface Props {
     influentialClues: InfluentialClue[];
-    setOpen: (clue: SlideDemo | SlideCollage) => void;
+    setOpen: (clue: SlideDemo | SlideCollage | SlideImage) => void;
     revealCards: boolean;
 }
 

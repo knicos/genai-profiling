@@ -1,4 +1,3 @@
-import { QuestionData } from '@genaipg/components/Question/types';
 import { PeerEvent, BuiltinEvent } from '@genai-fi/base';
 import { ProfileMeta } from '@genaipg/components/ContentLoaders/types';
 import { UserTimelineData } from '@genaipg/components/Slide/Ending/types';
@@ -44,8 +43,8 @@ export interface ChangeFormEvent extends PeerEvent {
 export interface ResponseData {
     timestamp: number;
     date: string;
-    category: string;
-    question: QuestionData | string;
+    categoryId: string;
+    questionId: string;
     value: string | string[];
     form: number;
 }

@@ -8,7 +8,7 @@ import TimelineChart from "@genaipg/components/Charts/Timeline/TimelineChart";
 import { Button } from "@genaipg/components/Button/Button";
 import InfluentalClues from "./InfluentalClues";
 import ClueDialog from "@genaipg/views/dialogs/ClueDialog/ClueDialog";
-import { SlideCollage, SlideDemo } from "../types";
+import { SlideCollage, SlideDemo, SlideImage } from "../types";
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -29,7 +29,7 @@ export default function Timeline({ setStep, setTimelineData }: Props) {
     const clues = useMemo(
         () =>
             profile?.slides.filter(
-                slide => slide.type === "demo" || slide.type === "collage"
+                slide => slide.type === "demo" || slide.type === "collage" || slide.type === "image"
             ) ?? [],
         [profile]
     );
@@ -39,20 +39,21 @@ export default function Timeline({ setStep, setTimelineData }: Props) {
     const users = useMemo(() => getAllUsers(), []);
 
     const [open, setOpen] = useState<boolean>(false)
-    const [clue, setClue] = useState<SlideDemo | SlideCollage>();
+    const [clue, setClue] = useState<SlideDemo | SlideCollage | SlideImage>();
     const [revealTimeline, setRevealTimeline] = useState<'idle' | 'revealing' | 'finished'>('idle');
 
     const timelineData = useMemo<UserTimelineData[]>(() => {
         return users.map((user, ix) => ({
             userId: user,
             color: USER_COLORS[ix],
-            scores: clues.map((clue) =>
+            scores: clues.map((clue) => 
                 scoreUserAtForm(user, clue.form ?? 0, profile)
             ),
         }));
     }, [users, clues, profile]);
 
     const startReveal = (state: 'revealing') => {
+
         if (timelineData.length > 0) {
             setTimelineData(timelineData);
         }
@@ -64,7 +65,7 @@ export default function Timeline({ setStep, setTimelineData }: Props) {
         setRevealTimeline('finished');
     }
 
-    const openDialog = (clue: SlideDemo | SlideCollage) => {
+    const openDialog = (clue: SlideDemo | SlideCollage | SlideImage) => {
         setClue(clue);
         setOpen(true);
     }

@@ -28,7 +28,8 @@ export default function RevealProfile({ setStep }: Props) {
 
     const categories = useMemo(() => {
         if (!profile) return [];
-        return getCorrectAnswers(profile.categories);
+        const c = getCorrectAnswers(profile.categories)
+        return c.filter(c => c.questions.length > 0);
     }, [profile]);
 
     const correctCount = useMemo(() => {
