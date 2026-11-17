@@ -50,25 +50,12 @@ export function Component() {
                     </span>
                 }
                 logoUrl="/logo192.png"
-
+                githubUrl="https://github.com/knicos/genai-profiling"
+                teachingMaterialsUrl="https://gen-ai.fi/en/materials/somekone-lesson-1-2"
+                githubLabel={t("start.github")}
+                teachingMaterialsLabel={t("start.teachingMaterials")}
             />
             <div className={style.innerContainer}>
-                <TextField
-                    label={t("start.existingPin")}
-                    onKeyDown={doKeyDown}
-                    fullWidth
-                    className={style.textbox}
-                    inputRef={inputRef}
-                />
-                <Button
-                    variant="contained"
-                    fullWidth
-                    size="large"
-                    onClick={doGo}
-                >
-                    {t("start.go")}
-                </Button>
-                <div className={style.or}>{t('start.labels.or')}</div>
                 <Button
                     variant="outlined"
                     href="/game/configure"
@@ -85,6 +72,24 @@ export function Component() {
                 >
                     {t("start.createNew")}
                 </Button>
+                <div className={style.or}>{t('start.labels.or')}</div>
+                <TextField
+                    label={t("start.existingPin")}
+                    onKeyDown={doKeyDown}
+                    fullWidth
+                    className={style.textbox}
+                    inputRef={inputRef}
+                />
+                <Button
+                    variant="contained"
+                    fullWidth
+                    size="large"
+                    onClick={doGo}
+                >
+                    {t("start.go")}
+                </Button>
+                
+                
                 <ErrorDialog />
             </div>
         </div>

@@ -14,8 +14,11 @@ export const featureFlagsAtom = atom(async () => {
     
     try {
         const response = await fetch(
-            `${import.meta.env.VITE_APP_API}/features/${localOrStaging ? 'pg-staging' : 'pg'}`
+            `${import.meta.env.VITE_APP_API}/features/${localOrStaging ? 'classroom-staging' : 'classroom'}`
         );
+        if (!response.ok) {
+            throw new Error('Failed to fetch feature flags');
+        }
         const data: {features: FeatureFlags} = await response.json();
         const features = data.features as FeatureFlags;
         return features;

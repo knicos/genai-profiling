@@ -48,6 +48,8 @@
         "preview": "Preview"
     },
     "start": {
+        "teachingMaterials": "Teaching Materials",
+        "github": "GitHub",
         "existingPin": "Existing PIN",
         "go": "Go",
         "createNew": "Create new profile",

@@ -22,7 +22,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@genaipg': path.resolve(__dirname, './src'),
+            '@genaipg': path.resolve(import.meta.dirname, './src'),
         },
     },
 });
