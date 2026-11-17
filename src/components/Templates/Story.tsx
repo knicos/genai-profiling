@@ -113,10 +113,10 @@ export default function Story({ url, profilePicUrl, username }: Props) {
                         </div>
                     </foreignObject>
                     <foreignObject
-                        y={1377}
+                        y={1373}
                         x={-1840}
                         width={350}
-                        height={50}
+                        height={60}
                     >
                         <div
                             className={style.text}

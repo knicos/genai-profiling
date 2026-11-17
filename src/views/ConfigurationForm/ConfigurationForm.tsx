@@ -4,10 +4,11 @@ import { MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import LangSelect from '@genaipg/components/LangSelect/LangSelect';
 import { Manifest } from '@genaipg/components/ContentLoaders/types';
 import { useAtom } from 'jotai';
 import { profileURLAtom } from '@genaipg/state/profileState';
+import { LangSelect } from '@genai-fi/base';
+import { LANGS } from '@genaipg/components/LangSelect/langs';
 
 const MANIFEST_URL = 'https://store.gen-ai.fi/classroom/manifest.json';
 const LOCAL_PROFILE_KEY = 'custom';
@@ -78,9 +79,16 @@ export default function ConfigurationForm() {
                 className={style.userContainer}
                 onSubmit={handleSubmit}
             >
-                <LangSelect />
+                <div
+                    className={style.languageSelect}
+                >
+                    <LangSelect
+                        languages={LANGS}
+                    />
+                </div>
+
                 <TextField
-                    label={t('Enter Class Name')}
+                    label={t('enterClassname')}
                     name="className"
                     value={formData.className}
                     onChange={handleInputChange}
@@ -109,22 +117,22 @@ export default function ConfigurationForm() {
                         </MenuItem>
                     ))}
                 </Select>
-                <Typography variant="body1" style={{ marginTop: '1rem', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '0.5rem'   }}>
+                <Typography variant="body1" style={{ marginTop: '1rem', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     Or
                 </Typography>
-                 <input type="file" accept=".zip" ref={fileInputRef} style={{ display: 'none' }} onChange={handleProfileUpload} />
+                <input type="file" accept=".zip" ref={fileInputRef} style={{ display: 'none' }} onChange={handleProfileUpload} />
                 <LargeButton
                     variant="outlined"
                     onClick={() => fileInputRef.current?.click()}
                 >
-                    Upload custom profile
+                    {t("uploadCustomProfile")}
                 </LargeButton>
                 <LargeButton
                     type="submit"
                     variant="contained"
                     disabled={profile === '' || !manifest}
                 >
-                    {t('Go')}
+                    {t("start.go")}
                 </LargeButton>
             </form>
         </div>

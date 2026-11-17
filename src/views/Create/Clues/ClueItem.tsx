@@ -63,7 +63,7 @@ export default function ClueItem({ clue, currentClue, clueIndex, maxUnlockedInde
                 )} ${clueIndex + 1
                     }`}
                 secondary={`${clue.clue.length > 0 ?
-                    clue.clue : 'No clue yet'
+                    clue.clue : t("create.clues.noClueYet")
                     }`}
                 sx={{
                     '& .MuiListItemText-primary':

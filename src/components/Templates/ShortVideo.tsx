@@ -107,10 +107,10 @@ export default function ShortVideo({ username, caption, url, profilePicUrl, chec
                         }}
                     />
                     <foreignObject
-                        y={-770}
+                        y={-775}
                         x={-2792}
                         width={350}
-                        height={50}
+                        height={75}
                     >
                         <div
                             className={style.text}

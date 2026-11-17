@@ -80,7 +80,7 @@ export default function Post({ url, profilePicUrl, checked, username, caption }:
                         x={-1825}
                         y={-225}
                         width={350}
-                        height={50}
+                        height={60}
                     >
                         <div
                             className={style.text}

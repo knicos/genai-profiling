@@ -123,7 +123,7 @@ export function Component() {
                                             }}
                                             startIcon={<DownloadIcon />}
                                         >
-                                            {t('Download')}
+                                            {t('download')}
                                         </LargeButton>
                                     </SlideContainer>
                                 ) : undefined

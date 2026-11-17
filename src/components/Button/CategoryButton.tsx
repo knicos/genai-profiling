@@ -7,11 +7,12 @@ const Button = styled(MButton, {
 })<{ highlighted?: boolean }>(({ highlighted }) => ({
     display: 'flex',
     flexDirection: 'column',
-    padding: '0',
+    padding: 0,
     maxWidth: '100px',
     width: '100%',
-    height: '100%',
-    maxHeight: '100px',
+    minWidth: 0,
+    minHeight: 0,
+    height: 'auto',
     textTransform: 'none',
     borderRadius: '10px',
 
@@ -25,6 +26,8 @@ const Button = styled(MButton, {
 
     alignItems: 'center',
     overflow: 'hidden',
+    whiteSpace: 'normal',
+
     '&:hover': {
         filter: 'brightness(0.90)'
     }

@@ -6,6 +6,7 @@ import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { HomeBanner, LangSelect } from '@genai-fi/base';
 import { Button } from '@genai-fi/base/components/Button';
+import { LANGS } from '@genaipg/components/LangSelect/langs';
 
 
 export function Component() {
@@ -33,7 +34,9 @@ export function Component() {
     return (
         <div className={style.container}>
             <div className={style.language}>
-                <LangSelect />
+                <LangSelect 
+                    languages={LANGS}
+                />
             </div>
             <HomeBanner
                 title={
@@ -51,7 +54,7 @@ export function Component() {
             />
             <div className={style.innerContainer}>
                 <TextField
-                    label={t("Enter Code")}
+                    label={t("start.existingPin")}
                     onKeyDown={doKeyDown}
                     fullWidth
                     className={style.textbox}
@@ -63,7 +66,7 @@ export function Component() {
                     size="large"
                     onClick={doGo}
                 >
-                    {t("Go")}
+                    {t("start.go")}
                 </Button>
                 <div className={style.or}>{t('start.labels.or')}</div>
                 <Button
@@ -72,7 +75,7 @@ export function Component() {
                     className={style.createButton}
                     fullWidth
                 >
-                    {t("Start a session")}
+                    {t("start.startSession")}
                 </Button>
                 <Button
                     variant="outlined"
@@ -80,7 +83,7 @@ export function Component() {
                     className={style.createButton}
                     fullWidth
                 >
-                    {t("Create New")}
+                    {t("start.createNew")}
                 </Button>
                 <ErrorDialog />
             </div>

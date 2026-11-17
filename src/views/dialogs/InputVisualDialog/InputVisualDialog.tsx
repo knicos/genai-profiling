@@ -98,6 +98,9 @@ export default function InputVisualDialog({ onSave, initialVisual }: Props) {
     const handleNext = () => {
         if (step === 'source') {
             if (source === 'upload') {
+                setDraft((current) =>
+                    current?.type === 'image' ? current : null
+                );
                 setStep('upload');
             } else if (source === 'template') {
                 setStep('template');

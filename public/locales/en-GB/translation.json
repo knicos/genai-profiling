@@ -24,19 +24,16 @@
         },
         "cancel": "Cancel"
     },
-    "Enter Code": "Enter Code",
-    "Go": "Go",
-    "Create New": "Create new profile",
-    "Start a session": "Start a session",
-    "Enter Class Name": "Enter Class Name",
-    "Enter Session Detail": "Enter Session Detail",
-    "Enable Recordings": "Enable Recordings",
-    "Configure": "Configure",
-    "Enter Username": "Enter Username",
-    "Enter": "Enter",
-    "Submit": "Submit",
-    "Next": "Next",
-    "Download": "Download",
+    "uploadCustomProfile": "Upload custom profile",
+    "enterClassname": "Enter Class Name",
+    "enterSessionDetail": "Enter Session Detail",
+    "enableRecordings": "Enable Recordings",
+    "configure": "Configure",
+    "enterUsername": "Enter Username",
+    "enter": "Enter",
+    "submit": "Submit",
+    "next": "Next",
+    "download": "Download",
     "connection": "Go to the address below and enter the code <Code>{{codeText}}</Code>, or use the QR code.",
     "waitingPeople": "Waiting for people...",
     "onePerson": "{{count}} person has joined.",
@@ -51,6 +48,10 @@
         "preview": "Preview"
     },
     "start": {
+        "existingPin": "Existing PIN",
+        "go": "Go",
+        "createNew": "Create new profile",
+        "startSession": "Start a session",
         "labels": {
             "or": "Or"
         }
@@ -171,6 +172,7 @@
             "noImageYet": "No image yet",
             "templatePreview": "Preview",
             "noTemplateSelected": "No template selected",
+            "noClueYet": "No clue yet",
             "templateGroups": {
                 "volunteeredData": {
                     "label": "Volunteered data",

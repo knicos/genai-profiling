@@ -52,7 +52,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
             <div className={style.userContainer}>
                 <TextField
                     inputRef={ref}
-                    label={t('Enter Username')}
+                    label={t('enterUsername')}
                     onKeyDown={doUsernameKey}
                     required
                     error={!!errors.username}
@@ -70,7 +70,7 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
                     }}
                     variant="contained"
                 >
-                    {t('Enter')}
+                    {t('enter')}
                 </LargeButton>
                 {!showRestore && (
                     <div>

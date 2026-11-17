@@ -1,18 +1,410 @@
 {
-    "Enter Code": "Syötä koodi",
-    "Go": "Aloita",
-    "Create New": "Luo uusi",
-    "Enter Class Name": "Enter Class Name",
-    "Enter Session Detail": "Enter Session Detail",
-    "Enable Recordings": "Enable Recordings",
-    "Enter Username": "Anna oikea nimesi",
-    "Enter": "Aloita",
-    "Download": "Tallenna",
-    "connection": "Mene allaolevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>, tai käytä QR -koodia.",
+    "app": {
+        "appTitle": "Profilointipeli",
+        "appSubtitle": "Tutki, miten erilaiset data jäljet voivat paljastaa mysteerihenkilön profiilin.",
+        "selectProfile": "Valitse profiili",
+        "reportProblem": "Anna palautetta",
+        "reportProblemTip": "Ilmoita meille ongelmasta tai ideasta.",
+        "report": {
+            "title": "Palaute tai bugi",
+            "reason": "Syy",
+            "bug": "Sovelluksessa on ongelma",
+            "feedback": "Minulla on ehdotus",
+            "other": "Muu syy",
+            "message": "Viesti",
+            "send": "Lähetä",
+            "error": "Raportin lähetys epäonnistui. Yritä uudelleen.",
+            "characterCount": "Käytetty {{count}} / {{max}} merkkiä",
+            "cancel": "Peruuta",
+            "close": "Sulje",
+            "messageTooLong": "Viesti on liian pitkä.",
+            "messageRequired": "Kirjoita viesti.",
+            "thankYou": "Kiitos!",
+            "success": "Palaute on lähetetty."
+        },
+        "cancel": "Peruuta"
+    },
+    "uploadCustomProfile": "Lataa oma profiilisi",
+    "enterClassname": "Anna istunnolle nimi",
+    "enterSessionDetail": "Syötä istunnon yksityiskohdat",
+    "enableRecordings": "Ota tallennus käyttöön",
+    "enterUsername": "Anna käyttäjänimi",
+    "enter": "Aloita",
+    "download": "Tallenna",
+    "connection": "Mene alla olevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>, tai käytä QR -koodia.",
     "waitingPeople": "Odotetaan käyttäjiä...",
     "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
     "manyPeople": "{{count}} käyttäjää on liittynyt mukaan.",
     "pleaseWait": "Odota",
-    "loading": "Loading",
-    "done": "Valmis"
+    "loading": "Lataa",
+    "done": "Valmis",
+    "submit": "Lähetä",
+    "next": "Seuraava",
+    "workflow": {
+        "profile": "Profiilin tiedot",
+        "clues": "Vihjeet",
+        "preview": "Esikatselu"
+    },
+    "start": {
+        "existingPin": "Olemassa oleva PIN",
+        "go": "Aloita",
+        "createNew": "Luo uusi",
+        "startSession": "Aloita istunto",
+        "labels": {
+            "or": "Tai"
+        }
+    },
+    "create": {
+        "createOrEdit": "Luo tai muokkaa profiilia",
+        "createOrEditSubtitle": "Mitä haluaisit tehdä?",
+        "upload": "Lataa ja muokkaa",
+        "createNew": "Luo uusi",
+        "buttons": {
+            "next": "Seuraava",
+            "previous": "Edellinen",
+            "export": "Tallenna",
+            "add": "Lisää",
+            "cancel": "Peruuta",
+            "delete": "Poista",
+            "save": "Tallenna",
+            "select": "Valitse",
+            "close": "Sulje",
+            "back": "Takaisin",
+            "addClue": "Lisää vihje",
+            "addCheckpoint": "Lisää välietappi",
+            "addStickyNote": "Lisää tai muokkaa taulunäkymää"
+        },
+        "confirmation": {
+            "collage": "Kollaasi",
+            "preview": "Esikatselu",
+            "hardness": {
+                "placeholder": "Valitse vaikeustaso:",
+                "1": "Helppo",
+                "2": "Keskitaso",
+                "3": "Vaikea"
+            }
+        },
+        "profileInformation": {
+            "title": "Mysteeri profiili",
+            "subTitle": "Profiilin tiedot",
+            "description": "Täytä alla olevat kategoriat. Pelaajat yrittävät arvata vastaukset annettujen vihjeiden perusteella. Valmiiksi täytetyissä kategorioissa on oletuskysymykset. Harrastukset-kategoria on tyhjä.",
+            "addCategory": "Lisää kategoria",
+            "questions": "Kysymykset:",
+            "categoryPlaceholder": "Kirjoita kategoria tähän...",
+            "correctAnswer": "Oikein",
+            "chooseCorrect": "Valitse oikea vastaus",
+            "markCorrect": "Merkitse oikeaksi",
+            "questionText": "Kysymyksen teksti",
+            "iconLabel": "Kategorian kuvake",
+            "chooseIcon": "Valitse kuvake",
+            "changeIcon": "Vaihda kuvake",
+            "questionTextPlaceholder": "esim. Harrastaako tämä henkilö urheilua?",
+            "age": {
+                "category": "Ikä",
+                "templateQuestion": "Kuinka vanha tämä henkilö on?"
+            },
+            "interests": {
+                "category": "Kiinnostukset",
+                "templateQuestion": "Mistä tämä henkilö on kiinnostunut?",
+                "options": [
+                    "Pelaaminen",
+                    "Urheilu",
+                    "Musiikki",
+                    "Lukeminen",
+                    "Sisällöntuotanto",
+                    "Teknologia / Ohjelmointi",
+                    "Matkustaminen",
+                    "Ei voida päätellä"
+                ]
+            },
+            "location": {
+                "category": "Asuinpaikka",
+                "templateQuestion": "Missä tämä henkilö asuu?",
+                "options": [
+                    "Kaupunkialueella",
+                    "Esikaupunkialueella",
+                    "Maaseudulla",
+                    "Ei voida päätellä"
+                ]
+            },
+            "hobbies": {
+                "category": "Harrastukset"
+            },
+            "questionType": "Kysymystyyppi",
+            "questionTypePlaceholder": "Valitse kysymyksen tyyppi",
+            "questionTypeOptions": {
+                "text": "Tekstivastaus",
+                "singlechoice": "Valitse yksi",
+                "multichoice": "Valitse monta",
+                "slider": "Liukusäädin"
+            },
+            "questionOption": "Lisää vastausvaihtoehtoja",
+            "questionOptionPlaceHolder": "Vaihtoehto",
+            "configSlider": "Liukusäätimen asetukset",
+            "configSliderDescription": "Vaihteluväli",
+            "min": "Minimi",
+            "max": "Maksimi",
+            "questionSliderPlaceHolder": "esim. 25",
+            "addQuestion": "Lisää kysymys",
+            "updateQuestion": "Päivitä kysymys",
+            "noQuestions": "Ei vielä kysymyksiä"
+        },
+        "clues": {
+            "clue": "Vihje",
+            "createImage": "Luo kuva vihjeelle",
+            "imageButton": "Valitse kuva",
+            "useTemplate": "Käytä mallipohjaa",
+            "addImage": "Lisää kuva",
+            "addImageSubtitle": "Valitse mallipohja tai lataa oma kuvasi",
+            "chooseTemplate": "Valitse mallipohja",
+            "chooseTemplateSubtitle": "Valitse yksi jatkaaksesi",
+            "fillTemplate": "Täytä mallipohja",
+            "fillTemplateSubtitle": "Täytä mallipohja ja tallenna",
+            "uploadImage": "Lataa kuva",
+            "uploadImageInstructions": "Lataa kuva vihjettä varten",
+            "imageInstructions": "1. Lataa kuva vihjettä varten",
+            "describeClue": "2. Kuvaile vihjettä",
+            "describeClueSubtitle": "Kerro lyhyesti, mitä vihje esittää",
+            "describeCluePlaceholder": "esim. Käyttäjä on tehnyt viime aikoina seuraavia hakuja...",
+            "categoryQuestion": "3. Mitä pelaajat voivat päätellä tästä vihjeestä?",
+            "categoryQuestionSubtitle": "Valitse kaikki kategoriat, joihin tämä vihje liittyy",
+            "noImageYet": "Ei vielä kuvaa",
+            "templatePreview": "Esikatselu",
+            "noTemplateSelected": "Mallipohjaa ei ole valittu",
+            "noClueYet": "Ei vihjettä vielä",
+            "templateGroups": {
+                "volunteeredData": {
+                    "label": "Vapaaehtoisesti annettu tieto",
+                    "description": "Tieto, jonka henkilö on itse antanut."
+                },
+                "observedData": {
+                    "label": "Havaittu tieto",
+                    "description": "Tieto, joka on kerätty henkilön toiminnasta."
+                }
+            },
+            "stickyNotes": {
+                "choose": "Saatavilla",
+                "label": "Taulunäkymä",
+                "title": "Lisää tai muokkaa taulunäkymiä",
+                "subtitle": "Valitse avoimet kysymykset, joiden vastaukset näytetään lopuksi."
+            },
+            "templates": {
+                "username": "Käyttäjänimi",
+                "caption": "Esimerkkiteksti",
+                "originalAudio": "Alkuperäinen ääni",
+                "exampleSong": "Esimerkkikappale",
+                "exampleArtist": "Esimerkkiartisti",
+                "streaming": {
+                    "label": "Musiikin / podcastin suoratoisto",
+                    "url": "Valitse kappaleen tai podcastin kansikuva:",
+                    "title": "Kirjoita kappaleen tai podcastin nimi:",
+                    "artist": "Kirjoita artistin tai juontajan nimi:",
+                    "titlePlaceholder": "esim. Tuutulaulu",
+                    "artistPlaceholder": "esim. Laulaja-Sara"
+                },
+                "image": {
+                    "label": "Lataa oma kuva vihjeeksi",
+                    "noImage": "Ei kuvaa"
+                },
+                "searches": {
+                    "label": "Hakuhistoria",
+                    "searchesPlaceholder": "esim. Videopelikauppa lähelläni",
+                    "searches": "Viimeisimmät haut:"
+                },
+                "memoryMap": {
+                    "label": "Muisto kartta",
+                    "url": "Valitse kartta muistojen esittämistä varten:",
+                    "profilePicUrl": "Valitse profiilikuva:",
+                    "addMemory": "Lisää muisto",
+                    "memory": "Muisto",
+                    "memories": "Kartalla olevat muistot:",
+                    "memoriesLabel": "Muistot",
+                    "memoriesList": "Muistot:",
+                    "memoriesSublabel": "Valitse kuva ja vedä se oikeaan kohtaan kartalla"
+                },
+                "post": {
+                    "label": "Julkaisu",
+                    "url": "Valitse kuva julkaisua varten:",
+                    "profilePicUrl": "Valitse profiilikuva:",
+                    "checked": "Onko käyttäjä tykännyt julkaisusta?",
+                    "checked.text": "On tykännyt",
+                    "username": "Julkaisun tehneen käyttäjän nimi:",
+                    "usernamePlaceholder": "esim. käyttäjänimi1",
+                    "caption": "Kirjoita julkaisun kuvateksti:",
+                    "captionPlaceholder": "esim. Minulla oli todella hauskaa viikonloppuna!"
+                },
+                "shortVideo": {
+                    "label": "Lyhytvideo / Reels",
+                    "profilePicUrl": "Valitse profiilikuva:",
+                    "url": "Valitse kuva videota varten:",
+                    "checked": "Onko käyttäjä tykännyt videosta?",
+                    "checked.text": "On tykännyt",
+                    "caption": "Kirjoita videon kuvateksti:",
+                    "captionPlaceholder": "esim. Striimin parhaat hetket!",
+                    "username": "Videon julkaisseen käyttäjän nimi:",
+                    "usernamePlaceholder": "esim. käyttäjänimi1"
+                },
+                "story": {
+                    "label": "Tarina",
+                    "profilePicUrl": "Valitse profiilikuva:",
+                    "url": "Valitse kuva tarinaa varten:",
+                    "username": "Tarinan julkaisseen käyttäjän nimi:",
+                    "usernamePlaceholder": "esim. käyttäjänimi1"
+                },
+                "comments": {
+                    "label": "Kommenttiosio",
+                    "profilePicUrl": "Valitse profiilikuva:",
+                    "url": "Valitse kuva julkaisua varten:",
+                    "comment": "Kirjoita kommentti:",
+                    "time": "2 t",
+                    "commentPlaceholder": "esim. Näyttääpä upealta!",
+                    "comments": "Kommentit",
+                    "comment1": {
+                        "username": "käyttäjänimi1",
+                        "comment": "Niin siisti!"
+                    },
+                    "comment2": {
+                        "username": "käyttäjänimi123",
+                        "comment": "🔥🔥🔥"
+                    },
+                    "comment0": {
+                        "username": "käyttäjänimi__",
+                        "comment": "Ihanaa ❤️"
+                    },
+                    "comment3": {
+                        "username": "käyttäjänimi3",
+                        "comment": "❤️❤️❤️"
+                    }
+                },
+                "watchHistory": {
+                    "label": "Katseluhistoria",
+                    "watchHistory": "Katseluhistoria",
+                    "profilePicUrl": "Valitse profiilikuva:",
+                    "checked": "Ovatko aikaleimat näkyvissä?",
+                    "checked.text": "On näkyvissä",
+                    "time1": "Minä päivänä tai mihin aikaan käyttäjä katsoi videoita?",
+                    "time2": "Minä päivänä tai mihin aikaan käyttäjä katsoi videoita?",
+                    "time1Placeholder": "esim. Tänään",
+                    "time2Placeholder": "esim. Perjantaina",
+                    "videos": "Lisää videoita katseluhistoriaan:",
+                    "videoTitle": "Videon nimi:",
+                    "videoTitlePlaceholder": "esim. Pakastekuivatun karkin testaaminen",
+                    "videoCreator": "Sisällöntuottaja:",
+                    "videoCreatorPlaceholder": "esim. videontekijä_1",
+                    "addVideo": "Lisää video",
+                    "videosList": "Videot:",
+                    "addThumbnail": "Valitse pikkukuva:",
+                    "exampleTitle": "Esimerkkivideon nimi",
+                    "exampleCreator": "sisällöntuottaja_esimerkki1"
+                },
+                "reactions": "Reagoinut julkaisuun",
+                "forYou": "Suositeltu sisältö",
+                "locations": "Matkustanut kohteeseen jne."
+            }
+        }
+    },
+    "game": {
+        "checkpoint": {
+            "checkpoint": "Välietappi",
+            "studentQuestion": "Kuinka varma olet arvauksistasi?",
+            "asClass": "Koko luokan keskiarvo:",
+            "next": "Tarkista oikeellisuus",
+            "confidence": {
+                "title": "Keskimääräinen varmuus",
+                "vote": "Arvioi, kuinka varma olet vastauksistasi.",
+                "low": "Etkö ole kovin varma?\nKatsotaanpa miksi.",
+                "medium": "Melko varma.\nKatsotaan, miten kävi!",
+                "high": "Erittäin varma!\nSelvitetään, oletko oikeassa."
+            },
+            "correctness": {
+                "title": "Vastausten keskimääräinen oikeellisuus",
+                "low": "Voi ei...\nEi aivan osunut kohdalleen.",
+                "medium": "Olette oikeilla jäljillä,\njatkakaa samaan malliin!",
+                "high": "Hienoa työtä!\nArvasitte oikein."
+            }
+        },
+        "ending": {
+            "noAnswers": "Ei vastauksia",
+            "close": "Sulje",
+            "profileTitle": "Mysteeri profiili",
+            "profileSubtitle": "@mysteeri_profiili",
+            "noCategory": "Valitse kategoria, jonka vastaukset haluat nähdä.",
+            "calculating": "Analysoidaan vastauksia...",
+            "revealButton": "Paljasta oikea profiili",
+            "popularTitle": "Jos luokka olisi itse muodostanut profiilin...",
+            "correctTitle": "Oikein",
+            "correctProfile": "Oikea profiili",
+            "influentialClues": {
+                "title": "Merkittävimmät vihjeet",
+                "reasoning": "{{count}} henkilöä muutti vastauksiaan.",
+                "reasoningSingle": "{{count}} henkilö muutti vastaustaan.",
+                "correctCount": "{{value}} oikein",
+                "best": "Paras",
+                "second": "Toiseksi paras",
+                "third": "Kolmanneksi paras",
+                "worst": "Hämmentävin"
+            },
+            "revealTimeline": "Paljasta aikajana",
+            "timelineTitle": "Miten kukin vihje vaikutti vastauksiinne?",
+            "collageTitle": "Tee vielä viime hetken muutoksia\nhenkilön profiiliin."
+        }
+    },
+    "student": {
+        "waitForTitle": "Odota hetki!",
+        "waitForStart": "Odotetaan, että opettaja aloittaa pelin",
+        "timeline": {
+            "title": "Aikajana",
+            "subtitle": "Miten kukin vihje vaikutti vastaukseesi?"
+        },
+        "intermission": {
+            "title": "Välietappi"
+        },
+        "mysteryPerson": "Mysteerihenkilö",
+        "solve": "Mysteeri",
+        "revealButton": "Paljasta oikea profiili",
+        "help": "Tämä on mysteerihenkilön profiili. Vastaa henkilöä koskeviin kysymyksiin annettujen vihjeiden avulla haluamassasi järjestyksessä. Kun olet käynyt läpi nykyisen vihjeen ja haluat siirtyä eteenpäin, paina Valmis. Näin opettaja saa tiedon, että olet valmis."
+    },
+    "loader": {
+        "messages": {
+            "getIceConfig": "Haetaan verkkoyhteyden asetuksia",
+            "cameraPermission": "Laitteiden välisten suorien yhteyksien mahdollistamiseksi sinun on sallittava kameran tilapäinen käyttö.",
+            "connecting": "Yritetään muodostaa yhteyttä...",
+            "signaling": "Etsitään muita laitteita",
+            "disconnected": "Yhteys toiseen laitteeseen katkesi",
+            "retry": "Yritetään muodostaa yhteys uudelleen...",
+            "content_load": "Ladataan sisältöä",
+            "content_download": "Ladataan sisältöä laitteelle",
+            "ready": "Yhteys on valmis",
+            "content_none": "Sisältö on valmis",
+            "wifiNetwork": "Tietosi lähetetään internetin kautta, koska ette käytä samaa Wi-Fi-verkkoa.",
+            "permNetwork": "Tietosi lähetetään internetin kautta, koska et sallinut kameran käyttöä."
+        },
+        "errors": {
+            "unknown": "Yhteydessä tapahtui virhe",
+            "id-in-use": "Joku käyttää jo tätä koodia",
+            "peer-not-found": "Koodia ei löytynyt",
+            "missing-ice": "Yhteysasetukset puuttuvat",
+            "no-signaling": "Palvelimemme ei vastaa",
+            "bad-browser": "Laitteesi ei tue tätä sovellusta",
+            "unknownContent": "Mediatiedoston kanssa on ongelma",
+            "load": "Mediatiedoston lataaminen epäonnistui",
+            "download": "Mediatiedoston lataaminen laitteelle epäonnistui"
+        },
+        "titles": {
+            "iceConfig": "Asetusten määrittäminen",
+            "permission": "Käyttöoikeudet",
+            "connecting": "Yhteys",
+            "error": "Virhe",
+            "contentLoad": "Mediasisältö",
+            "networkType": "Tiedot"
+        },
+        "actions": {
+            "close": "Sulje"
+        }
+    },
+    "about": {
+        "back": "Takaisin",
+        "title": "Generation AI",
+        "privacyTitle": "Tietoturvaselvitys"
+    }
 }

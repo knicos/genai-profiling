@@ -1,3 +1,4 @@
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
@@ -7,19 +8,19 @@ i18n.on('languageChanged', (lng) => {
     document.documentElement.setAttribute('lang', lng);
 });
 
-i18n.use(Backend)
+i18n
     .use(LanguageDetector)
+    .use(Backend)
     .use(initReactI18next)
-
     .init({
-        fallbackLng: 'en-GB',
         backend: {
             loadPath: '/locales/{{lng}}/{{ns}}.json',
         },
         interpolation: {
             escapeValue: false,
         },
-        supportedLngs: ['en-GB', /*'fi-FI'*/],        
+        fallbackLng: 'en-GB',
+        supportedLngs: ['en-GB', 'fi-FI'],
     });
 
 export default i18n;
