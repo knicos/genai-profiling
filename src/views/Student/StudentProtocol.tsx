@@ -131,7 +131,7 @@ export default function StudentProtocol({
         <ConnectionStatus
             api={import.meta.env.VITE_APP_APIURL}
             appName="classroom"
-            checkURL={`${import.meta.env.VITE_APP_APIURL}/health`}
+            checkURL={`${import.meta.env.VITE_APP_APIURL}`}
             visibility={0}
             noCheck={false}
         />

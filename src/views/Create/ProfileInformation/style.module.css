@@ -39,6 +39,17 @@
     gap: 10px
 }
 
+.profileInformation h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.profileInformation p {
+    margin: 0;
+    font-size: 1rem;
+}
+
 .fieldSet {
     border: 0;
     padding: 0;
@@ -46,10 +57,11 @@
 }
 
 .fieldLabel {
-    font-size: larger;
+    font-size: large;
     font-weight: bold;
     color: #444444;
     padding: 0.5rem 0;
+    margin: 0;
 }
 
 .listItemCard {
@@ -77,9 +89,15 @@
 .questionsContainer h4 {
     margin: 0;
     font-size: larger;
-    color: var(--text-dark);
+    color: var(--bg-dark2);
     font-weight: bold;
     padding-top: 0.5rem;
+}
+
+.questionsContainer p {
+    padding: 1rem;
+    margin: 0;
+    font-style: italic;
 }
 
 .fieldSubLabel {
@@ -100,6 +118,13 @@
     margin: 0 auto;
     border-radius: 8px;
     max-width: 700px;
+}
+
+.questionForm h2 {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin: 0;
+    font-weight: 100;
 }
 
 .tag {

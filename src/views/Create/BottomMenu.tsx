@@ -4,7 +4,7 @@ import ArrowBackIos  from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIos  from "@mui/icons-material/ArrowForwardIos";
 import Download  from "@mui/icons-material/Download";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import useWorkFlowItems from "@genaipg/hooks/useWorkFlowItems";
 import style from './style.module.css';
 

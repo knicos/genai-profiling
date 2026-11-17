@@ -3,7 +3,7 @@ import { LargeButton } from '@genai-fi/base/components/Button';
 import { MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import LangSelect from '@genaipg/components/LangSelect/LangSelect';
 import { Manifest } from '@genaipg/components/ContentLoaders/types';
 import { useAtom } from 'jotai';

@@ -35,7 +35,6 @@ export default function FormFields({ field, template, isEnabled, getValue, handl
                     placeholder={t(`create.clues.templates.${template}.${field.label}Placeholder`)}
                     value={getValue(field, ix)}
                     onChange={(value) => handleChange(field.label, value, ix)}
-                    inputProps={{ maxLength: field.maxLength }}
                     disabled={isEnabled && !isEnabled(field, values)}
                     multiline={field.multiline}
                     minRows={field.multiline ? 2 : 'none'}
@@ -43,7 +42,11 @@ export default function FormFields({ field, template, isEnabled, getValue, handl
                     required={field.required}
                     fontSize={FONT_SIZE.medium}
                     normal={true}
-
+                    slotProps={{
+                        htmlInput: {
+                            maxLength: field.maxLength
+                        }
+                    }}
                 />
             );
         case 'check':

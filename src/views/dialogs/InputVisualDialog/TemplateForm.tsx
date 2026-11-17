@@ -159,10 +159,14 @@ export default function TemplateForm({ draft, setDraft, template }: Props) {
                                             value={videoDraft.title}
                                             fullWidth
                                             multiline
-                                            inputProps={{ maxLength: 60 }}
                                             onChange={(value) => setVideoDraft((prev) => ({ ...prev, title: value }))}
                                             fontSize={FONT_SIZE.medium}
                                             normal={true}
+                                            slotProps={{
+                                                htmlInput: {
+                                                    maxLength: 60
+                                                }
+                                            }}
                                         />
                                         <TextArea
                                             title={t(`create.clues.templates.${template}.videoCreator`)}

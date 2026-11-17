@@ -2,7 +2,27 @@
     "app": {
         "appTitle": "Profiling game",
         "appSubtitle": "Explore how different data traces can reveal a mystery profile.",
-        "selectProfile": "Select a profile"
+        "selectProfile": "Select a profile",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Report an issue or idea to us.",
+        "report": {
+            "title": "Feedback or Bug",
+            "reason": "Reason",
+            "bug": "There is a problem",
+            "feedback": "I have a suggestion",
+            "other": "Other reason",
+            "message": "Message",
+            "send": "Send",
+            "error": "Failed to send report.",
+            "characterCount": "{{count}} characters of {{max}}",
+            "cancel": "Cancel",
+            "close": "Close",
+            "messageTooLong": "Message is too long.",
+            "messageRequired": "Message is required.",
+            "thankYou": "Thank you!",
+            "success": "Feedback sent successfully."
+        },
+        "cancel": "Cancel"
     },
     "Enter Code": "Enter Code",
     "Go": "Go",

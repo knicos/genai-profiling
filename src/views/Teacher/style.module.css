@@ -79,7 +79,7 @@
 .logo {
     position: absolute;
     right: 1rem;
-    bottom: 1rem;
+    bottom: 0.5rem;
     opacity: 0.8;
     user-select: none;
 }

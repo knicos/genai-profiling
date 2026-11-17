@@ -1,7 +1,7 @@
 import ListCard from "@genaipg/components/List/ListCard";
 import Check from '@mui/icons-material/Check';
 import Edit from '@mui/icons-material/Edit';
-import DeleteOutline from '@mui/icons-material/DeleteOutline'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { Button } from "@genai-fi/base";
 import style from './style.module.css';
 import { Category, QuestionData } from "@genaipg/components/Question/types";
@@ -40,7 +40,7 @@ export function QuestionsList({ category, handleEdit }: Props) {
                             variant="outlined"
                             onClick={() => handleDelete({ categoryId: category.category, questionId: question.id })}
                         >
-                            <DeleteOutline />
+                            <DeleteOutlinedIcon />
                         </Button>
                         <Button
                             variant="outlined"

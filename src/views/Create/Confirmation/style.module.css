@@ -53,11 +53,24 @@
 }
 
 .previewContainer {
-    aspect-ratio: 1 / 2;
+    width: 300px;
+    height: 600px;
+    flex-shrink: 0;
+    max-height: 78%;
     border-radius: 18px;
     position: relative;
     margin: auto 0;
-    width: 300px;
+}
+
+@media (max-width: 1200px) {
+    .previewContainer {
+        width: 265px;
+        height: 500px;
+    }
+
+    .displayContainer {
+        max-width: 500px;
+    }
 }
 
 .topBar {

@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import { Component as Start } from './views/Start/Start';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 describe('Start', () => {
     it('renders', async ({ expect }) => {

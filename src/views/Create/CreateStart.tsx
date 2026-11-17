@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSetAtom } from "jotai";
 import { cluesAtom, editorItemsAtom, formOrderAtom, questionsAtom } from "@genaipg/state/createState";
 import { loadZipFile, ZipData } from "@genai-fi/base";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { addImage } from "@genaipg/services/images/images";
 import { Category } from "@genaipg/components/Question/types";
 import { SlideMeta } from "@genaipg/components/Slide/types";

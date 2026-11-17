@@ -1,7 +1,7 @@
 import { Menu } from "./Menu";
 import { BottomMenu } from "./BottomMenu";
 import JSZip from "jszip";
-import { Outlet } from "react-router";
+import { Outlet } from 'react-router';
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAtom, useAtomValue } from "jotai";

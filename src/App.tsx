@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements, Navigate } from 'react-router-dom';
+import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements, Navigate } from 'react-router';
 import { Provider } from 'jotai';
 import './App.css';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';

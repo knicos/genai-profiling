@@ -1,4 +1,4 @@
-import { DialogContent, Typography } from "@mui/material";
+import { DialogContent } from "@mui/material";
 import React from "react";
 import style from './style.module.css'
 
@@ -17,10 +17,8 @@ export function ContentTemplate({ label, subtitle, step, children } : Props){
                     {step}
                 </span>
                 <div>
-                    <Typography variant="h5" fontWeight="bold">
-                        {label}
-                    </Typography>
-                    <Typography variant="subtitle2">{subtitle}</Typography>
+                    <h5>{label}</h5>
+                    <p>{subtitle}</p>
                 </div>
             </div>
             {children}

@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 import SlideShow from '@genaipg/components/SlideShow/SlideShow';
 import { useCallback, useEffect, useState } from 'react';
 import { useID } from '@genaipg/hooks/id';

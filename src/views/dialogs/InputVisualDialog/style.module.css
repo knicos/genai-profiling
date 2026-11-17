@@ -26,6 +26,17 @@
     align-items: center;
 }
 
+.stepHeader h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.stepHeader p {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
 .stepBadge {
     display: block;
     padding: 0.5rem 1rem;
@@ -108,14 +119,14 @@
     height: 350px;
     flex-shrink: 0;
     flex-grow: 1;
-    max-height: calc(100% * 0.66);
+    max-height: 66%;
 }
 
 @media (min-height: 800px) {
     .phoneFrame {
         width: 200px;
         height: 400px;
-        max-height: calc(100% * 0.72);
+        max-height: 72%;
     }
 }
 

@@ -1,7 +1,7 @@
 import { Button } from "@genai-fi/base";
 import CheckBoxField from "@genaipg/components/FormFields/CheckboxField";
 import { getAllOpenEndedQuestionsAtom, hasOpenEndedQuestionsAtom, selectedStickyNoteQuestionsAtom } from "@genaipg/state/createState";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useAtom, useAtomValue } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -70,17 +70,20 @@ export default function StickyNoteDialog() {
                             <StickyNote2Icon fontSize="inherit"/>
                         </span>
                         <div>
-                            <Typography variant="h5" fontWeight="bold">
+                            <h5>
                                 {t("create.clues.stickyNotes.title")}
-                            </Typography>
-                            <Typography variant="subtitle2">
+                            </h5>
+                            <p>
                                 {t("create.clues.stickyNotes.subtitle")}
-                            </Typography>
+                            </p>
                         </div>
                     </div>
                     <div className={style.content}>
                         {openEndedQuestions.map((question, ix) => (
-                            <div className={`${style.field} ${ix !== openEndedQuestions.length - 1 ? style.seperator : ''}`}>
+                            <div 
+                                key={question.id}
+                                className={`${style.field} ${ix !== openEndedQuestions.length - 1 ? style.seperator : ''}`}
+                            >
                                 <CheckBoxField
                                     key={ix}
                                     label={question.text}
@@ -88,7 +91,6 @@ export default function StickyNoteDialog() {
                                     text={t("create.clues.stickyNotes.choose")}
                                     onChange={(checked) => toggleQuestion(question.categoryId, question.id, checked)}
                                     normal={true}
-                                    fontSize="18px"
                                 />
                             </div>
                         ))}

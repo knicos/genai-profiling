@@ -2,7 +2,7 @@ import SelectField from "@genaipg/components/FormFields/SelectField";
 import TextArea from "@genaipg/components/FormFields/TextArea";
 import { useTranslation } from "react-i18next";
 import { Category, QuestionData, QuestionType } from "@genaipg/components/Question/types";
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Button } from "@genai-fi/base";
 import Add from '@mui/icons-material/Add';
 import Clear from '@mui/icons-material/Clear';
@@ -105,13 +105,13 @@ export default function QuestionDraft({ category, draft, handleChanges, onSubmit
             />
             {draft?.type === 'slider' &&
                 <div>
-                    <Typography className={style.fieldLabel}>
+                    <h1 className={style.fieldLabel}>
                         {t('create.profileInformation.configSlider')}
-                    </Typography>
+                    </h1>
 
-                    <Typography className={style.fieldSubLabel}>
+                    <h2 className={style.fieldSubLabel}>
                         {t('create.profileInformation.configSliderDescription')}
-                    </Typography>
+                    </h2>
 
                     <div style={{ display: 'flex', gap: 16 }}>
                         <fieldset className={style.fieldSet} style={{ flex: 1 }}>

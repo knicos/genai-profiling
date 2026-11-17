@@ -3,7 +3,7 @@ import ErrorDialog from '../dialogs/ErrorDialog/ErrorDialog';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { HomeBanner, LangSelect } from '@genai-fi/base';
 import { Button } from '@genai-fi/base/components/Button';
 

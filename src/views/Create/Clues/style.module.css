@@ -1,3 +1,4 @@
+
 .mainContainer {
     display: flex;
     width: 100%;
@@ -5,25 +6,24 @@
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     background-color: white;
     width: 100%;
-    padding: 0.5rem 1rem;
     max-width: 300px;
-    flex-direction: column;
-    display: flex;
-    gap: 1rem;
+    padding: 0.5rem 1rem;
 }
 
 .listItem {
-    border: 1px solid transparent;
-    border-radius: 8px;
-    transform: border 0.3s ease;
     position: relative;
     overflow: visible;
     max-height: 60px;
     margin: 1rem 0;
     background: #00829708;
     border: 1px solid var(--background);
+    border-radius: 8px;
+    transition: border 0.3s ease;
 }
 
 .listItem.current {
@@ -59,7 +59,6 @@
     gap: 2rem;
 }
 
-
 .form {
     display: inline-flex;
     flex-direction: column;
@@ -77,12 +76,12 @@
 }
 
 .formSection {
-    width: 100%;
-    height: 100%;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
     gap: 0.75rem;
 }
 
@@ -106,9 +105,7 @@
     position: relative;
     width: 100%;
     max-width: 300px;
-
     padding-bottom: 204.92%;
-
     border-radius: clamp(20px, 5.5%, 40px);
     overflow: hidden;
     align-self: center;
@@ -117,9 +114,9 @@
 .uploadImage {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     justify-content: center;
     align-items: center;
+    gap: 0.5rem;
     background: var(--grey);
     color: var(--text-dark);
     height: 100%;
@@ -128,9 +125,9 @@
 
 .checkPointPlaceholder {
     display: flex;
-    padding: 0.75rem 1rem;
     align-items: center;
     gap: 5px;
+    padding: 0.75rem 1rem;
     background: #b89ecd6b;
     border: 2px dashed var(--purple);
     border-radius: 8px;
@@ -145,15 +142,14 @@
 
 .checkpoint {
     display: flex;
+    align-items: center;
+    gap: 5px;
     padding-right: 0.75rem;
     padding-left: 1.5rem;
-    align-items: center;
+    padding-bottom: 1rem;
     border-radius: 8px;
     max-height: 60px;
-    padding-bottom: 1rem;
-    gap: 5px;
 }
-
 
 .checkpoint h1 {
     font-size: medium;
@@ -191,115 +187,17 @@
 
 .itemVisualWrapper {
     position: relative;
-    aspect-ratio: 1 / 2;
-    height: 100%;
-    width: 100%;
+    width: 56px;
+    height: 112px;
+    max-height: 72%;
 }
 
 .noImage {
+    display: flex;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    display: flex;
-    background: var(--border-grey);
-    font-size: 2.5rem;
     padding-top: 15px;
-    justify-content: center;
-}
-
-.noImage {
-    width: 100%;
-    height: 100%;
-    display: flex;
     background: var(--border-grey);
     font-size: 2.5rem;
-    justify-content: center;
-}
-
-.checkPointPlaceholder {
-    display: flex;
-    padding: 0.75rem 1rem;
-    align-items: center;
-    gap: 5px;
-    background: #b89ecd6b;
-    border: 2px dashed var(--purple);
-    border-radius: 8px;
-    max-height: 60px;
-}
-
-.dragIndicator {
-    display: flex;
-    cursor: grab;
-    padding: 0.5rem;
-}
-
-.checkpoint {
-    display: flex;
-    padding-right: 0.75rem;
-    padding-left: 1.5rem;
-    align-items: center;
-    border-radius: 8px;
-    max-height: 60px;
-    padding-bottom: 1rem;
-    gap: 5px;
-}
-
-
-.checkpoint h1 {
-    font-size: medium;
-    font-weight: 100;
-    width: 100%;
-    margin-left: 10px;
-}
-
-.checkPointDragClone {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    background: white;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-    cursor: grabbing;
-    pointer-events: none;
-}
-
-.dropIndicator {
-    position: relative;
-    height: 10px;
-    background-color: #1976d2;
-    border-radius: 8px;
-    margin-bottom: 30px;
-}
-
-.itemVisual {
-    position: relative;
-    overflow: hidden;
-    max-height: 75px;
-    margin-top: -15px;
-}
-
-.itemVisualWrapper {
-    position: relative;
-    aspect-ratio: 1 / 2;
-    height: 100%;
-    width: 100%;
-}
-
-.noImage {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background: var(--border-grey);
-    font-size: 2.5rem;
-    padding-top: 15px;
-    justify-content: center;
-}
-
-.noImage {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background: var(--border-grey);
-    font-size: 2.5rem;
-    justify-content: center;
 }

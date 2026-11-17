@@ -4,7 +4,7 @@ import style from './style.module.css'
 import AccordionSection from "@genaipg/components/Accordion/Accordion";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Button } from "@genai-fi/base";
 import Add from '@mui/icons-material/Add';
 import { Category, QuestionData } from "@genaipg/components/Question/types";
@@ -81,11 +81,11 @@ export function ProfileInformation() {
                         <MysteryProfileIcon />
                     </span>
                     <div className={style.profileInformation}>
-                        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{t('create.profileInformation.title')}</Typography>
-                        <Typography variant="body1">{t('create.profileInformation.description')}</Typography>
+                        <h1>{t('create.profileInformation.title')}</h1>
+                        <p>{t('create.profileInformation.description')}</p>
                     </div>
                 </div>
-                <Typography variant="h6" sx={{ fontWeight: 'normal', color: '#444' }}>  Profile information </Typography>
+                <h2>Profile information</h2>
                 {categories.map((cat) => (
                     <AccordionSection key={cat.id} label={cat.category} onDelete={() => handleCategoryDelete({ category: cat.category })}>
                         <IconPicker 
@@ -98,16 +98,9 @@ export function ProfileInformation() {
                             {cat.questions.length > 0 ? (
                                 <QuestionsList category={cat} handleEdit={handleEdit} />
                             ) : (
-                                <Typography
-                                    sx={{
-                                        fontStyle: 'italic',
-                                        padding: '1rem'
-                                    }}
-                                    variant="body2"
-                                    color="text.secondary"
-                                >
+                                <p>
                                     {t('create.profileInformation.noQuestions')}
-                                </Typography>
+                                </p>
                             )}
                         </div>
                         <QuestionDraft

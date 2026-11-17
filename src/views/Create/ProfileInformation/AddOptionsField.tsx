@@ -3,7 +3,7 @@ import { Button } from "@genai-fi/base";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import CheckOutlined from '@mui/icons-material/CheckOutlined';
-import DeleteOutline from '@mui/icons-material/DeleteOutline';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import style from "./style.module.css";
 
 interface Props {
@@ -96,7 +96,7 @@ export default function AddOptionsField({ values, handleChange, correct }: Props
                                 aria-label={t('create.buttons.delete')}
                                 onClick={() => handleDelete(value)}
                             >
-                                <DeleteOutline />
+                                <DeleteOutlinedIcon />
                             </Button>
                         </ListItem>
                     ))}

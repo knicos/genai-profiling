@@ -10,10 +10,6 @@
   border-radius: 6px;
 }
 
-.MuiDialog-root {
-  z-index: 2100;
-}
-
 .MuiTooltip-arrow {
   color: #5f7377;
 }

@@ -1,7 +1,7 @@
 import style from './style.module.css';
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import { Peer } from '@genai-fi/base/hooks/peer';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import Loading from '@genaipg/components/Loading/Loading';
 import EnterUsername from './EnterUsername';
 import { QuestionData } from '@genaipg/components/Question/types';

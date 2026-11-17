@@ -35,3 +35,30 @@
     justify-content: center;
     background: white;
 }
+
+.reportButton {
+    color: white;
+    position: absolute;
+    bottom: 1.75rem;
+    right: 6rem;
+    min-width: 36px;
+    overflow: hidden;
+    transition: padding 300ms ease;
+}
+
+.reportButtonLabel {
+    display: grid;
+    transition: grid-template-columns 300ms ease, opacity 200ms ease;
+}
+
+.reportButtonLabel span {
+    min-width: 0;
+    overflow: hidden;
+}
+
+@media (max-width: 985px) {
+    .reportButton {
+        display: none;
+    }
+    
+}
