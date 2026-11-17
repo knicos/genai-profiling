@@ -143,7 +143,7 @@ export default function SlideShow({
 
                     {allowReportProblem && showReportDialog && (
                         <ReportDialog
-                            application='pg'
+                            application="classroom"
                             apiURL={import.meta.env.VITE_APP_API}
                             open={showReportDialog}
                             onClose={() => setShowReportDialog(false)}

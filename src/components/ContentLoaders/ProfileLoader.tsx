@@ -14,7 +14,7 @@ interface Props {
     onError?: () => void;
 }
 
-const MANIFEST_URL = 'https://store.gen-ai.fi/classroom/manifest.json';
+const MANIFEST_URL = 'https://store.gen-ai.fi/classroom/manifest2.json';
 const LOCAL_PROFILE_KEY = 'custom';
 
 export default function ProfileLoader({ lang, profile, onError }: Props) {
