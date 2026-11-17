@@ -23,4 +23,11 @@
     height: 100%;
     gap: 2rem;
     position: relative;
+    width: 100%;
+}
+
+.language {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
 }

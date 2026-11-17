@@ -3,9 +3,11 @@ import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui
 import { useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import {  useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { availableUsers } from '@genaipg/state/sessionState';
 import RestoreIcon from '@mui/icons-material/Restore';
+import { LangSelect } from '@genai-fi/base';
+import { LANGS } from '@genaipg/components/LangSelect/langs';
 
 interface Props {
     onUsername: (name: string) => void;
@@ -49,6 +51,11 @@ export default function EnterUsername({ onUsername, onChangeId }: Props) {
 
     return (
         <div className={style.page}>
+            <div className={style.language}>
+                <LangSelect
+                    languages={LANGS}
+                />
+            </div>
             <div className={style.userContainer}>
                 <TextField
                     inputRef={ref}

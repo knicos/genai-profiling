@@ -11,6 +11,7 @@ export default function ImageSlide({ meta }: Props) {
     return (
         <div className={style.image}>
             <img
+                className={style.phoneFrame}
                 src={getImage(meta.url)}
                 alt={meta.label || ''}
                 style={meta.scale !== undefined ? { height: `${Math.floor(meta.scale * 100)}%` } : undefined}
